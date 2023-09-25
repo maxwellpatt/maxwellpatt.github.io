@@ -1,5 +1,23 @@
 ---
-title: "maxwellpatt.github.io"
+title: "Maxwell Patterson"
+about:
+  id: hero-heading
+  template: jolla
+  image: headshot.jpg
+  links:
+    - icon: twitter
+      text: twitter
+      href: https://twitter.com
+    - icon: github
+      text: Github
+      href: https://github.com/maxwellpatt
+    - icon: linkedin
+      text: linkedin
+      href: https://www.linkedin.com/in/maxwell-patterson-60b553190/
+    - icon: instagram
+      text: instagram
+      href: https://www.instagram.com/chefxwell/
 ---
 
-Check check 1212
+Welcome to the show!
+
