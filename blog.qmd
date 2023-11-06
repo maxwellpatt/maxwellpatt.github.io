@@ -1,0 +1,8 @@
+---
+title: "blog"
+listing:
+  contents: blog
+  type: grid
+  sort: "data desc"
+  categories: true 
+---
