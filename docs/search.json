@@ -1,17 +1,17 @@
 [
   {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "blog",
-    "section": "",
-    "text": "My first post\n\n\n\nQuarto\n\n\nR\n\n\nMEDS\n\n\n\ndescription here\n\n\n\nMaxwell Patterson\n\n\nNov 6, 2023\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "blog/2023-11-30-ethics-proj/index.html",
+    "href": "blog/2023-11-30-ethics-proj/index.html",
+    "title": "",
+    "section": "",
+    "text": "title: \"My first post\"\n  description: \"description here\"\n  author:\n    - name: Maxwell Patterson\n    - affiliation: Master of Environmental Data Science Program\n    - affiliation-url: https://ucsb-meds.github.io/\n  date: 11-06-2023\n  categories: [Quarto, R, MEDS]\n  image: fppg_vs_salary_polynomial_fit2.png\n---"
   },
   {
     "objectID": "index.html",
@@ -23,8 +23,8 @@
   {
     "objectID": "blog/2023-11-6-test-post/index.html",
     "href": "blog/2023-11-6-test-post/index.html",
-    "title": "My first post",
+    "title": "Ethics Project",
     "section": "",
-    "text": "Start!"
+    "text": "This is a test."
   }
 ]
