@@ -6,7 +6,7 @@
     - affiliation: Master of Environmental Data Science Program
     - affiliation-url: https://ucsb-meds.github.io/
   date: 12-01-2023
-  categories: [Quarto, R, MEDS]
+  categories: [Quarto, R, MEDS, Ethics]
   bibliography: references.bib
 ---
 

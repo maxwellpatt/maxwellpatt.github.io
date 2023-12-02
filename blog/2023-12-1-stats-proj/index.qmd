@@ -1,0 +1,14 @@
+---
+  title: "Stats Project"
+  description: "EDS222 Final Project"
+  author:
+    - name: Maxwell Patterson
+    - affiliation: Master of Environmental Data Science Program
+    - affiliation-url: https://ucsb-meds.github.io/
+  date: 12-01-2023
+  categories: [Quarto, R, MEDS, Stats]
+  bibliography: references.bib
+---
+
+
+

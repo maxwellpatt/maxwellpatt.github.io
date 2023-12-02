@@ -10,8 +10,8 @@ website:
         text: Home
       - about.qmd
       - blog.qmd
-      - href: resources.qmd
-        text: Resources
+      - cooking.qmd
+      
 
 format:
   html:
