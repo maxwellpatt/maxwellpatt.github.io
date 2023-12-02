@@ -1,5 +1,5 @@
 ---
-title: "Listing Example"
+title: "Blog"
 listing:
-  contents: posts
+  contents: blog
 ---
