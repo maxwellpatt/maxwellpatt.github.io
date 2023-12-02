@@ -11,7 +11,7 @@
     "href": "blog/2023-11-30-ethics-proj/index.html",
     "title": "",
     "section": "",
-    "text": "title: \"My first post\"\n  description: \"description here\"\n  author:\n    - name: Maxwell Patterson\n    - affiliation: Master of Environmental Data Science Program\n    - affiliation-url: https://ucsb-meds.github.io/\n  date: 11-06-2023\n  categories: [Quarto, R, MEDS]\n  image: fppg_vs_salary_polynomial_fit2.png\n---"
+    "text": "title: \"Ethics Project\"\n  description"
   },
   {
     "objectID": "index.html",
@@ -26,5 +26,12 @@
     "title": "Ethics Project",
     "section": "",
     "text": "This is a test."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "",
+    "section": "",
+    "text": "title: \"My Blog\"\nlisting: \n  contents: posts # all Quarto docs in the `posts` directory will be included on your listing page\n  type: grid # or `default` or `table`; each type has its own set of yaml options to include\n  sort: \"date desc\" # can also sort on more than one field\n  categories: true # allows you to sort posts by assigned categories"
   }
 ]

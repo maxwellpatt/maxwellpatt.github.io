@@ -1,1 +1,5 @@
-test
+---
+title: "Listing Example"
+listing:
+  contents: posts
+---
