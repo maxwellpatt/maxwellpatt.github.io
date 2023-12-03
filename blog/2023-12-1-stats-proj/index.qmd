@@ -109,5 +109,22 @@ esg_wb <- esg_wb %>%
 ```
 
 ```{r}
+# filtering for each series name in esg data
+agricultural_land_subset <- filter(esg_wb, series_name == "Agricultural land (% of land area)")
+
+net_forest_depletion_subset <- filter(esg_wb, series_name == "Adjusted savings: net forest depletion (% of GNI)")
+
+coastal_protection_subset <- filter(esg_wb, series_name == "Coastal protection")
+
+water_stress_level_subset <- filter(esg_wb, series_name == "Level of water stress: freshwater withdrawal as a proportion of available freshwater resources")
+
+methane_emissions_subset <- filter(esg_wb, series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
+
+renewable_energy_consumption_subset <- filter(esg_wb, series_name == "Renewable energy consumption (% of total final energy consumption)")
+
+renewable_electricity_output_subset <- filter(esg_wb, series_name == "Renewable electricity output (% of total electricity output)")
+
+unemployment_total_subset <- filter(esg_wb, series_name == "Unemployment, total (% of total labor force) (modeled ILO estimate)")
+
 
 ```
