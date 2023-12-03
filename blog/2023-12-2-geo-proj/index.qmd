@@ -41,11 +41,7 @@ library(here)
 Next, importing data. The first set of data is the night light data, tiles or images that capture the light intensity emanating from the surface of the planet during nighttime. The data is stored as rasters, and the `stars` package is used for raster handling. 
 
 ```{r}
-# read in night lights tiles
-feb7_h08v05 <- read_stars("blog", "2023-12-2-geo-proj", "data", "VNP46A1", "VNP46A1.A2021038.h08v05.001.2021039064328.tif")
-feb7_h0806 <- read_stars("data", "VNP46A1", "VNP46A1.A2021038.h08v06.001.2021039064329.tif")
-feb16_h0805 <- read_stars("data", "VNP46A1", "VNP46A1.A2021047.h08v05.001.2021048091106.tif")
-feb16_h0806 <- read_stars("data", "VNP46A1", "VNP46A1.A2021047.h08v06.001.2021048091105.tif")
+
 ```
 
 
