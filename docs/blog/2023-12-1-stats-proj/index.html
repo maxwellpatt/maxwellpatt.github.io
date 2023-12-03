@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -90,8 +124,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../../blog.html" rel="" target="">
  <span class="menu-text">Blog</span></a>
   </li>  
-  <li class="dropdown-header">
- <span class="menu-text">cooking.qmd Cooking</span></li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../cooking.html" rel="" target="">
+ <span class="menu-text">Cooking</span></a>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -110,7 +146,6 @@ ul.task-list li input[type="checkbox"] {
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Quarto</div>
                 <div class="quarto-category">R</div>
                 <div class="quarto-category">MEDS</div>
                 <div class="quarto-category">Stats</div>
@@ -145,6 +180,72 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p>I’ll be investigating economic freedom. The United States, China, Russia, and the EU will be the primary analysis of the project.</p>
+<p>First, let’s import the libraries we will need to conduct this analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s import and clean the data containing the freedom index and other scores by country.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in freedom data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>freedom_raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/efw_ratings.csv'</span>, <span class="at">header =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This data needs a good bit of clean up.</p>
+<p>Filtering for a few countries I want to analyze will make analysis more convenient.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>freedom_us_china_russia <span class="ot">&lt;-</span> freedom <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(countries <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'United States'</span>, <span class="st">'China'</span>, <span class="st">'Russian Federation'</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>freedom_capitalism <span class="ot">&lt;-</span> freedom <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(countries <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'United States'</span>, <span class="st">'Singapore'</span>, <span class="st">'Hong Kong SAR, China'</span>, <span class="st">'Switzerland'</span>, <span class="st">'New Zealand'</span>, <span class="st">'Australia'</span>, <span class="st">'United Kingdom'</span>, <span class="st">'Ireland'</span>, <span class="st">'Netherlands'</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>freedom_anticapitalism <span class="ot">&lt;-</span> freedom <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(countries <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'Sweden'</span>, <span class="st">'Norway'</span>, <span class="st">'Finland'</span>, <span class="st">'Denmark'</span>, <span class="st">'France'</span>, <span class="st">'Belgium'</span>, <span class="st">'Austria'</span>, <span class="st">'Germany'</span>, <span class="st">'Italy'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, lets move on to entering the next dataset. This <em>freedom</em> data serves as the policy side of the data – now we want to append and compare environmental outcomes based on different political and economic factors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in esg data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>esg_wb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/esg_wb.csv'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This data also needs to be cleaned up a bit. Let’s get to work.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>column_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"x1998_yr1998"</span>, <span class="st">"x1999_yr1999"</span>, <span class="st">"x2000_yr2000"</span>, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2001_yr2001"</span>, <span class="st">"x2002_yr2002"</span>, <span class="st">"x2003_yr2003"</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2004_yr2004"</span>, <span class="st">"x2005_yr2005"</span>, <span class="st">"x2006_yr2006"</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2007_yr2007"</span>, <span class="st">"x2008_yr2008"</span>, <span class="st">"x2009_yr2009"</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2010_yr2010"</span>, <span class="st">"x2011_yr2011"</span>, <span class="st">"x2012_yr2012"</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2013_yr2013"</span>, <span class="st">"x2014_yr2014"</span>, <span class="st">"x2015_yr2015"</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2016_yr2016"</span>, <span class="st">"x2017_yr2017"</span>, <span class="st">"x2018_yr2018"</span>, </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2019_yr2019"</span>, <span class="st">"x2020_yr2020"</span>, <span class="st">"x2021_yr2021"</span>, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"x2022_yr2022"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to extract and convert the year part of a column name to numeric</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>extract_year <span class="ot">&lt;-</span> <span class="cf">function</span>(column_name) {</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  year_str <span class="ot">&lt;-</span> <span class="fu">substr</span>(column_name, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(year_str)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>first <span class="ot">&lt;-</span> <span class="fu">names</span>(esg_wb)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to each column name</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>numeric_years <span class="ot">&lt;-</span> <span class="fu">sapply</span>(column_names, extract_year)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>new_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(first, numeric_years)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(esg_wb) <span class="ot">&lt;-</span> new_cols</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>esg_wb <span class="ot">&lt;-</span> esg_wb <span class="sc">%&gt;%</span> </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">5</span><span class="sc">:</span><span class="fu">ncol</span>(.), <span class="sc">~</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(.))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 
