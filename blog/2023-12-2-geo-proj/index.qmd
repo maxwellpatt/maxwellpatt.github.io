@@ -21,6 +21,34 @@ Urban blackouts are more than mere inconveniences; they're a stark reminder of o
 ## Data and Methodology
 The analysis hinges on three key data sources: VIIRS night light data, OpenStreetMap data detailing roads and buildings, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as dplyr, sf, and terra, to manipulate and analyze these datasets. Our methodology involved a step-by-step geospatial approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.
 
+Let's get to coding.
+
+Starting off by loading in the necessary libraries.
+```{r, message=FALSE}
+# import libraries
+library(dplyr)
+library(abind)
+library(sf)
+library(terra)
+library(spData)
+library(spDataLarge)
+library(tidyverse)
+library(dplyr)
+library(stars)
+library(here)
+```
+
+Next, importing data. The first set of data is the night light data, tiles or images that capture the light intensity emanating from the surface of the planet during nighttime. The data is stored as rasters, and the `stars` package is used for raster handling. 
+
+```{r}
+# read in night lights tiles
+feb7_h08v05 <- read_stars("blog", "2023-12-2-geo-proj", "data", "VNP46A1", "VNP46A1.A2021038.h08v05.001.2021039064328.tif")
+feb7_h0806 <- read_stars("data", "VNP46A1", "VNP46A1.A2021038.h08v06.001.2021039064329.tif")
+feb16_h0805 <- read_stars("data", "VNP46A1", "VNP46A1.A2021047.h08v05.001.2021048091106.tif")
+feb16_h0806 <- read_stars("data", "VNP46A1", "VNP46A1.A2021047.h08v06.001.2021048091105.tif")
+```
+
+
 ## Results and Visualizations
 - **Night Lights Intensity Maps**:
   - Present the visual comparison of night lights before and after the blackout
