@@ -24,6 +24,10 @@ library(janitor)
 library(tidyr)
 library(MASS)
 library(randomForest)
+library(tidyverse)
+
+# clear environment for sanity
+rm(list = ls())
 ```
 
 Now, let's import and clean the data containing the freedom index and other scores by country.
@@ -106,7 +110,44 @@ names(esg_wb) <- new_cols
 esg_wb <- esg_wb %>% 
   mutate(across(5:ncol(.), ~ as.numeric(as.character(.))))
 
+
+
 ```
+
+```{r}
+esg_wb_long <- esg_wb %>%
+  pivot_longer(
+    cols = '1998':'2022', # Specify the range of columns to pivot
+    names_to = "Year", # Name of the new column that will store the years
+    values_to = "Value" # Name of the new column that will store the corresponding values
+  )
+
+# View the pivoted data
+head(esg_wb_long)
+```
+
+Renewable energy
+
+```{r}
+energy <- esg_wb %>% 
+  filter(series_name == "Renewable energy consumption (% of total final energy consumption)")
+
+energy_long <- energy %>%
+  pivot_longer(
+    cols = `1998`:`2022`, # Specify the range of year columns as integers
+    names_to = "Year", # Name of the new column for years
+    values_to = "RenewableEnergyConsumption" # Name of the new column for values
+  )
+```
+
+```{r}
+ggplot(subset(energy_long, country_name %in% c("High income", "Low income")), aes(x = Year, y = RenewableEnergyConsumption, color = country_name)) +
+  geom_point() +
+  labs(title = "Renewable Energy Consumption Trend for High and Low Income Countries", x = "Year", y = "Renewable Energy Consumption (%)") +
+  theme_minimal()
+```
+
+Ocean protection
 
 ```{r}
 # filtering for each series name in esg data
@@ -128,3 +169,59 @@ unemployment_total_subset <- filter(esg_wb, series_name == "Unemployment, total 
 
 
 ```
+
+```{r}
+ggplot(subset(freedom, countries %in% c("United States", "China", "United Kingdom", "France", "South Africa", "Iraq", "Serbia")), 
+       aes(x = year, y = economic_freedom_summary_index, color = countries)) +
+    geom_point() +
+    labs(title = "Economic Freedom Index Over Time", x = "Year", y = "Economic Freedom Index") +
+    theme_minimal() +
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+
+Hypothesis testing:
+
+```{r}
+
+eu_countries <- c("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", 
+                  "Czech Republic", "Denmark", "Estonia", "Finland", "France", 
+                  "Germany", "Greece", "Hungary", "Ireland", "Italy", "Latvia", 
+                  "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", 
+                  "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden")
+
+freedom_eu <- freedom %>% 
+  filter(countries %in% eu_countries) %>% 
+  filter(year == 2020)
+
+freedom_wo_eu <- freedom %>% 
+  filter(!(countries %in% eu_countries)) %>% 
+  filter(year == 2020)
+```
+
+```{r}
+# Perform T-test
+t_test_result <- t.test(freedom_eu$economic_freedom_summary_index, 
+                        freedom_wo_eu$economic_freedom_summary_index,
+                        na.rm = TRUE)
+
+# Print the results
+t_test_result
+```
+
+Some analysis to consider:
+
+-   Comparative analysis of economic freedom scores
+
+-   Correlation analysis
+
+-   Regression analysis
+
+-   Time series analysis
+
+-   Cluster analysis
+
+-   Hypothesis testing
+
+-   Random forest analysis
+
+-   Interaction effect
