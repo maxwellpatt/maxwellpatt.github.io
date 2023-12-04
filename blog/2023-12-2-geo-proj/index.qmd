@@ -13,17 +13,21 @@
 # A Geospatial Analysis of Houston's Blackout Sensitivity
 
 ## Introduction
+
 In the heart of winter, the city of Houston found itself plunged into darkness. The February 2021 blackout, a consequence of severe winter storms, left a metropolis reeling, exposing the vulnerabilities in urban power grids. This blog post aims to dissect the Houston blackout, employing geospatial analysis to estimate the number of homes affected and explore the socio-economic factors influencing community resilience during power outages. This intricate analysis is not just a tale of a city in darkness but a lens into the fragility of our urban lifelines.
 
 ## Background
+
 Urban blackouts are more than mere inconveniences; they're a stark reminder of our dependence on stable power sources. In Houston, a city with a complex infrastructure and a propensity for extreme weather events, the susceptibility to blackouts raises critical concerns about preparedness and resilience. A study by the U.S. Energy Information Administration highlights Houston's energy landscape, noting its significant role in national energy supply but also its vulnerability to disruptions. This backdrop sets the stage for our analysis of the 2021 blackout, a pivotal moment that not only challenged the city's infrastructure but also tested the resilience of its communities.
 
 ## Data and Methodology
+
 The analysis hinges on three key data sources: VIIRS night light data, OpenStreetMap data detailing roads and buildings, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as dplyr, sf, and terra, to manipulate and analyze these datasets. Our methodology involved a step-by-step geospatial approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.
 
 Let's get to coding.
 
 Starting off by loading in the necessary libraries.
+
 ```{r, message=FALSE}
 # import libraries
 library(dplyr)
@@ -38,30 +42,37 @@ library(stars)
 library(here)
 ```
 
-Next, importing data. The first set of data is the night light data, tiles or images that capture the light intensity emanating from the surface of the planet during nighttime. The data is stored as rasters, and the `stars` package is used for raster handling. 
+Next, importing data. The first set of data is the night light data, tiles or images that capture the light intensity emanating from the surface of the planet during nighttime. The data is stored as rasters, and the `stars` package is used for raster handling.
 
 ```{r}
-
+# read in night lights tiles
+feb7_h08v05 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
+feb7_h0806 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
+feb16_h0805 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021047.h08v05.001.2021048091106.tif"))
+feb16_h0806 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021047.h08v06.001.2021048091105.tif"))
 ```
 
-
 ## Results and Visualizations
-- **Night Lights Intensity Maps**:
-  - Present the visual comparison of night lights before and after the blackout
-- **Blackout Impact Analysis**:
-  - Show maps identifying areas affected by the blackout
-  - Discuss any interesting patterns or findings
-- **Socio-Economic Analysis**:
-  - Display the box plot of median incomes and discuss socio-economic disparities
+
+-   **Night Lights Intensity Maps**:
+    -   Present the visual comparison of night lights before and after the blackout
+-   **Blackout Impact Analysis**:
+    -   Show maps identifying areas affected by the blackout
+    -   Discuss any interesting patterns or findings
+-   **Socio-Economic Analysis**:
+    -   Display the box plot of median incomes and discuss socio-economic disparities
 
 ## Conclusions and Discussion
-- Summarize the key findings of your analysis
-- Discuss the implications of these findings on urban planning and emergency management
-- Acknowledge any limitations of your study
-- Suggest potential areas for future research
+
+-   Summarize the key findings of your analysis
+-   Discuss the implications of these findings on urban planning and emergency management
+-   Acknowledge any limitations of your study
+-   Suggest potential areas for future research
 
 ## References
-- List all references used in your analysis, formatted appropriately.
+
+-   List all references used in your analysis, formatted appropriately.
 
 ## Appendix (Optional)
-- Include any additional information, code snippets, or extended data visualizations.
+
+-   Include any additional information, code snippets, or extended data visualizations.
