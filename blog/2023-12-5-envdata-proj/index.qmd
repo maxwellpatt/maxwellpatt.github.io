@@ -1,0 +1,14 @@
+---
+  title: "EDS220 Project"
+  description: "EDS220 Final Project"
+  author:
+    - name: Maxwell Patterson
+    - affiliation: Master of Environmental Data Science Program
+    - affiliation-url: https://ucsb-meds.github.io/
+  date: 12-05-2023
+  categories: [Quarto, Python, MEDS, Datasets]
+  bibliography: references.bib
+---
+
+Placeholder
+
