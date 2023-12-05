@@ -93,7 +93,7 @@ plot(st_geometry(blackout_sf_valid_trans))
 
 The next piece of analysis involves defining the Houston metropolitan area and cropping the blackout mask to this area of interest. It is imperative that the coordinate reference systems align of these two spatial objects!
 
-```{r}
+```{r, warning=FALSE}
 # define Houston metropolitan coordinates
 houston_coords <- matrix(c(-96.5, 29, -96.5, 30.5, -94.5, 30.5, -94.5, 29, -96.5, 29), ncol = 2, byrow = TRUE)
 
@@ -115,12 +115,12 @@ cropped_blackout_proj <- st_transform(cropped_blackout_proj, crs = "EPSG:3083")
 
 Next, we will refine the blackout analysis by excluding areas near highways. This helps in ensuring that the blackout mask we created earlier accurately reflects residential or non-highway areas that lost power, rather than areas simply experiencing less traffic during the storms.
 
-```{r}
+```{r, warning=FALSE}
 # define SQL query
 query <- "SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'"
 
 # load highway data
-highways <- st_read("data/gis_osm_roads_free_1.gpkg", query = query)
+highways <- st_read("data/gis_osm_roads_free_1.gpkg", query = query, quiet = TRUE)
 
 # reproject highway to EPSG:3083
 highway_proj <- st_transform(highways, crs = 3083)

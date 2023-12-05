@@ -42,7 +42,6 @@ In the face of these challenges, the field has witnessed the advent of innovativ
 
 ![Eco-Friendly AI](images/green_ai.png)
 
-
 There is a pressing need for increased transparency in the AI sector. Contrary to a lack of knowledge, companies are quite cognizant of the extent of training conducted on their hardware. They possess detailed insights into the computational demands of various algorithms, akin to the aviation industry's awareness of the energy efficiency of airplanes. In aviation, there are established standards and detailed reports outlining the hardware used in planes, their flight durations, and distances. Similarly, in the AI industry, adopting such standardized reporting and transparency could lead to more informed choices and practices. It is vital to draw parallels from sectors like aviation to instill a culture of accountability and sustainability in AI development. Just as the aviation industry has evolved with a focus on energy efficiency and transparency, the AI sector too must embrace these values. This shift not only demands technological innovation but also a concerted effort from policymakers, industry leaders, and consumers to foster an environment where sustainable AI development is not just a choice but an expectation.
 
 ### **Impact and Implications**
