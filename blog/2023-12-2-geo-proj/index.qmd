@@ -46,13 +46,96 @@ Next, importing data. The first set of data is the night light data, tiles or im
 
 ```{r}
 # read in night lights tiles
-feb7_h08v05 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
-feb7_h0806 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
-feb16_h0805 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021047.h08v05.001.2021048091106.tif"))
-feb16_h0806 <- read_stars(here::here("data", "VNP46A1", "VNP46A1.A2021047.h08v06.001.2021048091105.tif"))
+feb7_h08v05 <- read_stars(here::here("blog", "2023-12-2-geo-proj", "data", "VNP46A1", "VNP46A1.A2021038.h08v05.001.2021039064328.tif"))
+feb7_h0806 <- read_stars(here::here("blog", "2023-12-2-geo-proj", "data", "VNP46A1", "VNP46A1.A2021038.h08v06.001.2021039064329.tif"))
+feb16_h0805 <- read_stars(here::here("blog", "2023-12-2-geo-proj", "data", "VNP46A1", "VNP46A1.A2021047.h08v05.001.2021048091106.tif"))
+feb16_h0806 <- read_stars(here::here("blog", "2023-12-2-geo-proj", "data", "VNP46A1", "VNP46A1.A2021047.h08v06.001.2021048091105.tif"))
 ```
 
-## Results and Visualizations
+Next, we want to combine the tiles that have the same date and create two objects. Let's do this and plot the tiles for each date for inspection purposes. We can utilize the `st_mosaic()` function to combine the tiles.
+
+```{r}
+# combine tiles for each date to create 2 objects
+feb7 <- st_mosaic(feb7_h08v05, feb7_h0806)
+feb16 <- st_mosaic(feb16_h0805, feb16_h0806)
+
+# plot the combined tiles for each day for inspection
+plot(feb7, main = "Combined Tiles for Feb 7")
+plot(feb16, main = "Combined Tiles for Feb 16")
+```
+
+Great. The next step involves creating a blackout mask to identify areas in Houston that lost power during the winter storms. This is done by calculating the change in light intensity, reclassifying this difference raster, then converting the raster to a stars object. ADD MORE.
+
+Next, we want to convert the blackout stars to a vector format and fix any invalid geometries using `st_make_valid()`. Let's visualize the blackout in vector format to check where we are at.
+
+```{r}
+# calculate the change in lights intensity from Feb 7 to Feb 16
+diff <- feb7 - feb16
+
+# reclassify difference raster so it is maleable
+diff <- rast(diff)
+rmask <- diff
+
+# reclassify difference raster assuming a 200 nW shift was due to the blackout
+rmask[rmask <= 200] = NA
+
+# convert back to a stars object 
+blackout_stars <- st_as_stars(rmask)
+
+# convert blackout to vector format and fix invalid geometries, set CRS
+blackout_sf_valid_trans <- st_as_sf(blackout_stars, as_points = FALSE) %>% 
+  st_make_valid() %>% 
+  st_transform(crs = 3083)
+
+# plot the blackout now that it is in vector format for inspection
+plot(st_geometry(blackout_sf_valid_trans))
+```
+
+The next piece of analysis involves defining the Houston metropolitan area and cropping the blackout mask to this area of interest. It is imperative that the coordinate reference systems align of these two spatial objects!
+
+```{r}
+# define Houston metropolitan coordinates
+houston_coords <- matrix(c(-96.5, 29, -96.5, 30.5, -94.5, 30.5, -94.5, 29, -96.5, 29), ncol = 2, byrow = TRUE)
+
+# create Houston polygon outline
+houston_poly <- st_polygon(list(houston_coords))
+
+# convert to sf and initially assign CRS EPSG:4326
+houston <- st_sfc(houston_poly, crs = st_crs("EPSG:4326"))
+
+# transform the Houston polygon to EPSG:3083 
+houston <- st_transform(houston, crs = "EPSG:3083")
+
+# crop the blackout to the Houston metropolitan region
+cropped_blackout_proj <- st_intersection(blackout_sf_valid_trans, houston) 
+ 
+# assign EPSG:3083 CRS to assure consistent CRS
+cropped_blackout_proj <- st_transform(cropped_blackout_proj, crs = "EPSG:3083")
+```
+
+Next, we will refine the blackout analysis by excluding areas near highways. This helps in ensuring that the blackout mask we created earlier accurately reflects residential or non-highway areas that lost power, rather than areas simply experiencing less traffic during the storms.
+
+```{r}
+# define SQL query
+query <- "SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'"
+
+# load highway data
+highways <- st_read("data/gis_osm_roads_free_1.gpkg", query = query)
+
+# reproject highway to EPSG:3083
+highway_proj <- st_transform(highways, crs = 3083)
+
+# identify areas within 200m of all highways, dissolve buffer, and convert to sf 
+buffer <- highway_proj %>% 
+  st_buffer(200) %>% 
+  st_union() %>% 
+  st_as_sf()
+
+# exclude areas close to highways from blackout
+blackout <- st_difference(cropped_blackout_proj, buffer)
+```
+
+##  Results and Visualizations
 
 -   **Night Lights Intensity Maps**:
     -   Present the visual comparison of night lights before and after the blackout
