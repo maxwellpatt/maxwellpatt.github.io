@@ -9,7 +9,10 @@
   categories: [Quarto, Python, MEDS, Datasets]
   bibliography: references.bib
 ---
+I need to create a virtual environment to run this blog post in 
 
+import pandas as pd
+import matplotlib.pyplot as plt
 
 # Import necessary libraries for data manipulation and visualization
 import pandas as pd

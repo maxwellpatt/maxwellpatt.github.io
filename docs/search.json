@@ -137,6 +137,6 @@
     "href": "blog/2023-12-5-envdata-proj/index.html",
     "title": "EDS220 Project",
     "section": "",
-    "text": "Placeholder"
+    "text": "I need to create a virtual environment to run this blog post in\nimport pandas as pd import matplotlib.pyplot as plt\n\nImport necessary libraries for data manipulation and visualization\nimport pandas as pd import matplotlib.pyplot as plt\n\n\nRead in AQI data for the years 2017 and 2018 from online sources\naqi_17 = pd.read_csv(“https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2017.zip”) aqi_18 = pd.read_csv(“https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2018.zip”)\n\n\nCheck data types for each dataset\ndtypes_17 = aqi_17.dtypes dtypes_18 = aqi_18.dtypes print(“Data types for 2017 dataset:”, dtypes_17)\n\n\nGet basic information about the datasets\ninfo_17 = aqi_17.info() info_18 = aqi_18.info()"
   }
 ]

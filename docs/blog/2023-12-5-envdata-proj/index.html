@@ -108,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
+    <div class="quarto-title column-page-left">
       <h1 class="title">EDS220 Project</h1>
                   <div>
         <div class="description">
@@ -142,18 +142,44 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#import-necessary-libraries-for-data-manipulation-and-visualization" id="toc-import-necessary-libraries-for-data-manipulation-and-visualization" class="nav-link active" data-scroll-target="#import-necessary-libraries-for-data-manipulation-and-visualization">Import necessary libraries for data manipulation and visualization</a></li>
+  <li><a href="#read-in-aqi-data-for-the-years-2017-and-2018-from-online-sources" id="toc-read-in-aqi-data-for-the-years-2017-and-2018-from-online-sources" class="nav-link" data-scroll-target="#read-in-aqi-data-for-the-years-2017-and-2018-from-online-sources">Read in AQI data for the years 2017 and 2018 from online sources</a></li>
+  <li><a href="#check-data-types-for-each-dataset" id="toc-check-data-types-for-each-dataset" class="nav-link" data-scroll-target="#check-data-types-for-each-dataset">Check data types for each dataset</a></li>
+  <li><a href="#get-basic-information-about-the-datasets" id="toc-get-basic-information-about-the-datasets" class="nav-link" data-scroll-target="#get-basic-information-about-the-datasets">Get basic information about the datasets</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
-<p>Placeholder</p>
+<p>I need to create a virtual environment to run this blog post in</p>
+<p>import pandas as pd import matplotlib.pyplot as plt</p>
+<section id="import-necessary-libraries-for-data-manipulation-and-visualization" class="level1">
+<h1>Import necessary libraries for data manipulation and visualization</h1>
+<p>import pandas as pd import matplotlib.pyplot as plt</p>
+</section>
+<section id="read-in-aqi-data-for-the-years-2017-and-2018-from-online-sources" class="level1">
+<h1>Read in AQI data for the years 2017 and 2018 from online sources</h1>
+<p>aqi_17 = pd.read_csv(“https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2017.zip”) aqi_18 = pd.read_csv(“https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2018.zip”)</p>
+</section>
+<section id="check-data-types-for-each-dataset" class="level1">
+<h1>Check data types for each dataset</h1>
+<p>dtypes_17 = aqi_17.dtypes dtypes_18 = aqi_18.dtypes print(“Data types for 2017 dataset:”, dtypes_17)</p>
+</section>
+<section id="get-basic-information-about-the-datasets" class="level1">
+<h1>Get basic information about the datasets</h1>
+<p>info_17 = aqi_17.info() info_18 = aqi_18.info()</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
