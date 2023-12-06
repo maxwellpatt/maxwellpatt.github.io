@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2023-12-15">
 <meta name="description" content="EDS223 Final Project">
 
-<title>Geospatial Project</title>
+<title>A Geospatial Analysis of Houston’s Blackout Sensitivity</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -143,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Geospatial Project</h1>
+      <h1 class="title">A Geospatial Analysis of Houston’s Blackout Sensitivity</h1>
                   <div>
         <div class="description">
           EDS223 Final Project
@@ -180,9 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#a-geospatial-analysis-of-houstons-blackout-sensitivity" id="toc-a-geospatial-analysis-of-houstons-blackout-sensitivity" class="nav-link active" data-scroll-target="#a-geospatial-analysis-of-houstons-blackout-sensitivity">A Geospatial Analysis of Houston’s Blackout Sensitivity</a>
-  <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
   <li><a href="#data-and-methodology" id="toc-data-and-methodology" class="nav-link" data-scroll-target="#data-and-methodology">Data and Methodology</a>
   <ul class="collapse">
@@ -191,7 +189,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#results-and-visualizations" id="toc-results-and-visualizations" class="nav-link" data-scroll-target="#results-and-visualizations">Results and Visualizations</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -201,8 +198,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="a-geospatial-analysis-of-houstons-blackout-sensitivity" class="level1">
-<h1>A Geospatial Analysis of Houston’s Blackout Sensitivity</h1>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In the heart of winter, the city of Houston found itself plunged into darkness. The February 2021 blackout, a consequence of severe winter storms, left a metropolis in a precarious state, exposing the vulnerabilities in urban power grids. This blog post aims to dissect the Houston blackout, employing geospatial analysis to estimate the number of homes affected and explore the socio-economic factors influencing community resilience during power outages. This intricate analysis is not just a tale of a city in darkness but a lens into the fragility of our urban lifelines.</p>
@@ -214,6 +209,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-and-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="data-and-methodology">Data and Methodology</h2>
 <p>The analysis hinges on three key data sources: VIIRS night light data, OpenStreetMap data detailing roads and buildings, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as <code>stars</code>, <code>sf</code>, and <code>terra</code>, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.</p>
+<p>Night lights data: "Level-1 and Atmosphere Archive &amp; Distribution System Distributed Active Archive Center - LAADS DAAC." NASA. Accessed December 5, 2023. https://ladsweb.modaps.eosdis.nasa.gov/.</p>
+<p>Roads data: "Planet OSM." Index of /. Accessed December 5, 2023. https://planet.openstreetmap.org/.</p>
 <p>Let’s get to coding.</p>
 <p>Starting off by loading in the necessary libraries.</p>
 <div class="cell">
@@ -429,22 +426,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>boxplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 63 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
+<p><code>{r. warning=FALSE} boxplot</code></p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>The results show that the median income of a cencus tract did not influence how likely they were to have experienced a blackout. This can be seen in the map, but the box plot reveals it in a clearer picture. While it may seem that poorer tracts would be less likely to be influenced by the blackout and that it would take longer for their power to be fully rejuvenated, it is important to consider that there are many factors to consider in this situation. For example, it is possible that the distribution of power infrastructure and its resilience to extreme weather events played a more significant role in the occurrence of blackouts than socioeconomic factors. Areas with older or less maintained power grids, regardless of the median income of the residents, might have been more susceptible to failures. Additionally, the physical geography of the region, such as elevation or proximity to water bodies, could have influenced the impact of the winter storms on power availability. It’s also worth considering the location of essential services and emergency response priorities, which might lead to quicker restoration in certain areas irrespective of their economic status. These complexities highlight the importance of a multifaceted approach in understanding and addressing the challenges posed by such natural disasters.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

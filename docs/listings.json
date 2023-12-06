@@ -2,8 +2,8 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/blog/2023-12-5-envdata-proj/index.html",
       "/blog/2023-12-2-geo-proj/index.html",
+      "/blog/2023-12-5-envdata-proj/index.html",
       "/blog/2023-12-1-stats-proj/index.html",
       "/blog/2023-12-1-ethics-proj/index.html"
     ]
