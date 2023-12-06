@@ -8,25 +8,23 @@
   date: 12-05-2023
   categories: [Quarto, Python, MEDS, Datasets]
   bibliography: references.bib
+  jupyter: python3
 ---
-I need to create a virtual environment to run this blog post in 
 
-import pandas as pd
-import matplotlib.pyplot as plt
+I need to create a virtual environment to run this blog post in
+
+import pandas as pd import matplotlib.pyplot as plt
 
 # Import necessary libraries for data manipulation and visualization
-import pandas as pd
-import matplotlib.pyplot as plt
+
+import pandas as pd import matplotlib.pyplot as plt
 
 # Read in AQI data for the years 2017 and 2018 from online sources
-aqi_17 = pd.read_csv("https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2017.zip")
-aqi_18 = pd.read_csv("https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2018.zip")
 
 # Check data types for each dataset
-dtypes_17 = aqi_17.dtypes
-dtypes_18 = aqi_18.dtypes
-print("Data types for 2017 dataset:\n", dtypes_17)
+
+dtypes_17 = aqi_17.dtypes dtypes_18 = aqi_18.dtypes print("Data types for 2017 dataset:\n", dtypes_17)
 
 # Get basic information about the datasets
-info_17 = aqi_17.info()
-info_18 = aqi_18.info()
+
+info_17 = aqi_17.info() info_18 = aqi_18.info()
