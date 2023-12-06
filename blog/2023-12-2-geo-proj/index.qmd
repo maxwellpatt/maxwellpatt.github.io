@@ -22,9 +22,9 @@ Urban blackouts are more than mere inconveniences; they're a stark reminder of o
 
 The analysis hinges on three key data sources: VIIRS night light data, OpenStreetMap data detailing roads and buildings, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as `stars`, `sf`, and `terra`, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.
 
-Night lights data: \"Level-1 and Atmosphere Archive & Distribution System Distributed Active Archive Center - LAADS DAAC.\" NASA. Accessed December 5, 2023. https://ladsweb.modaps.eosdis.nasa.gov/.
+Night lights data: "Level-1 and Atmosphere Archive & Distribution System Distributed Active Archive Center - LAADS DAAC." NASA. Accessed December 5, 2023. https://ladsweb.modaps.eosdis.nasa.gov/.
 
-Roads data: \"Planet OSM.\" Index of /. Accessed December 5, 2023. https://planet.openstreetmap.org/.
+Roads data: "Planet OSM." Index of /. Accessed December 5, 2023. https://planet.openstreetmap.org/.
 
 Let's get to coding.
 
@@ -249,9 +249,7 @@ boxplot <- ggplot(acs_data, aes(x = impact_status, y = B19013e1, fill = impact_s
 map
 ```
 
-```{r. warning=FALSE}
-boxplot
-```
+`{r. warning=FALSE} boxplot`
 
 ## Conclusion
 

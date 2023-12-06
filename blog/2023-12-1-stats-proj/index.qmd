@@ -30,6 +30,8 @@ library(tidyverse)
 rm(list = ls())
 ```
 
+#### Data Cleaning
+
 Now, let's import and clean the data containing the freedom index and other scores by country.
 
 ```{r}
@@ -109,9 +111,6 @@ names(esg_wb) <- new_cols
 
 esg_wb <- esg_wb %>% 
   mutate(across(5:ncol(.), ~ as.numeric(as.character(.))))
-
-
-
 ```
 
 ```{r}
