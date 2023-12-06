@@ -14,7 +14,7 @@
 
 ## Introduction
 
-In the heart of winter, the city of Houston found itself plunged into darkness. The February 2021 blackout, a consequence of severe winter storms, left a metropolis reeling, exposing the vulnerabilities in urban power grids. This blog post aims to dissect the Houston blackout, employing geospatial analysis to estimate the number of homes affected and explore the socio-economic factors influencing community resilience during power outages. This intricate analysis is not just a tale of a city in darkness but a lens into the fragility of our urban lifelines.
+In the heart of winter, the city of Houston found itself plunged into darkness. The February 2021 blackout, a consequence of severe winter storms, left a metropolis in a precarious state, exposing the vulnerabilities in urban power grids. This blog post aims to dissect the Houston blackout, employing geospatial analysis to estimate the number of homes affected and explore the socio-economic factors influencing community resilience during power outages. This intricate analysis is not just a tale of a city in darkness but a lens into the fragility of our urban lifelines.
 
 ## Background
 
@@ -40,6 +40,9 @@ library(tidyverse)
 library(dplyr)
 library(stars)
 library(here)
+
+# clear environment for sanity
+rm(list = ls())
 ```
 
 Next, importing data. The first set of data is the night light data, tiles or images that capture the light intensity emanating from the surface of the planet during nighttime. The data is stored as rasters, and the `stars` package is used for raster handling.
@@ -58,10 +61,6 @@ Next, we want to combine the tiles that have the same date and create two object
 # combine tiles for each date to create 2 objects
 feb7 <- st_mosaic(feb7_h08v05, feb7_h0806)
 feb16 <- st_mosaic(feb16_h0805, feb16_h0806)
-
-# plot the combined tiles for each day for inspection
-plot(feb7, main = "Combined Tiles for Feb 7")
-plot(feb16, main = "Combined Tiles for Feb 16")
 ```
 
 Great. The next step involves creating a blackout mask to identify areas in Houston that lost power during the winter storms. This is done by calculating the change in light intensity, reclassifying this difference raster, then converting the raster to a stars object. ADD MORE.
@@ -91,6 +90,8 @@ blackout_sf_valid_trans <- st_as_sf(blackout_stars, as_points = FALSE) %>%
 plot(st_geometry(blackout_sf_valid_trans))
 ```
 
+This visual shows the light intensity of the greater Houston region.
+
 The next piece of analysis involves defining the Houston metropolitan area and cropping the blackout mask to this area of interest. It is imperative that the coordinate reference systems align of these two spatial objects!
 
 ```{r, warning=FALSE}
@@ -111,7 +112,11 @@ cropped_blackout_proj <- st_intersection(blackout_sf_valid_trans, houston)
  
 # assign EPSG:3083 CRS to assure consistent CRS
 cropped_blackout_proj <- st_transform(cropped_blackout_proj, crs = "EPSG:3083")
+
+plot(cropped_blackout_proj)
 ```
+
+This is a visual of the Houston metropolitan area light intensity. ADD MORE!!!!!
 
 Next, we will refine the blackout analysis by excluding areas near highways. This helps in ensuring that the blackout mask we created earlier accurately reflects residential or non-highway areas that lost power, rather than areas simply experiencing less traffic during the storms.
 
@@ -135,27 +140,44 @@ buffer <- highway_proj %>%
 blackout <- st_difference(cropped_blackout_proj, buffer)
 ```
 
-##  Results and Visualizations
+#### Finding Impacted Homes
 
--   **Night Lights Intensity Maps**:
-    -   Present the visual comparison of night lights before and after the blackout
+Next, we will look to find the number of homes that have been impacted by the blackouts. A buildings dataset will be loaded in and filtered for residential buildings. Then, we will filter for the homes that are in the blackout area and display this value.
+
+```{r}
+# define SQL query
+query_buildings <- "
+SELECT * 
+FROM gis_osm_buildings_a_free_1
+WHERE (type IS NULL AND name IS NULL)
+OR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')
+"
+
+# load buildings dataset using st_read and apply the query, reproject CRS
+buildings_proj <- st_read("data/gis_osm_buildings_a_free_1.gpkg", query = query_buildings, quiet = TRUE) %>% 
+  st_transform(crs = 'EPSG:3083')
+
+# filter for homes within blackout areas by filtering
+impacted_homes <- buildings_proj[blackout, , op = st_intersects]
+
+# count the number of impacted homes
+num_impacted_homes <- nrow(impacted_homes)
+
+# show the number of impacted homes
+print(paste("Number of impacted homes:", num_impacted_homes))
+```
+
+## Results and Visualizations
+
 -   **Blackout Impact Analysis**:
     -   Show maps identifying areas affected by the blackout
     -   Discuss any interesting patterns or findings
 -   **Socio-Economic Analysis**:
     -   Display the box plot of median incomes and discuss socio-economic disparities
 
-## Conclusions and Discussion
+## Conclusions 
 
 -   Summarize the key findings of your analysis
 -   Discuss the implications of these findings on urban planning and emergency management
 -   Acknowledge any limitations of your study
 -   Suggest potential areas for future research
-
-## References
-
--   List all references used in your analysis, formatted appropriately.
-
-## Appendix (Optional)
-
--   Include any additional information, code snippets, or extended data visualizations.
