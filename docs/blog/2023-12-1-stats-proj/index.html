@@ -270,25 +270,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">5</span><span class="sc">:</span><span class="fu">ncol</span>(.), <span class="sc">~</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(.))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>esg_wb_long <span class="ot">&lt;-</span> esg_wb <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>esg_wb_long_2020 <span class="ot">&lt;-</span> esg_wb <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">'1998'</span><span class="sc">:</span><span class="st">'2022'</span>, <span class="co"># Specify the range of columns to pivot</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"Year"</span>, <span class="co"># Name of the new column that will store the years</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Value"</span> <span class="co"># Name of the new column that will store the corresponding values</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># View the pivoted data</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(esg_wb_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># View the pivoted data</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(esg_wb_long_2020)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
-  country_name country_code series_name                  series_code Year  Value
-  &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;                        &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
-1 Afghanistan  AFG          Agricultural land (% of lan… AG.LND.AGR… 1998   58.1
-2 Afghanistan  AFG          Agricultural land (% of lan… AG.LND.AGR… 1999   57.9
-3 Afghanistan  AFG          Agricultural land (% of lan… AG.LND.AGR… 2000   57.9
-4 Afghanistan  AFG          Agricultural land (% of lan… AG.LND.AGR… 2001   57.9
-5 Afghanistan  AFG          Agricultural land (% of lan… AG.LND.AGR… 2002   57.9
-6 Afghanistan  AFG          Agricultural land (% of lan… AG.LND.AGR… 2003   58.1</code></pre>
+  country_name country_code series_name                 series_code Year   Value
+  &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;                       &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;
+1 Afghanistan  AFG          Agricultural land (% of la… AG.LND.AGR… 2020  58.7  
+2 Afghanistan  AFG          Adjusted savings: net fore… NY.ADJ.DFO… 2020   0.308
+3 Afghanistan  AFG          Coastal protection          EN.CLC.CST… 2020  NA    
+4 Afghanistan  AFG          Level of water stress: fre… ER.H2O.FWS… 2020  54.8  
+5 Afghanistan  AFG          Methane emissions (metric … EN.ATM.MET… 2020   0.416
+6 Afghanistan  AFG          Renewable energy consumpti… EG.FEC.RNE… 2020  17.6  </code></pre>
 </div>
 </div>
 <div class="cell">
