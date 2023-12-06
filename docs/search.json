@@ -152,5 +152,12 @@
     "title": "A Geospatial Analysis of Houston’s Blackout Sensitivity",
     "section": "Conclusion",
     "text": "Conclusion\nThe results show that the median income of a cencus tract did not influence how likely they were to have experienced a blackout. This can be seen in the map, but the box plot reveals it in a clearer picture. While it may seem that poorer tracts would be less likely to be influenced by the blackout and that it would take longer for their power to be fully rejuvenated, it is important to consider that there are many factors to consider in this situation. For example, it is possible that the distribution of power infrastructure and its resilience to extreme weather events played a more significant role in the occurrence of blackouts than socioeconomic factors. Areas with older or less maintained power grids, regardless of the median income of the residents, might have been more susceptible to failures. Additionally, the physical geography of the region, such as elevation or proximity to water bodies, could have influenced the impact of the winter storms on power availability. It’s also worth considering the location of essential services and emergency response priorities, which might lead to quicker restoration in certain areas irrespective of their economic status. These complexities highlight the importance of a multifaceted approach in understanding and addressing the challenges posed by such natural disasters."
+  },
+  {
+    "objectID": "blog/2023-12-5-envdata-proj/test.html",
+    "href": "blog/2023-12-5-envdata-proj/test.html",
+    "title": "",
+    "section": "",
+    "text": "this is a test."
   }
 ]
