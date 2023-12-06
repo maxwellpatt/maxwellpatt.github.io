@@ -132,7 +132,7 @@ esg_wb_long_2020 <- esg_wb %>%
   filter(Year == 2020)
 
 # View the pivoted data
-head(esg_wb_long)
+head(esg_wb_long_2020)
 ```
 
 ```{r}
