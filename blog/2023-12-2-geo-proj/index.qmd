@@ -5,7 +5,7 @@
     - name: Maxwell Patterson
     - affiliation: Master of Environmental Data Science Program
     - affiliation-url: https://ucsb-meds.github.io/
-  date: 12-01-2023
+  date: 12-15-2023
   categories: [R, MEDS, Maps]
   bibliography: references.bib
 ---
@@ -23,6 +23,10 @@ Urban blackouts are more than mere inconveniences; they're a stark reminder of o
 ## Data and Methodology
 
 The analysis hinges on three key data sources: VIIRS night light data, OpenStreetMap data detailing roads and buildings, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as `stars`, `sf`, and `terra`, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.
+
+Night lights data: \"Level-1 and Atmosphere Archive & Distribution System Distributed Active Archive Center - LAADS DAAC.\" NASA. Accessed December 5, 2023. https://ladsweb.modaps.eosdis.nasa.gov/.
+
+Roads data: \"Planet OSM.\" Index of /. Accessed December 5, 2023. https://planet.openstreetmap.org/.
 
 Let's get to coding.
 
@@ -251,11 +255,6 @@ map
 boxplot
 ```
 
-DISCUSS RESULTS HERE.
+## Conclusion
 
-## Conclusions 
-
--   Summarize the key findings of your analysis
--   Discuss the implications of these findings on urban planning and emergency management
--   Acknowledge any limitations of your study
--   Suggest potential areas for future research
+The results show that the median income of a cencus tract did not influence how likely they were to have experienced a blackout. This can be seen in the map, but the box plot reveals it in a clearer picture. While it may seem that poorer tracts would be less likely to be influenced by the blackout and that it would take longer for their power to be fully rejuvenated, it is important to consider that there are many factors to consider in this situation. For example, it is possible that the distribution of power infrastructure and its resilience to extreme weather events played a more significant role in the occurrence of blackouts than socioeconomic factors. Areas with older or less maintained power grids, regardless of the median income of the residents, might have been more susceptible to failures. Additionally, the physical geography of the region, such as elevation or proximity to water bodies, could have influenced the impact of the winter storms on power availability. It's also worth considering the location of essential services and emergency response priorities, which might lead to quicker restoration in certain areas irrespective of their economic status. These complexities highlight the importance of a multifaceted approach in understanding and addressing the challenges posed by such natural disasters.
