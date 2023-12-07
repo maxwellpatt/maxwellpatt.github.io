@@ -96,7 +96,7 @@ This visual shows the light intensity of the greater Houston region.
 
 The next piece of analysis involves defining the Houston metropolitan area and cropping the blackout mask to this area of interest. It is imperative that the coordinate reference systems align of these two spatial objects!
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # define Houston metropolitan coordinates
 houston_coords <- matrix(c(-96.5, 29, -96.5, 30.5, -94.5, 30.5, -94.5, 29, -96.5, 29), ncol = 2, byrow = TRUE)
 
@@ -115,7 +115,7 @@ cropped_blackout_proj <- st_intersection(blackout_sf_valid_trans, houston)
 # assign EPSG:3083 CRS to assure consistent CRS
 cropped_blackout_proj <- st_transform(cropped_blackout_proj, crs = "EPSG:3083")
 
-plot(cropped_blackout_proj)
+plot(cropped_blackout_proj, colorbar = FALSE)
 ```
 
 This is a visual of the Houston metropolitan area light intensity. ADD MORE!!!!!
@@ -212,7 +212,7 @@ acs_data_blackouts <- acs_data[acs_data$GEOID %in% tracts_with_blackouts, ]
 
 ## Results and Visualizations
 
-At this stage of the analysis, it is time to get down to the main analysis and determine the potential difference in income between impacted versus unimpacted tracts. To conduct this analysis, we will createa a map of median income by census tract and a box-plot of the income in impacted versus unimpacted tracts.
+At this stage of the analysis, it is time to get down to the main analysis and determine the potential difference in income between impacted versus unimpacted tracts. To conduct this analysis, we will create a a map of median income by census tract and a box-plot of the income in impacted versus unimpacted tracts.
 
 ```{r}
 # add impact status column 
@@ -249,8 +249,10 @@ boxplot <- ggplot(acs_data, aes(x = impact_status, y = B19013e1, fill = impact_s
 map
 ```
 
-`{r. warning=FALSE} boxplot`
+```{r, warning=FALSE}
+boxplot
+```
 
 ## Conclusion
 
-The results show that the median income of a cencus tract did not influence how likely they were to have experienced a blackout. This can be seen in the map, but the box plot reveals it in a clearer picture. While it may seem that poorer tracts would be less likely to be influenced by the blackout and that it would take longer for their power to be fully rejuvenated, it is important to consider that there are many factors to consider in this situation. For example, it is possible that the distribution of power infrastructure and its resilience to extreme weather events played a more significant role in the occurrence of blackouts than socioeconomic factors. Areas with older or less maintained power grids, regardless of the median income of the residents, might have been more susceptible to failures. Additionally, the physical geography of the region, such as elevation or proximity to water bodies, could have influenced the impact of the winter storms on power availability. It's also worth considering the location of essential services and emergency response priorities, which might lead to quicker restoration in certain areas irrespective of their economic status. These complexities highlight the importance of a multifaceted approach in understanding and addressing the challenges posed by such natural disasters.
+The results show that the median income of a census tract did not influence how likely they were to have experienced a blackout. This can be seen in the map, but the box plot reveals it in a clearer picture. While it may seem that poorer tracts would be less likely to be influenced by the blackout and that it would take longer for their power to be fully rejuvenated, it is important to consider that there are many factors to consider in this situation. For example, it is possible that the distribution of power infrastructure and its resilience to extreme weather events played a more significant role in the occurrence of blackouts than socioeconomic factors. Areas with older or less maintained power grids, regardless of the median income of the residents, might have been more susceptible to failures. Additionally, the physical geography of the region, such as elevation or proximity to water bodies, could have influenced the impact of the winter storms on power availability. It's also worth considering the location of essential services and emergency response priorities, which might lead to quicker restoration in certain areas irrespective of their economic status. These complexities highlight the importance of a multifaceted approach in understanding and addressing the challenges posed by such natural disasters.
