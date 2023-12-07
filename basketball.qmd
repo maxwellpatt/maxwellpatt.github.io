@@ -11,7 +11,6 @@ library(dplyr)
 library(tidyverse)
 ```
 
-
 ```{r}
 dec2_data <- read.csv(here('data/12-3-fantrax-stats.csv')) %>% 
   clean_names()
@@ -60,7 +59,6 @@ team_data <- data.frame(
 
 ```
 
-
 ```{r}
 # Normalize avg_adp, avg_fp_g, and avg_age
 team_data <- top10_adp %>%
@@ -88,14 +86,12 @@ team_data <- team_data %>%
 print(team_data)
 ```
 
-
 Cool! Now, let's look at the most promising young players in this dynasty format.
 
 ```{r}
 under25 <- dec2_data %>% 
   filter(age < 25, fp_g > 20)
 ```
-
 
 It would be neat to figure out the value of a future pick using trade information.
 
@@ -105,7 +101,6 @@ Let's make a trade function
 # read in data
 dec3_trades <- read.csv(here('data/12-3-trades.csv'))
 ```
-
 
 ```{r}
 # trade log
@@ -119,7 +114,6 @@ trades_df <- data.frame(
   stringsAsFactors = FALSE
 )
 ```
-
 
 ```{r}
 # # Assuming you've read your CSV file into a dataframe called 'csv_trades'
@@ -155,9 +149,3 @@ trades_df <- data.frame(
 # 
 
 ```
-
-
-
-
-
-
