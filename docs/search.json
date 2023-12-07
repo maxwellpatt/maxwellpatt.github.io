@@ -32,7 +32,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "A Geospatial Analysis of Houston’s Blackout Sensitivity\n\n\n\n\n\nEDS223 Final Project\n\n\n\n\n\n\nDec 15, 2023\n\n\nMaxwell Patterson\n\n\n\n\n\n\n  \n\n\n\n\nCan Economic Freedom Improve Environmental Outcomes?\n\n\n\n\n\nEDS222 Final Project\n\n\n\n\n\n\nDec 15, 2023\n\n\nMaxwell Patterson\n\n\n\n\n\n\n  \n\n\n\n\nThe AI Paradox in Environmental Research - Balancing Innovation with Ecological Impact\n\n\n\n\n\nEDS242 Final Project\n\n\n\n\n\n\nDec 5, 2023\n\n\nMaxwell Patterson\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\nNo matching items"
+    "text": "A Geospatial Analysis of Houston’s Blackout Sensitivity\n\n\n\n\n\nEDS223 Final Project\n\n\n\n\n\n\nDec 15, 2023\n\n\nMaxwell Patterson\n\n\n\n\n\n\n  \n\n\n\n\nCan Economic Freedom Improve Environmental Outcomes?\n\n\n\n\n\nEDS222 Final Project\n\n\n\n\n\n\nDec 15, 2023\n\n\nMaxwell Patterson\n\n\n\n\n\n\n  \n\n\n\n\nThe AI Paradox in Environmental Research - Balancing Innovation with Ecological Impact\n\n\n\n\n\nEDS242 Final Project\n\n\n\n\n\n\nDec 5, 2023\n\n\nMaxwell Patterson\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/2023-12-1-ethics-proj/index.html",
@@ -159,5 +159,12 @@
     "title": "",
     "section": "",
     "text": "this is a test."
+  },
+  {
+    "objectID": "blog/2023-12-5-envdata-proj/analysis.html",
+    "href": "blog/2023-12-5-envdata-proj/analysis.html",
+    "title": "",
+    "section": "",
+    "text": "---\ntitle: \"Title\"\nauthor: \"Maxwell Patterson\"\n---"
   }
 ]
