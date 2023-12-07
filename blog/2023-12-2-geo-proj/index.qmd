@@ -8,6 +8,8 @@
   date: 12-15-2023
   categories: [R, MEDS, Maps]
   bibliography: references.bib
+  theme:
+    - custom.scss
 ---
 
 ## Introduction
@@ -20,11 +22,7 @@ Urban blackouts are more than mere inconveniences; they're a stark reminder of o
 
 ## Data and Methodology
 
-The analysis hinges on three key data sources: VIIRS night light data, OpenStreetMap data detailing roads and buildings, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as `stars`, `sf`, and `terra`, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.
-
-Night lights data: "Level-1 and Atmosphere Archive & Distribution System Distributed Active Archive Center - LAADS DAAC." NASA. Accessed December 5, 2023. https://ladsweb.modaps.eosdis.nasa.gov/.
-
-Roads data: "Planet OSM." Index of /. Accessed December 5, 2023. https://planet.openstreetmap.org/.
+The analysis hinges on three key data sources: night light data [@nasa], OpenStreetMap data detailing roads and buildings [@osm], and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as `stars`, `sf`, and `terra`, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.
 
 Let's get to coding.
 

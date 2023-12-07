@@ -56,7 +56,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -208,9 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-and-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="data-and-methodology">Data and Methodology</h2>
-<p>The analysis hinges on three key data sources: VIIRS night light data, OpenStreetMap data detailing roads and buildings, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as <code>stars</code>, <code>sf</code>, and <code>terra</code>, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.</p>
-<p>Night lights data: “Level-1 and Atmosphere Archive &amp; Distribution System Distributed Active Archive Center - LAADS DAAC.” NASA. Accessed December 5, 2023. https://ladsweb.modaps.eosdis.nasa.gov/.</p>
-<p>Roads data: “Planet OSM.” Index of /. Accessed December 5, 2023. https://planet.openstreetmap.org/.</p>
+<p>The analysis hinges on three key data sources: night light data <span class="citation" data-cites="nasa">(<a href="#ref-nasa" role="doc-biblioref">NASA 2023</a>)</span>, OpenStreetMap data detailing roads and buildings <span class="citation" data-cites="osm">(<a href="#ref-osm" role="doc-biblioref">OpenStreetMaps 2023</a>)</span>, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as <code>stars</code>, <code>sf</code>, and <code>terra</code>, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.</p>
 <p>Let’s get to coding.</p>
 <p>Starting off by loading in the necessary libraries.</p>
 <div class="cell">
@@ -438,9 +455,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The results show that the median income of a census tract did not influence how likely they were to have experienced a blackout. This can be seen in the map, but the box plot reveals it in a clearer picture. While it may seem that poorer tracts would be less likely to be influenced by the blackout and that it would take longer for their power to be fully rejuvenated, it is important to consider that there are many factors to consider in this situation. For example, it is possible that the distribution of power infrastructure and its resilience to extreme weather events played a more significant role in the occurrence of blackouts than socioeconomic factors. Areas with older or less maintained power grids, regardless of the median income of the residents, might have been more susceptible to failures. Additionally, the physical geography of the region, such as elevation or proximity to water bodies, could have influenced the impact of the winter storms on power availability. It’s also worth considering the location of essential services and emergency response priorities, which might lead to quicker restoration in certain areas irrespective of their economic status. These complexities highlight the importance of a multifaceted approach in understanding and addressing the challenges posed by such natural disasters.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-nasa" class="csl-entry" role="listitem">
+NASA. 2023. <span>“Level-1 and Atmosphere Archive &amp; Distribution System Distributed Active Archive Center - LAADS DAAC.”</span>
+</div>
+<div id="ref-osm" class="csl-entry" role="listitem">
+OpenStreetMaps. 2023. <a href="https://planet.openstreetmap.org/">https://planet.openstreetmap.org/</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
