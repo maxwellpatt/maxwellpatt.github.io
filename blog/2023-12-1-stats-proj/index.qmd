@@ -131,7 +131,7 @@ esg_wb_long <- esg_wb %>%
   ) 
 
 # View the pivoted data
-head(esg_wb_long_2020)
+head(esg_wb_long)
 ```
 
 ```{r}
@@ -167,13 +167,21 @@ methane_long <- methane %>%
 ```
 
 ```{r}
-# testing data join
-# Rename the country column in freedom dataset to match esg_wb_long
+# rename the country column in freedom dataset to match esg_wb_long
 names(freedom)[names(freedom) == "countries"] <- "country_name"
+
+
 names(freedom)[names(freedom) == "year"] <- "Year"
 
-# Perform the join
-combined_dataset <- merge(freedom, esg_wb_long, by = c("Year", "country_name"))
+# perform the join
+freedom_esg <- merge(freedom, esg_wb_long, by = c("Year", "country_name"))
+
+# save dataset as a csv
+write.csv(freedom_esg, "freedom_esg.csv", row.names = FALSE)
+
+```
+
+```{r}
 
 ```
 
