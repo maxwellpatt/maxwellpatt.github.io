@@ -222,43 +222,12 @@ unemployment_total_subset <- filter(esg_wb, series_name == "Unemployment, total 
 
 ```
 
-```{r}
-ggplot(subset(freedom, countries %in% c("United States", "China", "United Kingdom", "France", "South Africa", "Iraq", "Serbia")), 
-       aes(x = year, y = economic_freedom_summary_index, color = countries)) +
-    geom_point() +
-    labs(title = "Economic Freedom Index Over Time", x = "Year", y = "Economic Freedom Index") +
-    theme_minimal() +
-  theme(axis.text.x = element_text(angle=45, hjust = 1))
-```
+
 
 Hypothesis testing:
-
-```{r}
-
-eu_countries <- c("Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", 
-                  "Czech Republic", "Denmark", "Estonia", "Finland", "France", 
-                  "Germany", "Greece", "Hungary", "Ireland", "Italy", "Latvia", 
-                  "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", 
-                  "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden")
-
-freedom_eu <- freedom %>% 
-  filter(countries %in% eu_countries) %>% 
-  filter(year == 2020)
-
-freedom_wo_eu <- freedom %>% 
-  filter(!(countries %in% eu_countries)) %>% 
-  filter(year == 2020)
 ```
 
-```{r}
-# Perform T-test
-t_test_result <- t.test(freedom_eu$economic_freedom_summary_index, 
-                        freedom_wo_eu$economic_freedom_summary_index,
-                        na.rm = TRUE)
 
-# Print the results
-t_test_result
-```
 
 Some analysis to consider:
 
