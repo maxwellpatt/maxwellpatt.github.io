@@ -10,6 +10,8 @@
   bibliography: references.bib
 ---
 
+## Introduction
+
 ### What is *economic freedom*?
 
 I'll be investigating economic freedom. The United States, China, Russia, and the EU will be the primary analysis of the project.
@@ -32,7 +34,7 @@ library(tidyverse)
 rm(list = ls())
 ```
 
-#### Data Cleaning
+### Data Cleaning
 
 Now, let's import and clean the data containing the freedom index and other scores by country.
 
@@ -62,27 +64,8 @@ freedom <- freedom %>%
 
 ```
 
-Filtering for a few countries I want to analyze will make analysis more convenient.
 
-```{r}
-freedom_us_china_russia <- freedom %>% 
-  filter(countries %in% c('United States', 'China', 'Russian Federation'))
-
-freedom_capitalism <- freedom %>% 
-  filter(countries %in% c('United States', 'Singapore', 'Hong Kong SAR, China', 'Switzerland', 'New Zealand', 'Australia', 'United Kingdom', 'Ireland', 'Netherlands'))
-
-freedom_anticapitalism <- freedom %>% 
-  filter(countries %in% c('Sweden', 'Norway', 'Finland', 'Denmark', 'France', 'Belgium', 'Austria', 'Germany', 'Italy'))
-```
-
-This analysis will focus on 2020, as this is the most complete recent year in the dataset.
-
-```{r}
-freedom_2020 <- freedom %>% 
-  filter(year == 2020)
-```
-
-Now, lets move on to entering the next dataset. This *freedom* data serves as the policy side of the data -- now we want to append and compare environmental outcomes based on different political and economic factors.
+Now, lets move on to reading in the next dataset. The *freedom* data serves as the policy side of the data -- now we want to append and compare environmental outcomes based on different political and economic factors.
 
 ```{r}
 # read in esg data
@@ -123,6 +106,7 @@ esg_wb <- esg_wb %>%
 ```
 
 ```{r}
+# make longer so it is compatible to join with freedom data
 esg_wb_long <- esg_wb %>%
   pivot_longer(
     cols = '1998':'2022', # Specify the range of columns to pivot
@@ -135,42 +119,10 @@ head(esg_wb_long)
 ```
 
 ```{r}
-energy <- esg_wb %>% 
-  filter(series_name == "Renewable energy consumption (% of total final energy consumption)")
-
-energy_long <- energy %>%
-  pivot_longer(
-    cols = `1998`:`2022`, # Specify the range of year columns as integers
-    names_to = "Year", # Name of the new column for years
-    values_to = "RenewableEnergyConsumption" # Name of the new column for values
-  )
-
-water <- esg_wb %>% 
-  filter(series_name == "Level of water stress: freshwater withdrawal as a proportion of available freshwater resources")
-
-water_long <- water %>%
-  pivot_longer(
-    cols = `1998`:`2022`, # Specify the range of year columns as integers
-    names_to = "Year", # Name of the new column for years
-    values_to = "Water" # Name of the new column for values
-  )
-
-methane <- esg_wb %>% 
-  filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
-
-methane_long <- methane %>%
-  pivot_longer(
-    cols = `1998`:`2022`, # Specify the range of year columns as integers
-    names_to = "Year", # Name of the new column for years
-    values_to = "Methane" # Name of the new column for values
-  )
-```
-
-```{r}
 # rename the country column in freedom dataset to match esg_wb_long
 names(freedom)[names(freedom) == "countries"] <- "country_name"
 
-
+# rename the year column in freedom dataset to match esg_wb_long
 names(freedom)[names(freedom) == "year"] <- "Year"
 
 # perform the join
@@ -178,56 +130,17 @@ freedom_esg <- merge(freedom, esg_wb_long, by = c("Year", "country_name"))
 
 # save dataset as a csv
 write.csv(freedom_esg, "freedom_esg.csv", row.names = FALSE)
-
-```
-
-```{r}
-
-```
-
-```{r}
-ggplot(subset(energy_long, country_name %in% c("High income", "Low income")), aes(x = Year, y = RenewableEnergyConsumption, color = country_name)) +
-  geom_point() +
-  labs(title = "Renewable Energy Consumption Trend for High and Low Income Countries", x = "Year", y = "Renewable Energy Consumption (%)") +
-  theme_minimal()
-```
-
-```{r}
-ggplot(subset(methane_long, country_name %in% c("High income", "Low income")), aes(x = Year, y = Methane, color = country_name)) +
-  geom_point() +
-  labs(title = "Water", x = "Year", y = "Water") +
-  theme_minimal()
-```
-
-Ocean protection
-
-```{r}
-# filtering for each series name in esg data
-agricultural_land_subset <- filter(esg_wb, series_name == "Agricultural land (% of land area)")
-
-net_forest_depletion_subset <- filter(esg_wb, series_name == "Adjusted savings: net forest depletion (% of GNI)")
-
-coastal_protection_subset <- filter(esg_wb, series_name == "Coastal protection")
-
-water_stress_level_subset <- filter(esg_wb, series_name == "Level of water stress: freshwater withdrawal as a proportion of available freshwater resources")
-
-methane_emissions_subset <- filter(esg_wb, series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
-
-renewable_energy_consumption_subset <- filter(esg_wb, series_name == "Renewable energy consumption (% of total final energy consumption)")
-
-renewable_electricity_output_subset <- filter(esg_wb, series_name == "Renewable electricity output (% of total electricity output)")
-
-unemployment_total_subset <- filter(esg_wb, series_name == "Unemployment, total (% of total labor force) (modeled ILO estimate)")
-
-
 ```
 
 
 
-Hypothesis testing:
-```
+Historical events to consider:
 
+-   2008 financial crisis
 
+-   2016 paris agreement
+
+Hypothesis testing: 
 
 Some analysis to consider:
 
