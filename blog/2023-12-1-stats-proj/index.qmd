@@ -11,10 +11,21 @@
 ---
 
 ## Introduction
+- Markets are meant to be efficient and allocate resources effectively
+- Capitalism is inherently inefficient due to the negative externality of environmental impact not being considered in pricing of goods and services
+- 
 
 ### What is *economic freedom*?
 
-I'll be investigating economic freedom. The United States, China, Russia, and the EU will be the primary analysis of the project.
+### Environmental Outcomes Analyzed
+
+### Predictions
+
+
+
+## Data and Methodology
+
+TALK ABOUT DATA HERE
 
 First, let's import the libraries we will need to conduct this analysis.
 
@@ -132,6 +143,67 @@ freedom_esg <- merge(freedom, esg_wb_long, by = c("Year", "country_name"))
 write.csv(freedom_esg, "freedom_esg.csv", row.names = FALSE)
 ```
 
+```{r}
+# filtering for each series name 
+water_stress <- freedom_esg %>% 
+  filter(series_name == "Level of water stress: freshwater withdrawal as a proportion of available freshwater resources")
+
+ag_area <- freedom_esg %>% 
+  filter(series_name == "Agricultural land (% of land area)")
+
+forest_depletion <- freedom_esg %>% 
+  filter(series_name == "Adjusted savings: net forest depletion (% of GNI)")
+
+coastal_protection <- freedom_esg %>% 
+  filter(series_name == "Coastal protection")
+
+renewable_output <- freedom_esg %>% 
+  filter(series_name == "Renewable electricity output (% of total electricity output)")
+
+renewable_consumption <- freedom_esg %>% 
+  filter(series_name == "Renewable energy consumption (% of total final energy consumption)")
+
+methane_emissions <- freedom_esg %>% 
+  filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
+```
+
+```{r}
+cor.test(methane_emissions_selected$Value, methane_emissions_selected$economic_freedom_summary_index)
+```
+
+
+```{r}
+# Filter the dataset for US and the years 2000-2020
+methane_emissions_us <- methane_emissions %>% 
+  filter(country_name == "United States", Year >= 2000, Year <= 2020)
+
+deforestation_brazil <- forest_depletion %>% 
+  filter(Year >= 2000, Year <= 2020) %>% 
+  group_by(country_name) %>% 
+  summarize(mean_deforestation = mean(Value, na.rm = TRUE),
+            mean_freedom = mean(economic_freedom_summary_index, na.rm = TRUE))
+
+
+```
+
+```{r}
+methane_lm <- lm(Value ~ x5d_freedom_to_enter_markets_and_compete, data = freedom_esg)
+
+summary(methane_lm)
+```
+
+
+```{r}
+methane_emissions %>% 
+  group_by(Year, quartile) %>% 
+  summarize(avg_methane = mean(Value, na.rm = TRUE))
+```
+
+```{r}
+methane_col_of_interest <- freedom_esg %>% 
+  dplyr::select(Year, quartile, country_name, economic_freedom_summary_index, data, data_3, data_6, x5d_freedom_to_enter_markets_and_compete, series_name, Value) %>% 
+  filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
+```
 
 
 Historical events to consider:
