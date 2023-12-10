@@ -4,7 +4,7 @@
     - name: Maxwell Patterson
     - affiliation: Master of Environmental Data Science Program
     - affiliation-url: https://ucsb-meds.github.io/
-  date: 12-11-2023
+  date: 12-09-2023
   categories: [Quarto, MEDS, Ethics]
   bibliography: references.bib
 ---
