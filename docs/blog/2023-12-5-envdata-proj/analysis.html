@@ -259,247 +259,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in AQI data for the years 2017 and 2018 from online sources</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>aqi_17 <span class="op">=</span> pd.read_csv(<span class="st">"https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2017.zip"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>aqi_18 <span class="op">=</span> pd.read_csv(<span class="st">"https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2018.zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ERROR:root:Internal Python error in the inspect module.
-Below is the traceback from this internal error.
-
-ERROR:root:Internal Python error in the inspect module.
-Below is the traceback from this internal error.
-
-ERROR:root:Internal Python error in the inspect module.
-Below is the traceback from this internal error.
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3437, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File "&lt;ipython-input-1-8077ab4a22ae&gt;", line 3, in &lt;module&gt;
-    import matplotlib.pyplot as plt
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 921, in &lt;module&gt;
-    dict.update(rcParams, _rc_params_in_file(matplotlib_fname()))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 602, in matplotlib_fname
-    for fname in gen_candidates():
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 591, in gen_candidates
-    yield os.path.join(os.getcwd(), 'matplotlibrc')
-FileNotFoundError: [Errno 2] No such file or directory
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: 'FileNotFoundError' object has no attribute '_render_traceback_'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1101, in get_records
-    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 248, in wrapped
-    return f(*args, **kwargs)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 281, in _fixed_getinnerframes
-    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 1515, in getinnerframes
-    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 1473, in getframeinfo
-    filename = getsourcefile(frame) or getfile(frame)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 708, in getsourcefile
-    if getattr(getmodule(object, filename), '__loader__', None) is not None:
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 737, in getmodule
-    file = getabsfile(object, _filename)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 721, in getabsfile
-    return os.path.normcase(os.path.abspath(_filename))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/posixpath.py", line 379, in abspath
-    cwd = os.getcwd()
-FileNotFoundError: [Errno 2] No such file or directory
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3437, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File "&lt;ipython-input-1-8077ab4a22ae&gt;", line 3, in &lt;module&gt;
-    import matplotlib.pyplot as plt
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 921, in &lt;module&gt;
-    dict.update(rcParams, _rc_params_in_file(matplotlib_fname()))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 602, in matplotlib_fname
-    for fname in gen_candidates():
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 591, in gen_candidates
-    yield os.path.join(os.getcwd(), 'matplotlibrc')
-FileNotFoundError: [Errno 2] No such file or directory
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: 'FileNotFoundError' object has no attribute '_render_traceback_'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3357, in run_ast_nodes
-    if (await self.run_code(code, result,  async_=asy)):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3454, in run_code
-    self.showtraceback(running_compiled_code=True)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2063, in showtraceback
-    stb = self.InteractiveTB.structured_traceback(etype,
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1367, in structured_traceback
-    return FormattedTB.structured_traceback(
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1267, in structured_traceback
-    return VerboseTB.structured_traceback(
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1124, in structured_traceback
-    formatted_exception = self.format_exception_as_a_whole(etype, evalue, etb, number_of_lines_of_context,
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1082, in format_exception_as_a_whole
-    last_unique, recursion_repeat = find_recursion(orig_etype, evalue, records)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 382, in find_recursion
-    return len(records), 0
-TypeError: object of type 'NoneType' has no len()
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: 'TypeError' object has no attribute '_render_traceback_'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1101, in get_records
-    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 248, in wrapped
-    return f(*args, **kwargs)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 281, in _fixed_getinnerframes
-    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 1515, in getinnerframes
-    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 1473, in getframeinfo
-    filename = getsourcefile(frame) or getfile(frame)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 708, in getsourcefile
-    if getattr(getmodule(object, filename), '__loader__', None) is not None:
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 737, in getmodule
-    file = getabsfile(object, _filename)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 721, in getabsfile
-    return os.path.normcase(os.path.abspath(_filename))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/posixpath.py", line 379, in abspath
-    cwd = os.getcwd()
-FileNotFoundError: [Errno 2] No such file or directory
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3437, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File "&lt;ipython-input-1-8077ab4a22ae&gt;", line 3, in &lt;module&gt;
-    import matplotlib.pyplot as plt
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 921, in &lt;module&gt;
-    dict.update(rcParams, _rc_params_in_file(matplotlib_fname()))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 602, in matplotlib_fname
-    for fname in gen_candidates():
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/matplotlib/__init__.py", line 591, in gen_candidates
-    yield os.path.join(os.getcwd(), 'matplotlibrc')
-FileNotFoundError: [Errno 2] No such file or directory
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: 'FileNotFoundError' object has no attribute '_render_traceback_'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3357, in run_ast_nodes
-    if (await self.run_code(code, result,  async_=asy)):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3454, in run_code
-    self.showtraceback(running_compiled_code=True)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2063, in showtraceback
-    stb = self.InteractiveTB.structured_traceback(etype,
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1367, in structured_traceback
-    return FormattedTB.structured_traceback(
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1267, in structured_traceback
-    return VerboseTB.structured_traceback(
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1124, in structured_traceback
-    formatted_exception = self.format_exception_as_a_whole(etype, evalue, etb, number_of_lines_of_context,
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1082, in format_exception_as_a_whole
-    last_unique, recursion_repeat = find_recursion(orig_etype, evalue, records)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 382, in find_recursion
-    return len(records), 0
-TypeError: object of type 'NoneType' has no len()
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: 'TypeError' object has no attribute '_render_traceback_'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2940, in _run_cell
-    return runner(coro)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/async_helpers.py", line 68, in _pseudo_sync_runner
-    coro.send(None)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3165, in run_cell_async
-    has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 3376, in run_ast_nodes
-    self.showtraceback()
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2063, in showtraceback
-    stb = self.InteractiveTB.structured_traceback(etype,
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1367, in structured_traceback
-    return FormattedTB.structured_traceback(
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1267, in structured_traceback
-    return VerboseTB.structured_traceback(
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1142, in structured_traceback
-    formatted_exceptions += self.format_exception_as_a_whole(etype, evalue, etb, lines_of_context,
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1082, in format_exception_as_a_whole
-    last_unique, recursion_repeat = find_recursion(orig_etype, evalue, records)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 382, in find_recursion
-    return len(records), 0
-TypeError: object of type 'NoneType' has no len()
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: 'TypeError' object has no attribute '_render_traceback_'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 1101, in get_records
-    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 248, in wrapped
-    return f(*args, **kwargs)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/IPython/core/ultratb.py", line 281, in _fixed_getinnerframes
-    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 1515, in getinnerframes
-    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 1473, in getframeinfo
-    filename = getsourcefile(frame) or getfile(frame)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 708, in getsourcefile
-    if getattr(getmodule(object, filename), '__loader__', None) is not None:
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 737, in getmodule
-    file = getabsfile(object, _filename)
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/inspect.py", line 721, in getabsfile
-    return os.path.normcase(os.path.abspath(_filename))
-  File "/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/posixpath.py", line 379, in abspath
-    cwd = os.getcwd()
-FileNotFoundError: [Errno 2] No such file or directory</code></pre>
-</div>
 </div>
 </section>
 <section id="data-exploration" class="level3">
 <h3 class="anchored" data-anchor-id="data-exploration">Data Exploration</h3>
 <p>Here, the code checks the data types and basic information of the datasets to understand their structure. This step is crucial for planning further data processing and analysis steps.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check data types for each dataset</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dtypes_17 <span class="op">=</span> aqi_17.dtypes</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dtypes_18 <span class="op">=</span> aqi_18.dtypes</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data types for 2017 dataset:</span><span class="ch">\n</span><span class="st">"</span>, dtypes_17)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get basic information about the datasets</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>info_17 <span class="op">=</span> aqi_17.info()</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>info_18 <span class="op">=</span> aqi_18.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check data types for each dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dtypes_17 <span class="op">=</span> aqi_17.dtypes</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dtypes_18 <span class="op">=</span> aqi_18.dtypes</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data types for 2017 dataset:</span><span class="ch">\n</span><span class="st">"</span>, dtypes_17)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get basic information about the datasets</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>info_17 <span class="op">=</span> aqi_17.info()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>info_18 <span class="op">=</span> aqi_18.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data types for 2017 dataset:
  State Name                   object
@@ -553,25 +326,25 @@ memory usage: 25.0+ MB</code></pre>
 <section id="analysis" class="level3">
 <h3 class="anchored" data-anchor-id="analysis">Analysis</h3>
 <p><strong>Data Cleaning and Preparation</strong> The datasets from different years are concatenated for a comprehensive analysis. Column names are cleaned for consistency, and irrelevant columns are removed, streamlining the data for effective analysis. The conversion of the ‘date’ column to a datetime object and setting it as an index is verified to ensure proper time-series analysis.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate the two data frames for combined analysis</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>aqi <span class="op">=</span> pd.concat([aqi_17, aqi_18])</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleaning column names for ease of use</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>aqi.columns <span class="op">=</span> aqi.columns.<span class="bu">str</span>.lower().<span class="bu">str</span>.replace(<span class="st">' '</span>, <span class="st">'_'</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cleaned column names:"</span>, aqi.columns.tolist())</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering data for Santa Barbara County</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi[aqi[<span class="st">'county_name'</span>] <span class="op">==</span> <span class="st">'Santa Barbara'</span>]</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing unnecessary columns</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>remove <span class="op">=</span> [<span class="st">'state_name'</span>, <span class="st">'county_name'</span>, <span class="st">'state_code'</span>, <span class="st">'county_code'</span>]</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi_sb.drop(columns<span class="op">=</span>remove)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'date' column to datetime object and set as index</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(aqi_sb[<span class="st">'date'</span>])</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi_sb.set_index(<span class="st">'date'</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Index data type:"</span>, aqi_sb.index.dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate the two data frames for combined analysis</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>aqi <span class="op">=</span> pd.concat([aqi_17, aqi_18])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleaning column names for ease of use</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>aqi.columns <span class="op">=</span> aqi.columns.<span class="bu">str</span>.lower().<span class="bu">str</span>.replace(<span class="st">' '</span>, <span class="st">'_'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cleaned column names:"</span>, aqi.columns.tolist())</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering data for Santa Barbara County</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi[aqi[<span class="st">'county_name'</span>] <span class="op">==</span> <span class="st">'Santa Barbara'</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing unnecessary columns</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>remove <span class="op">=</span> [<span class="st">'state_name'</span>, <span class="st">'county_name'</span>, <span class="st">'state_code'</span>, <span class="st">'county_code'</span>]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi_sb.drop(columns<span class="op">=</span>remove)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'date' column to datetime object and set as index</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(aqi_sb[<span class="st">'date'</span>])</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi_sb.set_index(<span class="st">'date'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Index data type:"</span>, aqi_sb.index.dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cleaned column names: ['state_name', 'county_name', 'state_code', 'county_code', 'date', 'aqi', 'category', 'defining_parameter', 'defining_site', 'number_of_sites_reporting']
 Index data type: datetime64[ns]</code></pre>
@@ -579,12 +352,12 @@ Index data type: datetime64[ns]</code></pre>
 </div>
 <p><strong>Time-Series Analysis</strong></p>
 <p>A 5-day rolling average for AQI is calculated and checked by displaying the first few entries. This step is critical for smoothing out daily fluctuations and observing longer-term trends in air quality.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 5-day rolling average for AQI</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'five_day_average'</span>] <span class="op">=</span> aqi_sb.aqi.rolling(<span class="st">'5D'</span>).mean()</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the rolling average by checking the first few entries</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sample of 5-day rolling average:"</span>, aqi_sb[<span class="st">'five_day_average'</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 5-day rolling average for AQI</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'five_day_average'</span>] <span class="op">=</span> aqi_sb.aqi.rolling(<span class="st">'5D'</span>).mean()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the rolling average by checking the first few entries</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sample of 5-day rolling average:"</span>, aqi_sb[<span class="st">'five_day_average'</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample of 5-day rolling average: date
 2017-01-01    39.000000
@@ -599,16 +372,16 @@ Name: five_day_average, dtype: float64</code></pre>
 <section id="final-output" class="level3">
 <h3 class="anchored" data-anchor-id="final-output">Final Output</h3>
 <p>The output visualizes the Air Quality Index (AQI) in Santa Barbara County across two years: 2017 and 2018. The blue line represents the daily AQI values, showing considerable variability with several peaks indicating days of poor air quality. The orange line depicts the 5-day rolling average of AQI, which smooths out the daily fluctuations to reveal the underlying trends more clearly. Notably, there is a significant peak at the start of December 2017, marked by the dashed vertical line, which correlates to a big fire in the area. Overall, the visualization effectively communicates the temporal changes in air quality and the utility of using a rolling average to understand longer-term trends.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting daily AQI and 5-day average AQI</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'aqi'</span>].plot(label<span class="op">=</span><span class="st">'Daily AQI'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'five_day_average'</span>].plot(label<span class="op">=</span><span class="st">'5-Day Average AQI'</span>, color<span class="op">=</span><span class="st">'orange'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.axvline(pd.Timestamp(<span class="st">'2017-12-01'</span>), color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Start of December 2017'</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Daily AQI vs. 5-Day Average AQI'</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Date'</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'AQI Value'</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting daily AQI and 5-day average AQI</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'aqi'</span>].plot(label<span class="op">=</span><span class="st">'Daily AQI'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'five_day_average'</span>].plot(label<span class="op">=</span><span class="st">'5-Day Average AQI'</span>, color<span class="op">=</span><span class="st">'orange'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.axvline(pd.Timestamp(<span class="st">'2017-12-01'</span>), color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Start of December 2017'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Daily AQI vs. 5-Day Average AQI'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Date'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'AQI Value'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="analysis_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
@@ -620,27 +393,27 @@ Name: five_day_average, dtype: float64</code></pre>
 <section id="importing-data-1" class="level3">
 <h3 class="anchored" data-anchor-id="importing-data-1">Importing Data</h3>
 <p>In this initial step, libraries essential for processing geospatial data, such as NumPy, Pandas, GeoPandas, and xarray, are imported. These tools enable the handling of complex raster and vector data formats necessary for environmental and geographical analyses.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries for handling geospatial and raster data</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> rioxr</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.features <span class="im">import</span> rasterize</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.crs <span class="im">import</span> CRS</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># File path for raster data</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> os.path.join(os.getcwd(), <span class="st">"data"</span>, <span class="st">"landsat8-2018-01-26-sb-simplified.nc"</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Open raster file</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>landsat <span class="op">=</span> rioxr.open_rasterio(data_path)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># read fire data</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>fire <span class="op">=</span> gpd.read_file(<span class="st">"data/California_Fire_Perimeters_2017/California_Fire_Perimeters_2017.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries for handling geospatial and raster data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> rioxr</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.features <span class="im">import</span> rasterize</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.crs <span class="im">import</span> CRS</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># File path for raster data</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> os.path.join(os.getcwd(), <span class="st">"data"</span>, <span class="st">"landsat8-2018-01-26-sb-simplified.nc"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Open raster file</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>landsat <span class="op">=</span> rioxr.open_rasterio(data_path)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># read fire data</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>fire <span class="op">=</span> gpd.read_file(<span class="st">"data/California_Fire_Perimeters_2017/California_Fire_Perimeters_2017.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/scipy/__init__.py:138: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.24.4)
   warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion} is required for this version of "</code></pre>
@@ -652,12 +425,12 @@ Name: five_day_average, dtype: float64</code></pre>
 <p>The geographical context is established by loading Landsat 8 satellite imagery for the Santa Barbara region and fire perimeter data from 2017. This step situates the analysis within the specific area affected by the Thomas Fire, setting the stage for a targeted examination of the landscape.</p>
 <p><strong>Data Preparation and Alignment</strong></p>
 <p>This section involves transforming the CRS of the fire perimeter data to match the Landsat data. The successful alignment of these datasets is confirmed, which is imperative for precise spatial overlay in the analysis.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reduce dimensions</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>landsat_new <span class="op">=</span> landsat.squeeze([<span class="st">'band'</span>])</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display updated landsat</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>landsat_new.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reduce dimensions</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>landsat_new <span class="op">=</span> landsat.squeeze([<span class="st">'band'</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display updated landsat</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>landsat_new.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>&lt;bound method Mapping.values of &lt;xarray.Dataset&gt;
 Dimensions:      (x: 870, y: 731)
@@ -678,15 +451,15 @@ Data variables:
 <section id="data-exploration-1" class="level3">
 <h3 class="anchored" data-anchor-id="data-exploration-1">Data Exploration</h3>
 <p>Here, the code explores the Landsat data to ensure it aligns with the fire perimeter data’s CRS. This alignment is critical for accurate mapping and overlay of geospatial data, ensuring that subsequent analyses accurately reflect the true geographical relationships.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot fire</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fire.plot()</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the first 5 rows of fire data</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>fire.head()</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at landsat data</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>landsat_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot fire</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fire.plot()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the first 5 rows of fire data</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fire.head()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at landsat data</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>landsat_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 
 <div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
@@ -1064,17 +837,17 @@ Data variables:
     green        (y, x) float64 ...
     blue         (y, x) float64 ...
     nir08        (y, x) float64 ...
-    swir22       (y, x) float64 ...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.Dataset</div></div><ul class="xr-sections"><li class="xr-section-item"><input id="section-6862db25-d63f-43da-9f78-8e0f863741a6" class="xr-section-summary-in" type="checkbox" disabled=""><label for="section-6862db25-d63f-43da-9f78-8e0f863741a6" class="xr-section-summary" title="Expand/collapse section">Dimensions:</label><div class="xr-section-inline-details"><ul class="xr-dim-list"><li><span class="xr-has-index">x</span>: 870</li><li><span class="xr-has-index">y</span>: 731</li></ul></div><div class="xr-section-details"></div></li><li class="xr-section-item"><input id="section-01f487ac-2b81-44ae-8393-0302acf71d34" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-01f487ac-2b81-44ae-8393-0302acf71d34" class="xr-section-summary">Coordinates: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>band</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1</div><input id="attrs-2147c7a3-5275-48cd-95a5-1044020afe79" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-2147c7a3-5275-48cd-95a5-1044020afe79" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1339ee72-1d4e-40a3-865a-6f8a968102b5" class="xr-var-data-in" type="checkbox"><label for="data-1339ee72-1d4e-40a3-865a-6f8a968102b5" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(1)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.213e+05 1.216e+05 ... 3.559e+05</div><input id="attrs-c2d9461a-4568-429f-a9b0-7ac3c54978c6" class="xr-var-attrs-in" type="checkbox"><label for="attrs-c2d9461a-4568-429f-a9b0-7ac3c54978c6" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-3edaccb5-f672-428e-bd69-49501125c866" class="xr-var-data-in" type="checkbox"><label for="data-3edaccb5-f672-428e-bd69-49501125c866" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>crs :</span></dt><dd>EPSG:32611</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>resolution :</span></dt><dd>30</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd><dt><span>_FillValue :</span></dt><dd>nan</dd></dl></div><div class="xr-var-data"><pre>array([121305., 121575., 121845., ..., 355395., 355665., 355935.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">3.952e+06 3.952e+06 ... 3.755e+06</div><input id="attrs-be1724f4-4a65-48a4-b933-bba7a8e2e4b7" class="xr-var-attrs-in" type="checkbox"><label for="attrs-be1724f4-4a65-48a4-b933-bba7a8e2e4b7" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-4921c4f6-d4bf-4513-afef-60c5f0278474" class="xr-var-data-in" type="checkbox"><label for="data-4921c4f6-d4bf-4513-afef-60c5f0278474" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>crs :</span></dt><dd>EPSG:32611</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>resolution :</span></dt><dd>-30</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd><dt><span>_FillValue :</span></dt><dd>nan</dd></dl></div><div class="xr-var-data"><pre>array([3952395., 3952125., 3951855., ..., 3755835., 3755565., 3755295.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>spatial_ref</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0</div><input id="attrs-5fa312b7-8ae8-4917-ba0b-181e95f725c8" class="xr-var-attrs-in" type="checkbox"><label for="attrs-5fa312b7-8ae8-4917-ba0b-181e95f725c8" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-8c820b0b-e8ab-436b-9a56-5b12da9c9abb" class="xr-var-data-in" type="checkbox"><label for="data-8c820b0b-e8ab-436b-9a56-5b12da9c9abb" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>crs_wkt :</span></dt><dd>PROJCS["WGS 84 / UTM zone 11N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32611"]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984</dd><dt><span>projected_crs_name :</span></dt><dd>WGS 84 / UTM zone 11N</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>0.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>-117.0</dd><dt><span>false_easting :</span></dt><dd>500000.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS["WGS 84 / UTM zone 11N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32611"]]</dd><dt><span>GeoTransform :</span></dt><dd>121170.0 270.0 0.0 3952530.0 0.0 -270.0</dd></dl></div><div class="xr-var-data"><pre>array(0)</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-c21b4661-1e77-45c2-85d5-894ce907d97c" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-c21b4661-1e77-45c2-85d5-894ce907d97c" class="xr-section-summary">Data variables: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>red</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-4b8b9dad-4ce5-4b03-9e6c-1ca694ff1c05" class="xr-var-attrs-in" type="checkbox"><label for="attrs-4b8b9dad-4ce5-4b03-9e6c-1ca694ff1c05" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1ef1e69e-cc93-4b82-ad59-0091b7ba0967" class="xr-var-data-in" type="checkbox"><label for="data-1ef1e69e-cc93-4b82-ad59-0091b7ba0967" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>green</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-f2352acc-bb87-4e66-8645-881ba56cd45e" class="xr-var-attrs-in" type="checkbox"><label for="attrs-f2352acc-bb87-4e66-8645-881ba56cd45e" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-b526733b-d7bc-4bf3-891f-f5def2c04def" class="xr-var-data-in" type="checkbox"><label for="data-b526733b-d7bc-4bf3-891f-f5def2c04def" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>blue</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-f5f31715-c6e4-450b-82af-72659a92b7c9" class="xr-var-attrs-in" type="checkbox"><label for="attrs-f5f31715-c6e4-450b-82af-72659a92b7c9" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-46ea20a0-efb0-4b71-a57c-80545db767f7" class="xr-var-data-in" type="checkbox"><label for="data-46ea20a0-efb0-4b71-a57c-80545db767f7" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>nir08</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-a67e1877-6b8b-4fc7-8fff-c911e3c42050" class="xr-var-attrs-in" type="checkbox"><label for="attrs-a67e1877-6b8b-4fc7-8fff-c911e3c42050" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1887c628-3f44-499a-9bb7-8d92d3ff32cd" class="xr-var-data-in" type="checkbox"><label for="data-1887c628-3f44-499a-9bb7-8d92d3ff32cd" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>swir22</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-414dc491-cae0-474f-b865-9913d4c886a4" class="xr-var-attrs-in" type="checkbox"><label for="attrs-414dc491-cae0-474f-b865-9913d4c886a4" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-c2b09bf6-3287-41a0-8945-5b693613eb1f" class="xr-var-data-in" type="checkbox"><label for="data-c2b09bf6-3287-41a0-8945-5b693613eb1f" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-306abb38-29c8-4133-bfe9-8f3268c3045e" class="xr-section-summary-in" type="checkbox"><label for="section-306abb38-29c8-4133-bfe9-8f3268c3045e" class="xr-section-summary">Indexes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-2721cdd2-d506-47e0-9ab5-90d10cadc9f3" class="xr-index-data-in" type="checkbox"><label for="index-2721cdd2-d506-47e0-9ab5-90d10cadc9f3" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([121305.0, 121575.0, 121845.0, 122115.0, 122385.0, 122655.0, 122925.0,
+    swir22       (y, x) float64 ...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.Dataset</div></div><ul class="xr-sections"><li class="xr-section-item"><input id="section-2f9c5fb0-ff9b-4696-aaa4-9f5a039be1aa" class="xr-section-summary-in" type="checkbox" disabled=""><label for="section-2f9c5fb0-ff9b-4696-aaa4-9f5a039be1aa" class="xr-section-summary" title="Expand/collapse section">Dimensions:</label><div class="xr-section-inline-details"><ul class="xr-dim-list"><li><span class="xr-has-index">x</span>: 870</li><li><span class="xr-has-index">y</span>: 731</li></ul></div><div class="xr-section-details"></div></li><li class="xr-section-item"><input id="section-8f3051d0-3f3e-4568-889c-ccf85824bfba" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-8f3051d0-3f3e-4568-889c-ccf85824bfba" class="xr-section-summary">Coordinates: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>band</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1</div><input id="attrs-a247d3a3-09e9-4ead-8828-8dd67bd08dae" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-a247d3a3-09e9-4ead-8828-8dd67bd08dae" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-a4a72887-3a12-46e3-96fb-32a42f497c3d" class="xr-var-data-in" type="checkbox"><label for="data-a4a72887-3a12-46e3-96fb-32a42f497c3d" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(1)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.213e+05 1.216e+05 ... 3.559e+05</div><input id="attrs-a36d397a-96b2-4bfc-9837-64df0ae94642" class="xr-var-attrs-in" type="checkbox"><label for="attrs-a36d397a-96b2-4bfc-9837-64df0ae94642" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-a9e046b7-8c02-4e67-91b1-0c7227d61511" class="xr-var-data-in" type="checkbox"><label for="data-a9e046b7-8c02-4e67-91b1-0c7227d61511" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>crs :</span></dt><dd>EPSG:32611</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>resolution :</span></dt><dd>30</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd><dt><span>_FillValue :</span></dt><dd>nan</dd></dl></div><div class="xr-var-data"><pre>array([121305., 121575., 121845., ..., 355395., 355665., 355935.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">3.952e+06 3.952e+06 ... 3.755e+06</div><input id="attrs-849eae56-f077-4a12-923d-db0544c4c798" class="xr-var-attrs-in" type="checkbox"><label for="attrs-849eae56-f077-4a12-923d-db0544c4c798" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-d3125f62-7f2f-4d44-956a-d0a31215b207" class="xr-var-data-in" type="checkbox"><label for="data-d3125f62-7f2f-4d44-956a-d0a31215b207" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>crs :</span></dt><dd>EPSG:32611</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>resolution :</span></dt><dd>-30</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd><dt><span>_FillValue :</span></dt><dd>nan</dd></dl></div><div class="xr-var-data"><pre>array([3952395., 3952125., 3951855., ..., 3755835., 3755565., 3755295.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>spatial_ref</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0</div><input id="attrs-33f29e24-f5c9-4019-a0f4-b98c955ed8ec" class="xr-var-attrs-in" type="checkbox"><label for="attrs-33f29e24-f5c9-4019-a0f4-b98c955ed8ec" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-781aabd4-e021-424f-870c-62ac3cf16e04" class="xr-var-data-in" type="checkbox"><label for="data-781aabd4-e021-424f-870c-62ac3cf16e04" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>crs_wkt :</span></dt><dd>PROJCS["WGS 84 / UTM zone 11N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32611"]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984</dd><dt><span>projected_crs_name :</span></dt><dd>WGS 84 / UTM zone 11N</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>0.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>-117.0</dd><dt><span>false_easting :</span></dt><dd>500000.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS["WGS 84 / UTM zone 11N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32611"]]</dd><dt><span>GeoTransform :</span></dt><dd>121170.0 270.0 0.0 3952530.0 0.0 -270.0</dd></dl></div><div class="xr-var-data"><pre>array(0)</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-3cf238b9-f1d2-4a77-8302-6bfe8c52ad57" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-3cf238b9-f1d2-4a77-8302-6bfe8c52ad57" class="xr-section-summary">Data variables: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>red</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-9d078813-9e18-420d-baf4-000f8f4b35d1" class="xr-var-attrs-in" type="checkbox"><label for="attrs-9d078813-9e18-420d-baf4-000f8f4b35d1" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-9cfa815c-a464-4e0d-ac4f-7684b9e78870" class="xr-var-data-in" type="checkbox"><label for="data-9cfa815c-a464-4e0d-ac4f-7684b9e78870" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>green</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-492e18f1-a3b4-4157-9057-2c8ac2f1d762" class="xr-var-attrs-in" type="checkbox"><label for="attrs-492e18f1-a3b4-4157-9057-2c8ac2f1d762" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-dfeb7677-d256-4c10-9420-66ff6ec7a8ce" class="xr-var-data-in" type="checkbox"><label for="data-dfeb7677-d256-4c10-9420-66ff6ec7a8ce" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>blue</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-c6758216-528c-4adf-8b22-9cf0cf496b07" class="xr-var-attrs-in" type="checkbox"><label for="attrs-c6758216-528c-4adf-8b22-9cf0cf496b07" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-9b294e39-73bc-4a50-9fda-a6273c82a0a6" class="xr-var-data-in" type="checkbox"><label for="data-9b294e39-73bc-4a50-9fda-a6273c82a0a6" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>nir08</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-99a8663f-662e-4f5c-9142-5cc62c711717" class="xr-var-attrs-in" type="checkbox"><label for="attrs-99a8663f-662e-4f5c-9142-5cc62c711717" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-c8c40a08-99fb-4ad8-aa9b-cd95c8c7450c" class="xr-var-data-in" type="checkbox"><label for="data-c8c40a08-99fb-4ad8-aa9b-cd95c8c7450c" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>swir22</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-13f2fb5c-aff0-4282-b3ef-4da9f16a3622" class="xr-var-attrs-in" type="checkbox"><label for="attrs-13f2fb5c-aff0-4282-b3ef-4da9f16a3622" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1ac1742d-7d39-4be5-8fbc-fb8bff8122cd" class="xr-var-data-in" type="checkbox"><label for="data-1ac1742d-7d39-4be5-8fbc-fb8bff8122cd" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-dd842a06-65d1-4cd9-aa3d-b4f3cc716fc5" class="xr-section-summary-in" type="checkbox"><label for="section-dd842a06-65d1-4cd9-aa3d-b4f3cc716fc5" class="xr-section-summary">Indexes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-8dabef76-cf6b-4b7a-bdc6-6bf1a6fecb92" class="xr-index-data-in" type="checkbox"><label for="index-8dabef76-cf6b-4b7a-bdc6-6bf1a6fecb92" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([121305.0, 121575.0, 121845.0, 122115.0, 122385.0, 122655.0, 122925.0,
        123195.0, 123465.0, 123735.0,
        ...
        353505.0, 353775.0, 354045.0, 354315.0, 354585.0, 354855.0, 355125.0,
        355395.0, 355665.0, 355935.0],
-      dtype='float64', name='x', length=870))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-752e4fd0-1b67-4d0a-bf61-5d559c7e586a" class="xr-index-data-in" type="checkbox"><label for="index-752e4fd0-1b67-4d0a-bf61-5d559c7e586a" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([3952395.0, 3952125.0, 3951855.0, 3951585.0, 3951315.0, 3951045.0,
+      dtype='float64', name='x', length=870))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-7802c9cc-af56-41e5-b384-a327a289fbe1" class="xr-index-data-in" type="checkbox"><label for="index-7802c9cc-af56-41e5-b384-a327a289fbe1" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([3952395.0, 3952125.0, 3951855.0, 3951585.0, 3951315.0, 3951045.0,
        3950775.0, 3950505.0, 3950235.0, 3949965.0,
        ...
        3757725.0, 3757455.0, 3757185.0, 3756915.0, 3756645.0, 3756375.0,
        3756105.0, 3755835.0, 3755565.0, 3755295.0],
-      dtype='float64', name='y', length=731))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-55b3d576-cf7a-4883-a77d-3ef183f9a3b9" class="xr-section-summary-in" type="checkbox" disabled=""><label for="section-55b3d576-cf7a-4883-a77d-3ef183f9a3b9" class="xr-section-summary" title="Expand/collapse section">Attributes: <span>(0)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"></dl></div></li></ul></div></div>
+      dtype='float64', name='y', length=731))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-d7c37ac6-6c4c-400f-8ac3-866d055fb708" class="xr-section-summary-in" type="checkbox" disabled=""><label for="section-d7c37ac6-6c4c-400f-8ac3-866d055fb708" class="xr-section-summary" title="Expand/collapse section">Attributes: <span>(0)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"></dl></div></li></ul></div></div>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="analysis_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
@@ -1085,42 +858,42 @@ Data variables:
 <h3 class="anchored" data-anchor-id="analysis-1">Analysis</h3>
 <p><strong>Creating True and False Color Images</strong> The creation of true and false color images utilizes specific bands from the Landsat data. These images are normalized to enhance visual contrast, aiding in the identification of different land features. Checks confirm the normalization process has occurred correctly.</p>
 <p><strong>True Color Image</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select R, G, B bands</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>red_band <span class="op">=</span> landsat_new[<span class="st">'red'</span>]</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>green_band <span class="op">=</span> landsat_new[<span class="st">'green'</span>]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>blue_band <span class="op">=</span> landsat_new[<span class="st">'blue'</span>]</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the bands along the 'color' dimension</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>rgb_image <span class="op">=</span> xr.concat([red_band, green_band, blue_band], dim<span class="op">=</span><span class="st">'color'</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>rgb_image <span class="op">=</span> (rgb_image <span class="op">-</span> rgb_image.<span class="bu">min</span>()) <span class="op">/</span> (rgb_image.<span class="bu">max</span>() <span class="op">-</span> rgb_image.<span class="bu">min</span>())</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the RGB image </span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.imshow(rgb_image.transpose(<span class="st">'y'</span>, <span class="st">'x'</span>, <span class="st">'color'</span>)) </span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize map</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select R, G, B bands</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>red_band <span class="op">=</span> landsat_new[<span class="st">'red'</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>green_band <span class="op">=</span> landsat_new[<span class="st">'green'</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>blue_band <span class="op">=</span> landsat_new[<span class="st">'blue'</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the bands along the 'color' dimension</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>rgb_image <span class="op">=</span> xr.concat([red_band, green_band, blue_band], dim<span class="op">=</span><span class="st">'color'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>rgb_image <span class="op">=</span> (rgb_image <span class="op">-</span> rgb_image.<span class="bu">min</span>()) <span class="op">/</span> (rgb_image.<span class="bu">max</span>() <span class="op">-</span> rgb_image.<span class="bu">min</span>())</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the RGB image </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.imshow(rgb_image.transpose(<span class="st">'y'</span>, <span class="st">'x'</span>, <span class="st">'color'</span>)) </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize map</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="analysis_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p><strong>False Color Image</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select spectral bands from the landsat data</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>swir22 <span class="op">=</span> landsat_new[<span class="st">'swir22'</span>]</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>nir    <span class="op">=</span> landsat_new[<span class="st">'nir08'</span>]</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>red    <span class="op">=</span> landsat_new[<span class="st">'red'</span>]</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the bands along 'color' dimension</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>false_color_image <span class="op">=</span> xr.concat([swir22, nir, red], dim<span class="op">=</span><span class="st">'color'</span>)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the false color image to increase contrast</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>false_image <span class="op">=</span> (false_color_image <span class="op">-</span> false_color_image.<span class="bu">min</span>()) <span class="op">/</span> (false_color_image.<span class="bu">max</span>() <span class="op">-</span> false_color_image.<span class="bu">min</span>())</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the RGB image using imshow</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>landsat_new[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array().plot.imshow(robust<span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select spectral bands from the landsat data</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>swir22 <span class="op">=</span> landsat_new[<span class="st">'swir22'</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>nir    <span class="op">=</span> landsat_new[<span class="st">'nir08'</span>]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>red    <span class="op">=</span> landsat_new[<span class="st">'red'</span>]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the bands along 'color' dimension</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>false_color_image <span class="op">=</span> xr.concat([swir22, nir, red], dim<span class="op">=</span><span class="st">'color'</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the false color image to increase contrast</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>false_image <span class="op">=</span> (false_color_image <span class="op">-</span> false_color_image.<span class="bu">min</span>()) <span class="op">/</span> (false_color_image.<span class="bu">max</span>() <span class="op">-</span> false_color_image.<span class="bu">min</span>())</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the RGB image using imshow</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>landsat_new[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array().plot.imshow(robust<span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>&lt;matplotlib.image.AxesImage at 0x7fcb52783910&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage at 0x7fc3b16f4850&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="analysis_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
@@ -1130,30 +903,30 @@ Data variables:
 <section id="final-output-1" class="level3">
 <h3 class="anchored" data-anchor-id="final-output-1">Final Output</h3>
 <p>The final output is a composite image that illustrates the affected area during the Thomas Fire. This output serves as a potent visual tool for understanding the spatial extent of wildfires and highlights the value of remote sensing in environmental monitoring and disaster assessment.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Thomas fire</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>thomas_fire <span class="op">=</span> fire[fire[<span class="st">'FIRE_NAME'</span>]<span class="op">==</span><span class="st">"THOMAS"</span>]</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert thomas_fire to GeoDataFrame to same crs as landsat</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>thomas_fire <span class="op">=</span> thomas_fire.to_crs(landsat_new.rio.crs)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Store false color map</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>false_color <span class="op">=</span> landsat_new[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Thomas fire</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>thomas_fire <span class="op">=</span> fire[fire[<span class="st">'FIRE_NAME'</span>]<span class="op">==</span><span class="st">"THOMAS"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert thomas_fire to GeoDataFrame to same crs as landsat</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>thomas_fire <span class="op">=</span> thomas_fire.to_crs(landsat_new.rio.crs)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Store false color map</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>false_color <span class="op">=</span> landsat_new[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initiate figure</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot outline of california and create key for legend</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>false_color.plot.imshow(ax<span class="op">=</span>ax, robust<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot lulc bounding box and create key for legend</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>thomas_fire.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>thomas_patch <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Thomas Fire'</span>)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create legend</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[thomas_patch], frameon<span class="op">=</span><span class="va">True</span>, loc<span class="op">=</span><span class="st">'upper right'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.4</span>, <span class="dv">1</span>))</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'False Color Image of Santa Barbara with Thomas Fire Boundary'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initiate figure</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot outline of california and create key for legend</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>false_color.plot.imshow(ax<span class="op">=</span>ax, robust<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot lulc bounding box and create key for legend</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>thomas_fire.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>thomas_patch <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Thomas Fire'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create legend</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[thomas_patch], frameon<span class="op">=</span><span class="va">True</span>, loc<span class="op">=</span><span class="st">'upper right'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.4</span>, <span class="dv">1</span>))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'False Color Image of Santa Barbara with Thomas Fire Boundary'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>Text(0.5, 1.0, 'False Color Image of Santa Barbara with Thomas Fire Boundary')</code></pre>
 </div>
