@@ -38,7 +38,7 @@ The *Economic Freedom of the World: 2022 Annual Report* serves as the backbone o
 
 
 
-## Methodology
+## Coding
 
 DISCUSS METHODOLOGY HERE
 
@@ -155,7 +155,8 @@ names(freedom)[names(freedom) == "year"] <- "Year"
 freedom_esg <- merge(freedom, esg_wb_long, by = c("Year", "country_name"))
 
 freedom_esg <- freedom_esg %>% 
-  mutate(Year = as.numeric(as.character(Year)))
+  mutate(Year = as.numeric(as.character(Year)),
+         Value = as.numeric(as.character(Value)))
 
 # save dataset as a csv
 write.csv(freedom_esg, "freedom_esg.csv", row.names = FALSE)
@@ -168,7 +169,6 @@ Sweet! Now we have the dataset we will be working with in the analysis.
 For convenience, I have created a dataframe for each of the environmental indicators to make the analysis smoother.
 
 ```{r}
-# filtering for each series name 
 water_stress <- freedom_esg %>% 
   filter(series_name == "Level of water stress: freshwater withdrawal as a proportion of available freshwater resources")
 
@@ -221,6 +221,42 @@ methane_col_of_interest <- freedom_esg %>%
   filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
 ```
 
+```{r}
+methane_lm <- lm(Value ~ data + data_3 + x5d_freedom_to_enter_markets_and_compete, data = methane_col_of_interest)
+
+summary(methane_lm)
+```
+
+```{r}
+# Ensure 'Value' is numeric
+methane_emissions$Value <- as.numeric(methane_emissions$Value)
+
+# Select only numeric columns (excluding 'Value' for now)
+numeric_data <- methane_emissions %>% 
+  select_if(is.numeric) %>% 
+  dplyr::select(-Value)
+
+# Calculate correlation of each numeric column with the 'Value' column
+correlations <- sapply(numeric_data, function(x) {
+  if(is.numeric(x)) {
+    return(cor(x, methane_emissions$Value, use = "complete.obs"))
+  } else {
+    return(NA)
+  }
+})
+
+# Convert to a dataframe for easier viewing
+correlation_results <- as.data.frame(correlations)
+
+# Sort by the absolute value of correlation to find the strongest correlations
+sorted_correlations <- correlation_results %>% 
+  rownames_to_column("variable") %>% 
+  arrange(desc(abs(correlations)))
+
+# View the results
+head(sorted_correlations, 10)
+```
+
 
 ### Renewable Energy Consumption
 
@@ -243,7 +279,7 @@ ggplot(renewable_consumption_leaders, aes(x = Year, y = Value, color = country_n
 Deforestation is a massive issue that exacerbates the climate crisis.
 
 ```{r}
-forest_depletion %>% 
+forest_depletion_2020_quartile_summary <- forest_depletion %>% 
   group_by(quartile) %>% 
   filter(Year == 2020) %>% 
   summarize(avg_depletion = mean(Value, na.rm = TRUE),
@@ -251,29 +287,34 @@ forest_depletion %>%
 ```
 
 
+
 ```{r}
-# Calculate the year-over-year change for each country
-renewable_data <- freedom_esg %>%
-  arrange(country_name, Year) %>%
-  group_by(country_name) %>%
-  mutate(Yearly_Change = Value - lag(Value))
-
-# Filter the data for the years 2000 to 2020
-renewable_data_filtered <- renewable_data %>%
-  filter(Year >= 2000, Year <= 2020)
-
-# Calculate the average change per quartile
-average_change_per_quartile <- renewable_data_filtered %>%
-  group_by(quartile) %>%
-  summarize(Average_Change = mean(Yearly_Change, na.rm = TRUE))
-
-# View the results
-average_change_per_quartile
+# Plotting
+ggplot(forest_depletion_2020_quartile_summary, aes(x = factor(quartile), y = avg_depletion)) +
+  geom_bar(stat = "identity", position = position_dodge(), fill = "skyblue") +
+  geom_errorbar(aes(ymin = avg_depletion - std_depletion, ymax = avg_depletion + std_depletion), 
+                width = 0.2, position = position_dodge(0.9)) +
+  labs(title = "Average Forest Depletion by Quartile in 2020",
+       x = "Economic Freedom Quartile",
+       y = "Average Forest Depletion") +
+  theme_minimal()
 ```
 
 
 
-Hypothesis testing: 
+Let's run an ANOVA test to determine the significance here.
+
+```{r}
+forest_depletion_2020 <- forest_depletion %>% 
+  filter(Year == 2020) %>% 
+  na.omit()
+
+anova_fd <- aov(Value ~ quartile, data = forest_depletion_2020)
+
+summary(anova_fd)
+```
+
+
 
 
 Some analysis to consider:
