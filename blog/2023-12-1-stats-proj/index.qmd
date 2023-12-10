@@ -1,6 +1,6 @@
 ---
   title: "Does Economic Freedom Improve Environmental Outcomes?"
-  description: "EDS222 Final Project"
+  description: "A Statistical Investigation"
   author:
     - name: Maxwell Patterson
     - affiliation: Master of Environmental Data Science Program
@@ -20,12 +20,11 @@ Now, the ugly. Capitalism often leads to aggressive resource use, resulting in i
 
 While capitalism has the potential to foster innovation and generate funds that could benefit environmental conservation, resource exploitation and prioritization of short-term profits present substantial challenges to achieving true environmental sustainability.
 
-
 ### What is *Economic Freedom*?
 
-There is certainly a level of subjectivity, or at least a certain amount of uncertainty, when scoring the freedom of an economy. As a result, it seems impossible to create a perfect score for economic freedom. However, this doesn't mean people haven't tried to create a spectrum to measure how free and open different economies are. 
+There is certainly a level of subjectivity, or at least a certain amount of uncertainty, when scoring the freedom of an economy. As a result, it seems impossible to create a perfect score for economic freedom. However, this doesn't mean people haven't tried to create a spectrum to measure how free and open different economies are.
 
-The *Economic Freedom of the World: 2022 Annual Report* serves as the backbone of the analysis in this exploration. The dataset has a multitude of columns, the most important of which is gives each country an economic freedom index score on a scale from 1 to 10. According to the Fraser Institute, the pillars of their scoring of economic freedom depend on "personal choice, voluntary exchange, freedom to enter markets and compete, and security of the person and privately owned property." [@fraser] This economic freedom score is measured in five areas: size of government, legal system and property rights, sound money, freedom to trade internationally, and regulation. 
+The *Economic Freedom of the World: 2022 Annual Report* serves as the backbone of the analysis in this exploration. The dataset has a multitude of columns, the most important of which is gives each country an economic freedom index score on a scale from 1 to 10. According to the Fraser Institute, the pillars of their scoring of economic freedom depend on "personal choice, voluntary exchange, freedom to enter markets and compete, and security of the person and privately owned property." [@fraser] This economic freedom score is measured in five areas: size of government, legal system and property rights, sound money, freedom to trade internationally, and regulation.
 
 In addition to the economic freedom index column, there are a plethora of interesting variables that can be analyzed in this dataset.
 
@@ -36,8 +35,6 @@ The report discusses how countries that are have higher levels of economic freed
 This analysis will consider several environmental outcomes pulled from the World Bank website. These data include freshwater withdrawal as a proportion of available freshwater resources (water stress), net forest depletion as a percentage of GNI, renewable energy output as a percentage of total energy consumption, renewable energy consumption as a percentage of total energy consumption, and methane emissions in metric tons of CO2 per capita [@worldbank] Combined with the economic freedom data, this will allow for the analysis to look at the relationship between economic freedom scores and related variables to environmental outcomes over time in different countries.
 
 ### Predictions
-
-
 
 ## Analysis
 
@@ -58,7 +55,6 @@ library(tidyverse)
 # clear environment for sanity
 rm(list = ls())
 ```
-
 
 ### Data Cleaning
 
@@ -89,7 +85,6 @@ freedom <- freedom %>%
   mutate(economic_freedom_summary_index = as.numeric(as.character(economic_freedom_summary_index)))
 
 ```
-
 
 Now, lets move on to reading in the next dataset. The *freedom* data serves as the policy side of the data -- now we want to append and compare environmental outcomes based on different political and economic factors.
 
@@ -161,7 +156,7 @@ freedom_esg <- freedom_esg %>%
 write.csv(freedom_esg, "freedom_esg.csv", row.names = FALSE)
 ```
 
-Sweet! Now we have the dataset we will be working with in the analysis. 
+Sweet! Now we have the dataset we will be working with in the analysis.
 
 ### Data Filtering
 
@@ -187,10 +182,9 @@ methane_emissions <- freedom_esg %>%
   filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
 ```
 
-
 ### Emissions
 
-In the first piece of analysis, let's look at the methane emissions data. The units for which the emissions are recorded in the dataset are metric tons of CO2 equivalent per capita. 
+In the first piece of analysis, let's look at the methane emissions data. The units for which the emissions are recorded in the dataset are metric tons of CO2 equivalent per capita.
 
 First, let's compare the average emission by economic freedom quartile from 2000 to 2020.
 
@@ -215,7 +209,7 @@ methane_emissions_plot_with_error
 
 ```
 
-Interesting, so the second quartile of economically free countries has the highest methane emissions by a significant amount across the entire time period. Overall, the emissions levels of all quartiles decreased from 2000 to 2020, a positive sign in the hopes of becoming a carbon-neutral planet. 
+Interesting, so the second quartile of economically free countries has the highest methane emissions by a significant amount across the entire time period. Overall, the emissions levels of all quartiles decreased from 2000 to 2020, a positive sign in the hopes of becoming a carbon-neutral planet.
 
 ```{r}
 methane_col_of_interest <- freedom_esg %>% 
@@ -261,8 +255,7 @@ methane_sorted_correlations <- methane_corr_results %>%
 head(methane_sorted_correlations, 10)
 ```
 
-This correlation analysis allows us to find the variables in the freedom dataset that are most strongly correlated with methane emissions. 
-
+This correlation analysis allows us to find the variables in the freedom dataset that are most strongly correlated with methane emissions.
 
 ### Renewable Energy Consumption
 
@@ -282,7 +275,7 @@ renewable_consumption_leaders_plot
 
 ### Renewable Energy Output
 
-Renewable energy output is valuable in determining a country's economic impact since energy that is consumed can be outputted in other countries. 
+Renewable energy output is valuable in determining a country's economic impact since energy that is consumed can be outputted in other countries.
 
 ```{r}
 renewable_output_leaders <- renewable_output %>% 
@@ -294,7 +287,7 @@ renewable_output_leaders_plot <- ggplot(renewable_output_leaders, aes(x = Year, 
 renewable_output_leaders_plot
 ```
 
-Next, let's investigate if there is a significant difference in renewable energy output across each quartile of economic freedom. 
+Next, let's investigate if there is a significant difference in renewable energy output across each quartile of economic freedom.
 
 ```{r}
 renewable_output_2020_quartile <- renewable_output %>% 
@@ -314,10 +307,9 @@ anova_ro <- aov(Value ~ quartile, data = renewable_output)
 summary(anova_ro)
 ```
 
-
 ### Forest Depletion
 
-Deforestation is a massive issue that exacerbates the climate crisis. 
+Deforestation is a massive issue that exacerbates the climate crisis.
 
 ```{r}
 forest_depletion_2020_quartile_summary <- forest_depletion %>% 
@@ -326,7 +318,6 @@ forest_depletion_2020_quartile_summary <- forest_depletion %>%
   summarize(avg_depletion = mean(Value, na.rm = TRUE),
             std_depletion = sd(Value, na.rm = TRUE))
 ```
-
 
 ```{r}
 # Plotting
@@ -340,7 +331,7 @@ ggplot(forest_depletion_2020_quartile_summary, aes(x = factor(quartile), y = avg
   theme_minimal()
 ```
 
-This visualization provides some strong takeaways. 
+This visualization provides some strong takeaways.
 
 Let's run an ANOVA test to determine the significance here.
 
@@ -395,7 +386,3 @@ water_stress_lm <- lm(Value ~ data + data_4 + data_5, data = water_stress)
 
 summary(water_stress_lm)
 ```
-
-
-
-

@@ -25,6 +25,7 @@ The analysis hinges on three key data sources: night light data [@nasa], OpenStr
 
 **Research Question**: How did economic status influence the susceptibility and resilience of communities in Houston in the 2021 winter blackouts?
 
+
 Let's get to coding.
 
 Starting off by loading in the necessary libraries.
