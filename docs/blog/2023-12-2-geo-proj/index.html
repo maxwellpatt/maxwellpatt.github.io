@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2023-12-15">
-<meta name="description" content="EDS223 Final Project">
 
 <title>A Geospatial Analysis of Houston’s Blackout Sensitivity</title>
 <style>
@@ -163,12 +162,7 @@ div.csl-indent {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
       <h1 class="title">A Geospatial Analysis of Houston’s Blackout Sensitivity</h1>
-                  <div>
-        <div class="description">
-          EDS223 Final Project
-        </div>
-      </div>
-                          <div class="quarto-categories">
+                                <div class="quarto-categories">
                 <div class="quarto-category">R</div>
                 <div class="quarto-category">MEDS</div>
                 <div class="quarto-category">Maps</div>
@@ -223,11 +217,12 @@ div.csl-indent {
 </section>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>Urban blackouts are more than mere inconveniences; they’re a stark reminder of our dependence on stable power sources. In Houston, a city with a complex infrastructure and a propensity for extreme weather events, the susceptibility to blackouts raises critical concerns about preparedness and resilience. A study by the U.S. Energy Information Administration highlights Houston’s energy landscape, noting its significant role in national energy supply but also its vulnerability to disruptions. This backdrop sets the stage for our analysis of the 2021 blackout, a pivotal moment that not only challenged the city’s infrastructure but also tested the resilience of its communities.</p>
+<p>The February 2021 blackout in Houston transcends being a singular, isolated power outage, instead unfolding as a critical incident that checked the robustness of urban infrastructures against extreme weather conditions. This event provides a unique opportunity to analyze the resilience of a major metropolitan area’s energy grid and its capacity to withstand unforeseen natural disasters. This particular incident in Houston, a city known for its dynamic growth and complex urban layout, becomes a focal point for examining urban resilience in the face of environmental challenges. The blackout serves as a view into understanding the repercussions of such events on a city’s operational continuity and the well-being of its residents. Houston is a good example for examining the intersection of urban infrastructure with environmental circumstances, offering insights into the areas where improvements are needed to enhance city-wide resilience. The significance of this analysis lies in its potential to influence future urban planning and emergency response strategies. By investigating the impacts of the Houston blackout, valuable lessons can be learned about the importance of designing cities that are not only efficient under normal conditions but also resilient and adaptable in the face of climate challenges. This blackout demonstrates the necessity of anticipating and preparing for extreme scenarios, ensuring that cities are not just places of progress and development, but also places of safety and stability for all civilians.</p>
 </section>
 <section id="data-and-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="data-and-methodology">Data and Methodology</h2>
-<p>The analysis hinges on three key data sources: night light data <span class="citation" data-cites="nasa">(<a href="#ref-nasa" role="doc-biblioref">NASA 2023</a>)</span>, OpenStreetMap data detailing roads and buildings <span class="citation" data-cites="osm">(<a href="#ref-osm" role="doc-biblioref">OpenStreetMaps 2023</a>)</span>, and American Community Survey (ACS) socio-economic data. We employed R, utilizing libraries such as <code>stars</code>, <code>sf</code>, and <code>terra</code>, to manipulate and analyze these datasets. Our methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. We then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.</p>
+<p>The analysis hinges on three key data sources: night light data <span class="citation" data-cites="nasa">(<a href="#ref-nasa" role="doc-biblioref">NASA 2023</a>)</span>, OpenStreetMap data detailing roads and buildings <span class="citation" data-cites="osm">(<a href="#ref-osm" role="doc-biblioref">OpenStreetMaps 2023</a>)</span>, and American Community Survey (ACS) socio-economic data. OpenStreetMap and the Landsat data from NASA are regularly-updated databases that are available to the public. I employed R, utilizing libraries such as <code>stars</code>, <code>sf</code>, and <code>terra</code>, to manipulate and analyze these datasets. The methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. I then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.</p>
+<p><strong>Research Question</strong>: How did economic status influence the susceptibility and resilience of communities in Houston in the 2021 winter blackouts?</p>
 <p>Let’s get to coding.</p>
 <p>Starting off by loading in the necessary libraries.</p>
 <div class="cell">
@@ -246,7 +241,7 @@ div.csl-indent {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># clear environment for sanity</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Next, importing data. The first set of data is the night light data, tiles or images that capture the light intensity emanating from the surface of the planet during nighttime. The data is stored as rasters, and the <code>stars</code> package is used for raster handling.</p>
+<p>Next, importing data. The first set of data is the night light data, made up of tiles, or images, that capture the light intensity emanating from the surface of the planet during nighttime. The data is stored as rasters, and the <code>stars</code> package is used for raster handling.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in night lights tiles</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>feb7_h08v05 <span class="ot">&lt;-</span> <span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"blog"</span>, <span class="st">"2023-12-2-geo-proj"</span>, <span class="st">"data"</span>, <span class="st">"VNP46A1"</span>, <span class="st">"VNP46A1.A2021038.h08v05.001.2021039064328.tif"</span>))</span>
@@ -254,14 +249,14 @@ div.csl-indent {
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>feb16_h0805 <span class="ot">&lt;-</span> <span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"blog"</span>, <span class="st">"2023-12-2-geo-proj"</span>, <span class="st">"data"</span>, <span class="st">"VNP46A1"</span>, <span class="st">"VNP46A1.A2021047.h08v05.001.2021048091106.tif"</span>))</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>feb16_h0806 <span class="ot">&lt;-</span> <span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"blog"</span>, <span class="st">"2023-12-2-geo-proj"</span>, <span class="st">"data"</span>, <span class="st">"VNP46A1"</span>, <span class="st">"VNP46A1.A2021047.h08v06.001.2021048091105.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Next, we want to combine the tiles that have the same date and create two objects. Let’s do this and plot the tiles for each date for inspection purposes. We can utilize the <code>st_mosaic()</code> function to combine the tiles.</p>
+<p>Next, we want to combine the tiles that have the same date and create two objects. We can utilize the <code>st_mosaic()</code> function to combine the tiles.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combine tiles for each date to create 2 objects</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>feb7 <span class="ot">&lt;-</span> <span class="fu">st_mosaic</span>(feb7_h08v05, feb7_h0806)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>feb16 <span class="ot">&lt;-</span> <span class="fu">st_mosaic</span>(feb16_h0805, feb16_h0806)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Great. The next step involves creating a blackout mask to identify areas in Houston that lost power during the winter storms. This is done by calculating the change in light intensity, reclassifying this difference raster, then converting the raster to a stars object. ADD MORE.</p>
-<p>Next, we want to convert the blackout stars to a vector format and fix any invalid geometries using <code>st_make_valid()</code>. Let’s visualize the blackout in vector format to check where we are at.</p>
+<p>Great. The next step involves creating a blackout mask to identify areas in Houston that lost power during the winter storms. This is done by calculating the change in light intensity, reclassifying this light internsity difference raster, and then converting the raster to a stars object.</p>
+<p>Now, we want to convert the blackout stars to a vector format and fix any invalid geometries using <code>st_make_valid()</code>. Let’s visualize the blackout in vector format to check where we are at.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the change in lights intensity from Feb 7 to Feb 16</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">&lt;-</span> feb7 <span class="sc">-</span> feb16</span>
@@ -279,15 +274,8 @@ div.csl-indent {
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># convert blackout to vector format and fix invalid geometries, set CRS</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>blackout_sf_valid_trans <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(blackout_stars, <span class="at">as_points =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_make_valid</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3083</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the blackout now that it is in vector format for inspection</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(blackout_sf_valid_trans))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3083</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>This visual shows the light intensity of the greater Houston region.</p>
 <p>The next piece of analysis involves defining the Houston metropolitan area and cropping the blackout mask to this area of interest. It is imperative that the coordinate reference systems align of these two spatial objects!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define Houston metropolitan coordinates</span></span>
@@ -308,12 +296,14 @@ div.csl-indent {
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># assign EPSG:3083 CRS to assure consistent CRS</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>cropped_blackout_proj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(cropped_blackout_proj, <span class="at">crs =</span> <span class="st">"EPSG:3083"</span>)</span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cropped_blackout_proj, <span class="at">colorbar =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cropped_blackout_proj, </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">colorbar =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Locations of Significant Light Intensity Change in Houston"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>This is a visual of the Houston metropolitan area light intensity. ADD MORE!!!!!</p>
+<p>This is a visual of the Houston metropolitan area light intensity from before and after the storm. The census tracts that lie in the places where the black dots show up are areas that have been impacted by the blackout.</p>
 <p>Next, we will refine the blackout analysis by excluding areas near highways. This helps in ensuring that the blackout mask we created earlier accurately reflects residential or non-highway areas that lost power, rather than areas simply experiencing less traffic during the storms.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define SQL query</span></span>
@@ -362,6 +352,7 @@ div.csl-indent {
 <pre><code>[1] "Number of impacted homes: 157411"</code></pre>
 </div>
 </div>
+<p>As the results show, a grand total of 157,411 residential buildings were impacted by the blackouts. This total quantifies the extreme impact of the storms and highlights how many individuals and families faced the consequences of prolonged blackouts.</p>
 </section>
 <section id="investigating-socioeconomic-factors" class="level3">
 <h3 class="anchored" data-anchor-id="investigating-socioeconomic-factors">Investigating Socioeconomic Factors</h3>
@@ -406,7 +397,7 @@ div.csl-indent {
 </section>
 <section id="results-and-visualizations" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-visualizations">Results and Visualizations</h2>
-<p>At this stage of the analysis, it is time to get down to the main analysis and determine the potential difference in income between impacted versus unimpacted tracts. To conduct this analysis, we will create a a map of median income by census tract and a box-plot of the income in impacted versus unimpacted tracts.</p>
+<p>At this stage, it is time to get down to the main analysis and determine the potential difference in income between impacted versus unimpacted tracts. To conduct this analysis, we will create a a map of median income by census tract and a box-plot of the income in impacted versus unimpacted tracts.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add impact status column </span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>acs_data<span class="sc">$</span>impact_status <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(acs_data<span class="sc">$</span>GEOID <span class="sc">%in%</span> tracts_with_blackouts, <span class="st">"Impacted"</span>, <span class="st">"Unimpacted"</span>)</span>
@@ -418,9 +409,9 @@ div.csl-indent {
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> acs_data) <span class="sc">+</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> B19013e1, <span class="at">color =</span> impact_status), <span class="at">show.legend =</span> <span class="st">'point'</span>) <span class="sc">+</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Impacted"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"Unimpacted"</span> <span class="ot">=</span> <span class="st">"green"</span>)) <span class="sc">+</span> </span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Median Income by Census Tract in Houston"</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Tracts impacted by blackouts are outlined in red"</span>,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Median Income"</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Median Income by Census Tract and Impact Status"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Median Income"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Impact Status"</span>) <span class="sc">+</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(houston_extent<span class="sc">$</span>xmin, houston_extent<span class="sc">$</span>xmax), </span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(houston_extent<span class="sc">$</span>ymin, houston_extent<span class="sc">$</span>ymax), </span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
@@ -433,9 +424,10 @@ div.csl-indent {
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>boxplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(acs_data, <span class="fu">aes</span>(<span class="at">x =</span> impact_status, <span class="at">y =</span> B19013e1, <span class="at">fill =</span> impact_status)) <span class="sc">+</span></span>
 <span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Impacted"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"Unimpacted"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Quartile Plot of Median Income in Houston's Census Tracts"</span>,</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Median Income of Impacted vs Unimpacted Tracts"</span>,</span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Blackout Impact"</span>, <span class="at">y =</span> <span class="st">"Median Income"</span>) <span class="sc">+</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -453,14 +445,18 @@ div.csl-indent {
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>The results show that the median income of a census tract did not influence how likely they were to have experienced a blackout. This can be seen in the map, but the box plot reveals it in a clearer picture. While it may seem that poorer tracts would be less likely to be influenced by the blackout and that it would take longer for their power to be fully rejuvenated, it is important to consider that there are many factors to consider in this situation. For example, it is possible that the distribution of power infrastructure and its resilience to extreme weather events played a more significant role in the occurrence of blackouts than socioeconomic factors. Areas with older or less maintained power grids, regardless of the median income of the residents, might have been more susceptible to failures. Additionally, the physical geography of the region, such as elevation or proximity to water bodies, could have influenced the impact of the winter storms on power availability. It’s also worth considering the location of essential services and emergency response priorities, which might lead to quicker restoration in certain areas irrespective of their economic status. These complexities highlight the importance of a multifaceted approach in understanding and addressing the challenges posed by such natural disasters.</p>
+<p>However, when considering areas that extended outside of the Houston and looking at all areas of Texas impacted by the blackouts, a Rockefeller foundation study revealed that areas with a high share of minority population were more than four times as likely to suffer a blackout than predominantly white areas. <span class="citation" data-cites="rockefeller">(<a href="#ref-rockefeller" role="doc-biblioref">Hsu 2021</a>)</span> The findings of the Rockefeller Foundation’s study are a call for action. They underscore the urgency for more equitable infrastructure planning and disaster response strategies that recognize and these historical imbalances. As we move forward, it is imperative that resilience and emergency preparedness are seen through the lens of equity, ensuring that all communities, no matter their racial or ethnic makeup, are fortified with the means to withstand the challenges of such catastrophic events.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-rockefeller" class="csl-entry" role="listitem">
+Hsu, Feng Chi et al. 2021. <span>“Frozen Out in Texas: Blackouts and Inequity.”</span> <a href="https://www.rockefellerfoundation.org/case-study/frozen-out-in-texas-blackouts-and-inequity/">https://www.rockefellerfoundation.org/case-study/frozen-out-in-texas-blackouts-and-inequity/</a>.
+</div>
 <div id="ref-nasa" class="csl-entry" role="listitem">
-NASA. 2023. <span>“Level-1 and Atmosphere Archive &amp; Distribution System Distributed Active Archive Center - LAADS DAAC.”</span>
+NASA. 2023. <span>“Level-1 and Atmosphere Archive &amp; Distribution System Distributed Active Archive Center - LAADS DAAC.”</span> <a href="https://ladsweb.modaps.eosdis.nasa.gov/">https://ladsweb.modaps.eosdis.nasa.gov/</a>.
 </div>
 <div id="ref-osm" class="csl-entry" role="listitem">
 OpenStreetMaps. 2023. <a href="https://planet.openstreetmap.org/">https://planet.openstreetmap.org/</a>.
