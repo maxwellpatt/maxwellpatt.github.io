@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxwell Patterson">
+<meta name="dcterms.date" content="2023-12-13">
+
+<title>Thomas Fire and AQI Inspection</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cooking.html" rel="" target="">
+ <span class="menu-text">Cooking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../basketball.html" rel="" target="">
+ <span class="menu-text">Basketball</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Thomas Fire and AQI Inspection</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Quarto</div>
+                <div class="quarto-category">Datasets</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Maxwell Patterson </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 13, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about" id="toc-about" class="nav-link active" data-scroll-target="#about">About</a></li>
+  <li><a href="#air-quality-index-data" id="toc-air-quality-index-data" class="nav-link" data-scroll-target="#air-quality-index-data"><em>Air Quality Index Data</em></a>
+  <ul class="collapse">
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing Data</a></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">Data Exploration</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
+  <li><a href="#final-output" id="toc-final-output" class="nav-link" data-scroll-target="#final-output">Final Output</a></li>
+  </ul></li>
+  <li><a href="#false-color-image" id="toc-false-color-image" class="nav-link" data-scroll-target="#false-color-image"><em>False Color Image</em></a>
+  <ul class="collapse">
+  <li><a href="#importing-data-1" id="toc-importing-data-1" class="nav-link" data-scroll-target="#importing-data-1">Importing Data</a></li>
+  <li><a href="#geographical-context" id="toc-geographical-context" class="nav-link" data-scroll-target="#geographical-context">Geographical Context</a></li>
+  <li><a href="#data-exploration-1" id="toc-data-exploration-1" class="nav-link" data-scroll-target="#data-exploration-1">Data Exploration</a></li>
+  <li><a href="#analysis-1" id="toc-analysis-1" class="nav-link" data-scroll-target="#analysis-1">Analysis</a></li>
+  <li><a href="#final-output-1" id="toc-final-output-1" class="nav-link" data-scroll-target="#final-output-1">Final Output</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+<section id="github-link-httpsgithub.commaxwellpatteds220-pres-repo" class="level5">
+<h5 class="anchored" data-anchor-id="github-link-httpsgithub.commaxwellpatteds220-pres-repo">GitHub Link: https://github.com/maxwellpatt/eds220-pres-repo</h5>
+</section>
+<section id="about" class="level2">
+<h2 class="anchored" data-anchor-id="about">About</h2>
+<section id="purpose" class="level4">
+<h4 class="anchored" data-anchor-id="purpose">Purpose</h4>
+<p>This notebook is designed to perform a comprehensive environmental analysis using two distinct approaches: Air Quality Index (AQI) trend analysis for Santa Barbara County from 2017-2018 and remote sensing data visualization of the 2017 Thomas Fire in California. The primary objectives include demonstrating data manipulation and visualization techniques, time-series analysis for AQI, and the application of true and false color imagery in assessing wildfire impacts.</p>
+</section>
+<section id="highlights-of-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="highlights-of-analysis">Highlights of Analysis</h4>
+<ul>
+<li>AQI Trend Analysis (2017-2018): Retrieval and preparation of AQI data from the EPA, focusing on data cleaning, concatenation, and column modification. Implementation of a 5-day rolling average for AQI to smooth daily variations and a detailed visualization of these trends over time.</li>
+<li>Remote Sensing Data Visualization: Utilization of Landsat 8 satellite imagery for creating true and false color images of Santa Barbara. Integration of California fire perimeter data to assess the spatial impact of the Thomas Fire, enhancing the understanding of wildfire effects through geospatial analysis.</li>
+<li>Data Concatenation and Cleaning: Merging AQI datasets for two consecutive years, followed by data cleaning processes such as modifying column names for consistency and dropping unnecessary columns.</li>
+<li>Visualization Techniques: Development of plots and maps to compare daily AQI values with the 5-day average and to overlay wildfire perimeters on satellite imagery, providing a clear visual representation of both air quality trends and the extent of wildfire damage.</li>
+</ul>
+</section>
+<section id="dataset-description" class="level4">
+<h4 class="anchored" data-anchor-id="dataset-description">Dataset Description</h4>
+<p>The analysis leverages two primary datasets: - Air Quality Index (AQI) Data: Daily AQI measurements by county for 2017 and 2018, sourced from the EPA, providing insights into air quality trends over the two-year period. - Landsat 8 Satellite Imagery and Fire Perimeter Data: High-resolution imagery capturing various spectral bands, combined with shapefile data of the 2017 California fire perimeters, to visualize and analyze the impact of wildfires.</p>
+</section>
+<section id="references-to-datasets" class="level4">
+<h4 class="anchored" data-anchor-id="references-to-datasets">References to Datasets</h4>
+<ul>
+<li>EPA Air Data: Daily AQI by County for 2017 and 2018.</li>
+<li>NASA EarthData: Landsat 8 Imagery.</li>
+<li>California Fire Perimeters 2017: California Department of Forestry and Fire Protection.</li>
+</ul>
+</section>
+</section>
+<section id="air-quality-index-data" class="level2">
+<h2 class="anchored" data-anchor-id="air-quality-index-data"><em>Air Quality Index Data</em></h2>
+<section id="importing-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data">Importing Data</h3>
+<p>This section involves importing necessary libraries like pandas and matplotlib for data manipulation and visualization. The AQI data for 2017 and 2018 is fetched from online sources, ensuring access to the most relevant and up-to-date air quality information.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries for data manipulation and visualization</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in AQI data for the years 2017 and 2018 from online sources</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>aqi_17 <span class="op">=</span> pd.read_csv(<span class="st">"https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2017.zip"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>aqi_18 <span class="op">=</span> pd.read_csv(<span class="st">"https://aqs.epa.gov/aqsweb/airdata/daily_aqi_by_county_2018.zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="data-exploration">Data Exploration</h3>
+<p>Here, the code checks the data types and basic information of the datasets to understand their structure. This step is crucial for planning further data processing and analysis steps.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check data types for each dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dtypes_17 <span class="op">=</span> aqi_17.dtypes</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dtypes_18 <span class="op">=</span> aqi_18.dtypes</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data types for 2017 dataset:</span><span class="ch">\n</span><span class="st">"</span>, dtypes_17)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get basic information about the datasets</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>info_17 <span class="op">=</span> aqi_17.info()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>info_18 <span class="op">=</span> aqi_18.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data types for 2017 dataset:
+ State Name                   object
+county Name                  object
+State Code                    int64
+County Code                   int64
+Date                         object
+AQI                           int64
+Category                     object
+Defining Parameter           object
+Defining Site                object
+Number of Sites Reporting     int64
+dtype: object
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 326801 entries, 0 to 326800
+Data columns (total 10 columns):
+ #   Column                     Non-Null Count   Dtype 
+---  ------                     --------------   ----- 
+ 0   State Name                 326801 non-null  object
+ 1   county Name                326801 non-null  object
+ 2   State Code                 326801 non-null  int64 
+ 3   County Code                326801 non-null  int64 
+ 4   Date                       326801 non-null  object
+ 5   AQI                        326801 non-null  int64 
+ 6   Category                   326801 non-null  object
+ 7   Defining Parameter         326801 non-null  object
+ 8   Defining Site              326801 non-null  object
+ 9   Number of Sites Reporting  326801 non-null  int64 
+dtypes: int64(4), object(6)
+memory usage: 24.9+ MB
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 327537 entries, 0 to 327536
+Data columns (total 10 columns):
+ #   Column                     Non-Null Count   Dtype 
+---  ------                     --------------   ----- 
+ 0   State Name                 327537 non-null  object
+ 1   county Name                327537 non-null  object
+ 2   State Code                 327537 non-null  int64 
+ 3   County Code                327537 non-null  int64 
+ 4   Date                       327537 non-null  object
+ 5   AQI                        327537 non-null  int64 
+ 6   Category                   327537 non-null  object
+ 7   Defining Parameter         327537 non-null  object
+ 8   Defining Site              327537 non-null  object
+ 9   Number of Sites Reporting  327537 non-null  int64 
+dtypes: int64(4), object(6)
+memory usage: 25.0+ MB</code></pre>
+</div>
+</div>
+</section>
+<section id="analysis" class="level3">
+<h3 class="anchored" data-anchor-id="analysis">Analysis</h3>
+<p><strong>Data Cleaning and Preparation</strong> The datasets from different years are concatenated for a comprehensive analysis. Column names are cleaned for consistency, and irrelevant columns are removed, streamlining the data for effective analysis. The conversion of the ‘date’ column to a datetime object and setting it as an index is verified to ensure proper time-series analysis.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate the two data frames for combined analysis</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>aqi <span class="op">=</span> pd.concat([aqi_17, aqi_18])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleaning column names for ease of use</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>aqi.columns <span class="op">=</span> aqi.columns.<span class="bu">str</span>.lower().<span class="bu">str</span>.replace(<span class="st">' '</span>, <span class="st">'_'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cleaned column names:"</span>, aqi.columns.tolist())</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering data for Santa Barbara County</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi[aqi[<span class="st">'county_name'</span>] <span class="op">==</span> <span class="st">'Santa Barbara'</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing unnecessary columns</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>remove <span class="op">=</span> [<span class="st">'state_name'</span>, <span class="st">'county_name'</span>, <span class="st">'state_code'</span>, <span class="st">'county_code'</span>]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi_sb.drop(columns<span class="op">=</span>remove)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'date' column to datetime object and set as index</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(aqi_sb[<span class="st">'date'</span>])</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>aqi_sb <span class="op">=</span> aqi_sb.set_index(<span class="st">'date'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Index data type:"</span>, aqi_sb.index.dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cleaned column names: ['state_name', 'county_name', 'state_code', 'county_code', 'date', 'aqi', 'category', 'defining_parameter', 'defining_site', 'number_of_sites_reporting']
+Index data type: datetime64[ns]</code></pre>
+</div>
+</div>
+<p><strong>Time-Series Analysis</strong></p>
+<p>A 5-day rolling average for AQI is calculated and checked by displaying the first few entries. This step is critical for smoothing out daily fluctuations and observing longer-term trends in air quality.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 5-day rolling average for AQI</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'five_day_average'</span>] <span class="op">=</span> aqi_sb.aqi.rolling(<span class="st">'5D'</span>).mean()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the rolling average by checking the first few entries</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sample of 5-day rolling average:"</span>, aqi_sb[<span class="st">'five_day_average'</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample of 5-day rolling average: date
+2017-01-01    39.000000
+2017-01-02    37.500000
+2017-01-03    48.666667
+2017-01-04    45.000000
+2017-01-05    43.400000
+Name: five_day_average, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="final-output" class="level3">
+<h3 class="anchored" data-anchor-id="final-output">Final Output</h3>
+<p>The output visualizes the Air Quality Index (AQI) in Santa Barbara County across two years: 2017 and 2018. The blue line represents the daily AQI values, showing considerable variability with several peaks indicating days of poor air quality. The orange line depicts the 5-day rolling average of AQI, which smooths out the daily fluctuations to reveal the underlying trends more clearly. Notably, there is a significant peak at the start of December 2017, marked by the dashed vertical line, which correlates to a big fire in the area. Overall, the visualization effectively communicates the temporal changes in air quality and the utility of using a rolling average to understand longer-term trends.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting daily AQI and 5-day average AQI</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'aqi'</span>].plot(label<span class="op">=</span><span class="st">'Daily AQI'</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>aqi_sb[<span class="st">'five_day_average'</span>].plot(label<span class="op">=</span><span class="st">'5-Day Average AQI'</span>, color<span class="op">=</span><span class="st">'orange'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.axvline(pd.Timestamp(<span class="st">'2017-12-01'</span>), color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Start of December 2017'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Daily AQI vs. 5-Day Average AQI'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Date'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'AQI Value'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="false-color-image" class="level2">
+<h2 class="anchored" data-anchor-id="false-color-image"><em>False Color Image</em></h2>
+<section id="importing-data-1" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data-1">Importing Data</h3>
+<p>In this initial step, libraries essential for processing geospatial data, such as NumPy, Pandas, GeoPandas, and xarray, are imported. These tools enable the handling of complex raster and vector data formats necessary for environmental and geographical analyses.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries for handling geospatial and raster data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> rioxr</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.features <span class="im">import</span> rasterize</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.crs <span class="im">import</span> CRS</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># File path for raster data</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> os.path.join(os.getcwd(), <span class="st">"data"</span>, <span class="st">"landsat8-2018-01-26-sb-simplified.nc"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Open raster file</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>landsat <span class="op">=</span> rioxr.open_rasterio(data_path)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># read fire data</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>fire <span class="op">=</span> gpd.read_file(<span class="st">"data/California_Fire_Perimeters_2017/California_Fire_Perimeters_2017.shp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/scipy/__init__.py:138: UserWarning: A NumPy version &gt;=1.16.5 and &lt;1.23.0 is required for this version of SciPy (detected version 1.24.4)
+  warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion} is required for this version of "</code></pre>
+</div>
+</div>
+</section>
+<section id="geographical-context" class="level3">
+<h3 class="anchored" data-anchor-id="geographical-context">Geographical Context</h3>
+<p>The geographical context is established by loading Landsat 8 satellite imagery for the Santa Barbara region and fire perimeter data from 2017. This step situates the analysis within the specific area affected by the Thomas Fire, setting the stage for a targeted examination of the landscape.</p>
+<p><strong>Data Preparation and Alignment</strong></p>
+<p>This section involves transforming the CRS of the fire perimeter data to match the Landsat data. The successful alignment of these datasets is confirmed, which is imperative for precise spatial overlay in the analysis.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reduce dimensions</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>landsat_new <span class="op">=</span> landsat.squeeze([<span class="st">'band'</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display updated landsat</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>landsat_new.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>&lt;bound method Mapping.values of &lt;xarray.Dataset&gt;
+Dimensions:      (x: 870, y: 731)
+Coordinates:
+    band         int64 1
+  * x            (x) float64 1.213e+05 1.216e+05 ... 3.557e+05 3.559e+05
+  * y            (y) float64 3.952e+06 3.952e+06 ... 3.756e+06 3.755e+06
+    spatial_ref  int64 0
+Data variables:
+    red          (y, x) float64 ...
+    green        (y, x) float64 ...
+    blue         (y, x) float64 ...
+    nir08        (y, x) float64 ...
+    swir22       (y, x) float64 ...&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="data-exploration-1" class="level3">
+<h3 class="anchored" data-anchor-id="data-exploration-1">Data Exploration</h3>
+<p>Here, the code explores the Landsat data to ensure it aligns with the fire perimeter data’s CRS. This alignment is critical for accurate mapping and overlay of geospatial data, ensuring that subsequent analyses accurately reflect the true geographical relationships.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot fire</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fire.plot()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the first 5 rows of fire data</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fire.head()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at landsat data</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>landsat_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewbox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewbox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class="xr-text-repr-fallback">&lt;xarray.Dataset&gt;
+Dimensions:      (x: 870, y: 731)
+Coordinates:
+    band         int64 1
+  * x            (x) float64 1.213e+05 1.216e+05 ... 3.557e+05 3.559e+05
+  * y            (y) float64 3.952e+06 3.952e+06 ... 3.756e+06 3.755e+06
+    spatial_ref  int64 0
+Data variables:
+    red          (y, x) float64 ...
+    green        (y, x) float64 ...
+    blue         (y, x) float64 ...
+    nir08        (y, x) float64 ...
+    swir22       (y, x) float64 ...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.Dataset</div></div><ul class="xr-sections"><li class="xr-section-item"><input id="section-6862db25-d63f-43da-9f78-8e0f863741a6" class="xr-section-summary-in" type="checkbox" disabled=""><label for="section-6862db25-d63f-43da-9f78-8e0f863741a6" class="xr-section-summary" title="Expand/collapse section">Dimensions:</label><div class="xr-section-inline-details"><ul class="xr-dim-list"><li><span class="xr-has-index">x</span>: 870</li><li><span class="xr-has-index">y</span>: 731</li></ul></div><div class="xr-section-details"></div></li><li class="xr-section-item"><input id="section-01f487ac-2b81-44ae-8393-0302acf71d34" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-01f487ac-2b81-44ae-8393-0302acf71d34" class="xr-section-summary">Coordinates: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>band</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1</div><input id="attrs-2147c7a3-5275-48cd-95a5-1044020afe79" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-2147c7a3-5275-48cd-95a5-1044020afe79" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1339ee72-1d4e-40a3-865a-6f8a968102b5" class="xr-var-data-in" type="checkbox"><label for="data-1339ee72-1d4e-40a3-865a-6f8a968102b5" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array(1)</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.213e+05 1.216e+05 ... 3.559e+05</div><input id="attrs-c2d9461a-4568-429f-a9b0-7ac3c54978c6" class="xr-var-attrs-in" type="checkbox"><label for="attrs-c2d9461a-4568-429f-a9b0-7ac3c54978c6" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-3edaccb5-f672-428e-bd69-49501125c866" class="xr-var-data-in" type="checkbox"><label for="data-3edaccb5-f672-428e-bd69-49501125c866" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>crs :</span></dt><dd>EPSG:32611</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>resolution :</span></dt><dd>30</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd><dt><span>_FillValue :</span></dt><dd>nan</dd></dl></div><div class="xr-var-data"><pre>array([121305., 121575., 121845., ..., 355395., 355665., 355935.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">3.952e+06 3.952e+06 ... 3.755e+06</div><input id="attrs-be1724f4-4a65-48a4-b933-bba7a8e2e4b7" class="xr-var-attrs-in" type="checkbox"><label for="attrs-be1724f4-4a65-48a4-b933-bba7a8e2e4b7" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-4921c4f6-d4bf-4513-afef-60c5f0278474" class="xr-var-data-in" type="checkbox"><label for="data-4921c4f6-d4bf-4513-afef-60c5f0278474" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>crs :</span></dt><dd>EPSG:32611</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>resolution :</span></dt><dd>-30</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd><dt><span>_FillValue :</span></dt><dd>nan</dd></dl></div><div class="xr-var-data"><pre>array([3952395., 3952125., 3951855., ..., 3755835., 3755565., 3755295.])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>spatial_ref</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0</div><input id="attrs-5fa312b7-8ae8-4917-ba0b-181e95f725c8" class="xr-var-attrs-in" type="checkbox"><label for="attrs-5fa312b7-8ae8-4917-ba0b-181e95f725c8" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-8c820b0b-e8ab-436b-9a56-5b12da9c9abb" class="xr-var-data-in" type="checkbox"><label for="data-8c820b0b-e8ab-436b-9a56-5b12da9c9abb" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>crs_wkt :</span></dt><dd>PROJCS["WGS 84 / UTM zone 11N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32611"]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984</dd><dt><span>projected_crs_name :</span></dt><dd>WGS 84 / UTM zone 11N</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>0.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>-117.0</dd><dt><span>false_easting :</span></dt><dd>500000.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS["WGS 84 / UTM zone 11N",GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-117],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","32611"]]</dd><dt><span>GeoTransform :</span></dt><dd>121170.0 270.0 0.0 3952530.0 0.0 -270.0</dd></dl></div><div class="xr-var-data"><pre>array(0)</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-c21b4661-1e77-45c2-85d5-894ce907d97c" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-c21b4661-1e77-45c2-85d5-894ce907d97c" class="xr-section-summary">Data variables: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span>red</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-4b8b9dad-4ce5-4b03-9e6c-1ca694ff1c05" class="xr-var-attrs-in" type="checkbox"><label for="attrs-4b8b9dad-4ce5-4b03-9e6c-1ca694ff1c05" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1ef1e69e-cc93-4b82-ad59-0091b7ba0967" class="xr-var-data-in" type="checkbox"><label for="data-1ef1e69e-cc93-4b82-ad59-0091b7ba0967" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>green</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-f2352acc-bb87-4e66-8645-881ba56cd45e" class="xr-var-attrs-in" type="checkbox"><label for="attrs-f2352acc-bb87-4e66-8645-881ba56cd45e" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-b526733b-d7bc-4bf3-891f-f5def2c04def" class="xr-var-data-in" type="checkbox"><label for="data-b526733b-d7bc-4bf3-891f-f5def2c04def" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>blue</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-f5f31715-c6e4-450b-82af-72659a92b7c9" class="xr-var-attrs-in" type="checkbox"><label for="attrs-f5f31715-c6e4-450b-82af-72659a92b7c9" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-46ea20a0-efb0-4b71-a57c-80545db767f7" class="xr-var-data-in" type="checkbox"><label for="data-46ea20a0-efb0-4b71-a57c-80545db767f7" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>nir08</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-a67e1877-6b8b-4fc7-8fff-c911e3c42050" class="xr-var-attrs-in" type="checkbox"><label for="attrs-a67e1877-6b8b-4fc7-8fff-c911e3c42050" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1887c628-3f44-499a-9bb7-8d92d3ff32cd" class="xr-var-data-in" type="checkbox"><label for="data-1887c628-3f44-499a-9bb7-8d92d3ff32cd" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>swir22</span></div><div class="xr-var-dims">(y, x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">...</div><input id="attrs-414dc491-cae0-474f-b865-9913d4c886a4" class="xr-var-attrs-in" type="checkbox"><label for="attrs-414dc491-cae0-474f-b865-9913d4c886a4" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-c2b09bf6-3287-41a0-8945-5b693613eb1f" class="xr-var-data-in" type="checkbox"><label for="data-c2b09bf6-3287-41a0-8945-5b693613eb1f" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>coordinates :</span></dt><dd>time</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>_FillValue :</span></dt><dd>0.0</dd></dl></div><div class="xr-var-data"><pre>[635970 values with dtype=float64]</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-306abb38-29c8-4133-bfe9-8f3268c3045e" class="xr-section-summary-in" type="checkbox"><label for="section-306abb38-29c8-4133-bfe9-8f3268c3045e" class="xr-section-summary">Indexes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-2721cdd2-d506-47e0-9ab5-90d10cadc9f3" class="xr-index-data-in" type="checkbox"><label for="index-2721cdd2-d506-47e0-9ab5-90d10cadc9f3" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([121305.0, 121575.0, 121845.0, 122115.0, 122385.0, 122655.0, 122925.0,
+       123195.0, 123465.0, 123735.0,
+       ...
+       353505.0, 353775.0, 354045.0, 354315.0, 354585.0, 354855.0, 355125.0,
+       355395.0, 355665.0, 355935.0],
+      dtype='float64', name='x', length=870))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-752e4fd0-1b67-4d0a-bf61-5d559c7e586a" class="xr-index-data-in" type="checkbox"><label for="index-752e4fd0-1b67-4d0a-bf61-5d559c7e586a" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([3952395.0, 3952125.0, 3951855.0, 3951585.0, 3951315.0, 3951045.0,
+       3950775.0, 3950505.0, 3950235.0, 3949965.0,
+       ...
+       3757725.0, 3757455.0, 3757185.0, 3756915.0, 3756645.0, 3756375.0,
+       3756105.0, 3755835.0, 3755565.0, 3755295.0],
+      dtype='float64', name='y', length=731))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-55b3d576-cf7a-4883-a77d-3ef183f9a3b9" class="xr-section-summary-in" type="checkbox" disabled=""><label for="section-55b3d576-cf7a-4883-a77d-3ef183f9a3b9" class="xr-section-summary" title="Expand/collapse section">Attributes: <span>(0)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"></dl></div></li></ul></div></div>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-1">Analysis</h3>
+<p><strong>Creating True and False Color Images</strong> The creation of true and false color images utilizes specific bands from the Landsat data. These images are normalized to enhance visual contrast, aiding in the identification of different land features. Checks confirm the normalization process has occurred correctly.</p>
+<p><strong>True Color Image</strong></p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select R, G, B bands</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>red_band <span class="op">=</span> landsat_new[<span class="st">'red'</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>green_band <span class="op">=</span> landsat_new[<span class="st">'green'</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>blue_band <span class="op">=</span> landsat_new[<span class="st">'blue'</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the bands along the 'color' dimension</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>rgb_image <span class="op">=</span> xr.concat([red_band, green_band, blue_band], dim<span class="op">=</span><span class="st">'color'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>rgb_image <span class="op">=</span> (rgb_image <span class="op">-</span> rgb_image.<span class="bu">min</span>()) <span class="op">/</span> (rgb_image.<span class="bu">max</span>() <span class="op">-</span> rgb_image.<span class="bu">min</span>())</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the RGB image </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.imshow(rgb_image.transpose(<span class="st">'y'</span>, <span class="st">'x'</span>, <span class="st">'color'</span>)) </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize map</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>False Color Image</strong></p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select spectral bands from the landsat data</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>swir22 <span class="op">=</span> landsat_new[<span class="st">'swir22'</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>nir    <span class="op">=</span> landsat_new[<span class="st">'nir08'</span>]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>red    <span class="op">=</span> landsat_new[<span class="st">'red'</span>]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the bands along 'color' dimension</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>false_color_image <span class="op">=</span> xr.concat([swir22, nir, red], dim<span class="op">=</span><span class="st">'color'</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the false color image to increase contrast</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>false_image <span class="op">=</span> (false_color_image <span class="op">-</span> false_color_image.<span class="bu">min</span>()) <span class="op">/</span> (false_color_image.<span class="bu">max</span>() <span class="op">-</span> false_color_image.<span class="bu">min</span>())</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the RGB image using imshow</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>landsat_new[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array().plot.imshow(robust<span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>&lt;matplotlib.image.AxesImage at 0x7fcb52783910&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="final-output-1" class="level3">
+<h3 class="anchored" data-anchor-id="final-output-1">Final Output</h3>
+<p>The final output is a composite image that illustrates the affected area during the Thomas Fire. This output serves as a potent visual tool for understanding the spatial extent of wildfires and highlights the value of remote sensing in environmental monitoring and disaster assessment.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Thomas fire</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>thomas_fire <span class="op">=</span> fire[fire[<span class="st">'FIRE_NAME'</span>]<span class="op">==</span><span class="st">"THOMAS"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert thomas_fire to GeoDataFrame to same crs as landsat</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>thomas_fire <span class="op">=</span> thomas_fire.to_crs(landsat_new.rio.crs)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Store false color map</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>false_color <span class="op">=</span> landsat_new[[<span class="st">'swir22'</span>, <span class="st">'nir08'</span>, <span class="st">'red'</span>]].to_array()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initiate figure</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot outline of california and create key for legend</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>false_color.plot.imshow(ax<span class="op">=</span>ax, robust<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot lulc bounding box and create key for legend</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>thomas_fire.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>thomas_patch <span class="op">=</span> mpatches.Patch(color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Thomas Fire'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create legend</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[thomas_patch], frameon<span class="op">=</span><span class="va">True</span>, loc<span class="op">=</span><span class="st">'upper right'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.4</span>, <span class="dv">1</span>))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'False Color Image of Santa Barbara with Thomas Fire Boundary'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>Text(0.5, 1.0, 'False Color Image of Santa Barbara with Thomas Fire Boundary')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
