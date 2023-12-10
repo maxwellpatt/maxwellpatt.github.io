@@ -1,5 +1,5 @@
 ---
-  title: "Can Economic Freedom Improve Environmental Outcomes?"
+  title: "Does Economic Freedom Improve Environmental Outcomes?"
   description: "EDS222 Final Project"
   author:
     - name: Maxwell Patterson
@@ -11,21 +11,36 @@
 ---
 
 ## Introduction
-- Markets are meant to be efficient and allocate resources effectively
-- Capitalism is inherently inefficient due to the negative externality of environmental impact not being considered in pricing of goods and services
-- 
 
-### What is *economic freedom*?
+When we scrutinize the relationship between capitalism and environmental impacts, we're engaging in a complex dialogue about efficiency, freedom, and sustainability. Markets act as a powerful mechanism for efficient resource allocation. Yet market-based economies, with the intrinsic drive for growth, often neglect the environmental dimension and impact. This oversight manifests in a key shortcoming: the failure to incorporate environmental costs into the pricing of goods and services.
+
+The role of freedom in global economies brings about a dualistic impact on the environment. The positive aspects are rooted in the innovative potential and efficiency that economic freedom encourages. In a capitalist system, the competitive market can be a catalyst for discovering sustainable and economical production methods. Furthermore, the wealth generated in such systems can boost both private and public investments in environmental initiatives. Regulatory efficiency also stands out as an advantage, offering the ability to quickly adapt and respond to emerging environmental challenges. Unfortunately, there are many reasons why this idealized version falls short. At the end of the day, addressing the climate crisis is a collective action dilemma, since the actions of one person are negligible in the grand scheme of things. This makes it difficult for consumers to support climate-focused goods and services in exchange for relatively cheaper alternatives.
+
+Now, the ugly. Capitalism often leads to aggressive resource use, resulting in issues like deforestation, loss of biodiversity, and water pollution. The tendency of capitalism to prioritize short-term profit over long-term sustainability creates a blind spot for environmental considerations. This short-sighted focus on immediate financial returns often overshadows the broader, more enduring impacts on the environment. Additionally, the burden of environmental degradation in capitalist systems is not evenly distributed. Often, it's the less affluent communities that bear the worst of this degradation, leading to a disparity in environmental impact and quality of life. In fact, the wealthiest 10 percent of the global population are responsible for half of global emissions. [@cnbc]
+
+While capitalism has the potential to foster innovation and generate funds that could benefit environmental conservation, resource exploitation and prioritization of short-term profits present substantial challenges to achieving true environmental sustainability.
+
+
+### What is *Economic Freedom*?
+
+There is certainly a level of subjectivity, or at least a certain amount of uncertainty, when scoring the freedom of an economy. As a result, it seems impossible to create a perfect score for economic freedom. However, this doesn't mean people haven't tried to create a spectrum to measure how free and open different economies are. 
+
+The *Economic Freedom of the World: 2022 Annual Report* serves as the backbone of the analysis in this exploration. 
 
 ### Environmental Outcomes Analyzed
+- Level of water stres: freshwater withdrawal as a proportion of available freshwater resources
+- Net forest depletion (% of GNI)
+- Renewable energy output (% of total total energy output)
+- Renewable energy consumption (% of total energy consumption)
+- Methane emissions (metric tons of CO2 per capita)
 
 ### Predictions
 
 
 
-## Data and Methodology
+## Methodology
 
-TALK ABOUT DATA HERE
+DISCUSS METHODOLOGY HERE
 
 First, let's import the libraries we will need to conduct this analysis.
 
@@ -37,13 +52,14 @@ library(tidyverse)
 library(ggplot2)
 library(janitor)
 library(tidyr)
-library(MASS)
+library(forecast)
 library(randomForest)
 library(tidyverse)
 
 # clear environment for sanity
 rm(list = ls())
 ```
+
 
 ### Data Cleaning
 
@@ -54,13 +70,13 @@ Now, let's import and clean the data containing the freedom index and other scor
 freedom_raw <- read.csv('data/efw_ratings.csv', header = FALSE)
 ```
 
-This data needs a good bit of clean up.
+This data needs a good bit of clean up. This next code chunk adjusts the column headers and converts column types appropriately.
 
-```{r, message=FALSE, warning=FALSE, echo=FALSE}
+```{r, message=FALSE, warning=FALSE}
 # set the 5th row as the column names
 colnames(freedom_raw) <- freedom_raw[5,]
 
-# remove the first 4 rows since they are now empty and clean names, remove na column
+# remove the first 4 rows since they are now empty and clean names, remove columns 
 freedom <- freedom_raw[-c(1:5), ] %>% 
   clean_names() %>% 
   subset(select = -na) %>% 
@@ -68,7 +84,7 @@ freedom <- freedom_raw[-c(1:5), ] %>%
   subset(select = -world_bank_region) %>% 
   subset(select = -world_bank_current_income_classification_1990_present)
 
-# convert appropriate columns from char to num
+# convert year columns from char to num
 freedom <- freedom %>%
   mutate(across(6:ncol(freedom), as.numeric)) %>% 
   mutate(economic_freedom_summary_index = as.numeric(as.character(economic_freedom_summary_index)))
@@ -124,10 +140,9 @@ esg_wb_long <- esg_wb %>%
     names_to = "Year", # Name of the new column that will store the years
     values_to = "Value" # Name of the new column that will store the corresponding values
   ) 
-
-# View the pivoted data
-head(esg_wb_long)
 ```
+
+Finally, let's merge the datasets together by year and country name.
 
 ```{r}
 # rename the country column in freedom dataset to match esg_wb_long
@@ -139,9 +154,18 @@ names(freedom)[names(freedom) == "year"] <- "Year"
 # perform the join
 freedom_esg <- merge(freedom, esg_wb_long, by = c("Year", "country_name"))
 
+freedom_esg <- freedom_esg %>% 
+  mutate(Year = as.numeric(as.character(Year)))
+
 # save dataset as a csv
 write.csv(freedom_esg, "freedom_esg.csv", row.names = FALSE)
 ```
+
+Sweet! Now we have the dataset we will be working with in the analysis. 
+
+### Data Filtering
+
+For convenience, I have created a dataframe for each of the environmental indicators to make the analysis smoother.
 
 ```{r}
 # filtering for each series name 
@@ -167,37 +191,29 @@ methane_emissions <- freedom_esg %>%
   filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
 ```
 
-```{r}
-cor.test(methane_emissions_selected$Value, methane_emissions_selected$economic_freedom_summary_index)
-```
 
+### Emissions
 
-```{r}
-# Filter the dataset for US and the years 2000-2020
-methane_emissions_us <- methane_emissions %>% 
-  filter(country_name == "United States", Year >= 2000, Year <= 2020)
+In the first piece of analysis, let's look at the emissions data. The units for which the emissions are recorded in the dataset are metric tons of CO2 equivalent per capita. 
 
-deforestation_brazil <- forest_depletion %>% 
-  filter(Year >= 2000, Year <= 2020) %>% 
-  group_by(country_name) %>% 
-  summarize(mean_deforestation = mean(Value, na.rm = TRUE),
-            mean_freedom = mean(economic_freedom_summary_index, na.rm = TRUE))
-
-
-```
+First, let's compare the average emission in 2022 by economic freedom quartile
 
 ```{r}
-methane_lm <- lm(Value ~ x5d_freedom_to_enter_markets_and_compete, data = freedom_esg)
+# create summary table for mean and stdev of methane emissions for each economic freedom quartile
+methane_emissions_quartile <- methane_emissions %>% 
+  filter(Year == 2020) %>% 
+  group_by(quartile) %>% 
+  summarize(avg_methane = mean(Value, na.rm = TRUE),
+            std_methane = sd(Value, na.rm = TRUE))
 
-summary(methane_lm)
+methane_emissions_quartile_plot <- ggplot(methane_emissions_quartile, aes(x = quartile, y = avg_methane)) +
+  geom_col() +
+  theme_minimal()
+
+methane_emissions_quartile_plot
+
 ```
 
-
-```{r}
-methane_emissions %>% 
-  group_by(Year, quartile) %>% 
-  summarize(avg_methane = mean(Value, na.rm = TRUE))
-```
 
 ```{r}
 methane_col_of_interest <- freedom_esg %>% 
@@ -206,11 +222,55 @@ methane_col_of_interest <- freedom_esg %>%
 ```
 
 
-Historical events to consider:
+### Renewable Energy Consumption
 
--   2008 financial crisis
+Many countries have ambitious goals in place to become carbon-neutral in the next few decades. Are countries on the right track? Let's look at the countries that consume the most energy: China, United States, India, and Russia. [@statista]
 
--   2016 paris agreement
+First, let's take a look at the percentage of energy consumption that comes from renewable sources for each of these countries.
+
+```{r}
+renewable_consumption_leaders <- renewable_consumption %>% 
+  filter(country_name %in% c("United States", "Russian Federation", "China", "India"))
+
+ggplot(renewable_consumption_leaders, aes(x = Year, y = Value, color = country_name)) +
+  geom_point()
+
+
+```
+
+### Forest Depletion
+
+Deforestation is a massive issue that exacerbates the climate crisis.
+
+```{r}
+forest_depletion %>% 
+  group_by(quartile) %>% 
+  filter(Year == 2020) %>% 
+  summarize(avg_depletion = mean(Value, na.rm = TRUE),
+            std_depletion = sd(Value, na.rm = TRUE))
+```
+
+
+```{r}
+# Calculate the year-over-year change for each country
+renewable_data <- freedom_esg %>%
+  arrange(country_name, Year) %>%
+  group_by(country_name) %>%
+  mutate(Yearly_Change = Value - lag(Value))
+
+# Filter the data for the years 2000 to 2020
+renewable_data_filtered <- renewable_data %>%
+  filter(Year >= 2000, Year <= 2020)
+
+# Calculate the average change per quartile
+average_change_per_quartile <- renewable_data_filtered %>%
+  group_by(quartile) %>%
+  summarize(Average_Change = mean(Yearly_Change, na.rm = TRUE))
+
+# View the results
+average_change_per_quartile
+```
+
 
 
 Hypothesis testing: 
