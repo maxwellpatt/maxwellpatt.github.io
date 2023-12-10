@@ -194,7 +194,7 @@ In the first piece of analysis, let's look at the methane emissions data. The un
 
 First, let's compare the average emission by economic freedom quartile from 2000 to 2020.
 
-```{r}
+```{r, message=FALSE}
 # create summary table for mean and stdev of methane emissions for each economic freedom quartile
 methane_emissions_quartile <- methane_emissions %>% 
   group_by(Year, quartile) %>% 
@@ -203,8 +203,8 @@ methane_emissions_quartile <- methane_emissions %>%
   na.omit()
 
 methane_emissions_plot_with_error <- ggplot(methane_emissions_quartile, aes(x = Year, y = avg_methane, color = as.factor(quartile))) +
-  geom_line() +
-  labs(title = "Methane Emissions Over Time by Economic Freedom Quartile with Standard Deviation",
+  geom_smooth(se = TRUE) +
+  labs(title = "Methane Emissions Over Time by Economic Freedom Quartile",
        x = "Year",
        y = "Average Methane Emissions (metric tons of CO2 equivalent per capita)",
        color = "Economic Freedom Quartile") +
@@ -215,6 +215,7 @@ methane_emissions_plot_with_error
 
 ```
 
+Interesting, so the second quartile of economically free countries has the highest methane emissions by a significant amount across the entire time period. Overall, the emissions levels of all quartiles decreased from 2000 to 2020, a positive sign in the hopes of becoming a carbon-neutral planet. 
 
 ```{r}
 methane_col_of_interest <- freedom_esg %>% 
@@ -228,7 +229,7 @@ methane_lm <- lm(Value ~ economic_freedom_summary_index, data = methane_col_of_i
 summary(methane_lm)
 ```
 
-This regression reveals that there is essentially no relationship between methane emissions and economic freedom. Let's look into a few other variables from the freedom dataset that might be more revealing.
+This regression reveals that there is essentially no relationship between methane emissions and economic freedom, as shown by the exceptionally high p-value. Let's look into a few other variables from the freedom dataset that might be more revealing.
 
 ```{r}
 # Ensure 'Value' is numeric
@@ -259,6 +260,8 @@ methane_sorted_correlations <- methane_corr_results %>%
 # View the results
 head(methane_sorted_correlations, 10)
 ```
+
+This correlation analysis allows us to find the variables in the freedom dataset that are most strongly correlated with methane emissions. 
 
 
 ### Renewable Energy Consumption
