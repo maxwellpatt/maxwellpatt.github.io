@@ -287,6 +287,14 @@ summary(emissions_lm_govt)
 
 INTERPRET HERE
 
+What about sound money? Does having more sound money bode well for carbon emissions?
+
+```{r}
+methane_sm_lm <- lm(formula = Value ~ x3_sound_money + x5_regulation + data, data = renewable_consumption)
+
+summary(methane_sm_lm)
+```
+
 ### Renewable Energy Consumption
 
 Increasing the rate of renewable energy consumption is imperative in the fight against climate change. While it would be logical to assume that private and public ensurers alike would react to the impending climate crisis by increasing demand in renewable energy, this is not really the case. First, let's look at renewable energy consumption rates across each quartile from 2000 to 2020.
@@ -312,6 +320,14 @@ renewable_consumption_quartile_plot
 ```
 
 The graph shows that the 4th quartile renewable energy consumption rate average is the highest among all quartiles, with the 3rd quartile being the second highest by a significant margin from 2000 all the way up until 2020. This is interesting as it reveals that countries with less economic freedom tend to have higher renewable energy consumption rates, possibly because of government regulation that mandates a certain level of consumption be renewable. However, there are alternative hypotheses as well. For instance, it could be that since we know countries that have less freedom tend to have lower GDP and overall economic output, that they simply need less energy overall and can therefore rely more on renewable energy consumption, which might be cheaper and more accessible in many of the poorer regions of the globe. Additionally, fostering a preference for renewable energy in poorer, less free countries can decrease the reliance on oil and natural gas, leading to energy portfolios that are more resilient to fluctuations and spikes in prices.
+
+```{r}
+renewable_pct <- renewable_consumption$Value / 100
+
+rc_glm <- glm(renewable_pct ~ economic_freedom_summary_index, family = binomial, data = renewable_consumption)
+
+rc_glm
+```
 
 Next, let's conduct a linear regression to examine the dynamic between economic freedom and renewable consumption for all quartiles.
 
@@ -371,9 +387,7 @@ renewable_output_quartile_plot
 Next, let's investigate if there is a significant difference in renewable energy output across each quartile of economic freedom.
 
 ```{r}
-renewable_output_2015 <- renewable_output %>% 
-  filter(Year == 2015) %>% 
-  na.omit()
+renewable_output$quartile <- factor(renewable_output$quartile)
 
 anova_ro <- aov(Value ~ quartile, data = renewable_output)
 
@@ -526,13 +540,13 @@ head(similar_countries, 25)
 So what we just made can be turned into a function to compare lots of countries. Here is the function:
 
 ```{r}
-find_similar_countries <- function(data, target_country, top_n = 25) {
+find_similar_countries_w_methane <- function(data, target_country, top_n = 25) {
   # Filter the dataset for the year 2020
   data_2020 <- filter(data, Year == 2020)
 
   # Select relevant columns
   relevant_data <- data_2020 %>%
-    dplyr::select(country_name, economic_freedom_summary_index, data, data_3, x1_size_of_government, x2c_property_rights, x3a_money_growth, x3_sound_money, x4a_tariffs, x4di_financial_openness, x4_freedom_to_trade_internationally, x5aii_private_sector_credit, x5d_freedom_to_enter_markets_and_compete) %>%
+    dplyr::select(country_name, economic_freedom_summary_index, x1_size_of_government, x2_legal_system_property_rights_with_gender_adjustment, x3_sound_money, x4_freedom_to_trade_internationally, x5_regulation) %>%
     na.omit()
 
   # Normalize the data
@@ -546,22 +560,35 @@ find_similar_countries <- function(data, target_country, top_n = 25) {
   })
 
   # Combine distances with country names
-  distance_data <- data.frame(country_name = normalized_data$country_name, distance = distances)
+  distance_data <- data.frame(country_name = normalized_data$country_name, 
+                              eucl_distance = distances)
 
   # Rank countries by distance
   similar_countries <- distance_data %>% 
-    arrange(distance) %>% 
+    arrange(eucl_distance) %>% 
     filter(country_name != target_country)
+  
+    # Filter methane emissions data for 2020
+  emissions_2020 <- filter(methane_emissions, Year == 2020)
+
+  # Join the methane emissions data
+  similar_countries_with_emissions <- merge(similar_countries, emissions_2020, by = "country_name") %>% 
+    dplyr::select(country_name, eucl_distance, Value) %>% 
+    arrange(eucl_distance)
 
   # Return the top similar countries
-  head(similar_countries, top_n)
+  head(similar_countries_with_emissions, top_n)
 }
 ```
 
 Now, let's test the function.
 
 ```{r}
-find_similar_countries(freedom_esg, "China", 100)
+find_similar_countries_w_methane(freedom, "Denmark", 25)
+```
+
+```{r}
+function_regression <- lm
 ```
 
 ## Omitted Variable Bias
