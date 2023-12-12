@@ -34,9 +34,9 @@ The report discusses how countries that are have higher levels of economic freed
 
 This analysis will consider several environmental outcomes pulled from the World Bank website. These data include freshwater withdrawal as a proportion of available freshwater resources (water stress), net forest depletion as a percentage of GNI, renewable energy output as a percentage of total energy consumption, renewable energy consumption as a percentage of total energy consumption, and methane emissions in metric tons of CO2 per capita [@worldbank] Combined with the economic freedom data, this will allow for the analysis to look at the relationship between economic freedom scores and related variables to environmental outcomes over time in different countries.
 
-### Predictions
+### 
 
-## Analysis
+## Data Wrangling
 
 First, let's import the libraries we will need to conduct this analysis.
 
@@ -182,6 +182,8 @@ methane_emissions <- freedom_esg %>%
   filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
 ```
 
+## Analysis
+
 ### Emissions
 
 In the first piece of analysis, let's look at the methane emissions data. The units for which the emissions are recorded in the dataset are metric tons of CO2 equivalent per capita.
@@ -196,34 +198,49 @@ methane_emissions_quartile <- methane_emissions %>%
             std_methane = sd(Value, na.rm = TRUE)) %>% 
   na.omit()
 
+# create bar chart of the above summary table
 methane_emissions_plot_with_error <- ggplot(methane_emissions_quartile, aes(x = Year, y = avg_methane, color = as.factor(quartile))) +
   geom_smooth(se = TRUE) +
   labs(title = "Methane Emissions Over Time by Economic Freedom Quartile",
        x = "Year",
-       y = "Average Methane Emissions (metric tons of CO2 equivalent per capita)",
+       y = "Avg Methane Emissions (metric tons of CO2 per capita)",
        color = "Economic Freedom Quartile") +
   theme_minimal()
 
-# Display the plot
+# display the plot
 methane_emissions_plot_with_error
 
 ```
 
 Interesting, so the second quartile of economically free countries has the highest methane emissions by a significant amount across the entire time period. Overall, the emissions levels of all quartiles decreased from 2000 to 2020, a positive sign in the hopes of becoming a carbon-neutral planet.
 
-```{r}
-methane_col_of_interest <- freedom_esg %>% 
-  dplyr::select(Year, quartile, country_name, economic_freedom_summary_index, data, data_3, data_6, x5d_freedom_to_enter_markets_and_compete, series_name, Value) %>% 
-  filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
-```
+Next, let's perform a linear regression on the economic freedom index and methane emissions.
 
 ```{r}
-methane_lm <- lm(Value ~ economic_freedom_summary_index, data = methane_col_of_interest)
+# run linear regression
+methane_lm <- lm(Value ~ economic_freedom_summary_index, data = methane_emissions)
 
 summary(methane_lm)
 ```
 
-This regression reveals that there is essentially no relationship between methane emissions and economic freedom, as shown by the exceptionally high p-value. Let's look into a few other variables from the freedom dataset that might be more revealing.
+This regression reveals that there is essentially no relationship between methane emissions and economic freedom, as shown by the exceptionally high p-value. When the freedom score is increased by 1, the economic freedom decreases by a measely .004037. Let's consider the analysis on a single year to see if this is any more significant (which shouldn't be that hard to achieve!).
+
+```{r}
+# filter methane data for 2019
+methane_emissions_2019 <- methane_emissions %>% 
+  filter(Year == 2019) %>% 
+  na.omit()
+
+# run linear regression on 2019 data
+methane_lm_2019 <- lm(Value ~ economic_freedom_summary_index, data = methane_emissions_2019)
+
+summary(methane_lm_2019)
+
+```
+
+Yikes! A negative adjusted r-squared value. This is a sign that the model is a poor fit for the data and is less informative than the mean of the dependent variable. It can also be due to overfitting, but this is not the case since we are only using one predictor variable. Maybe there is a combination of factors from the multitude of columns coming from the *freedom* dataset that could be useful and informative. Let's take a look.
+
+The code below finds the 10 variables that have the strongest correlation to methane emissions.
 
 ```{r}
 # Ensure 'Value' is numeric
@@ -255,61 +272,119 @@ methane_sorted_correlations <- methane_corr_results %>%
 head(methane_sorted_correlations, 10)
 ```
 
-This correlation analysis allows us to find the variables in the freedom dataset that are most strongly correlated with methane emissions.
+Let's consider the hypothesis that a strong government with stable currency and lower regulatory influence will have higher methane emissions due to the amount of profitability that can be gained through traditional methane production of goods.
+
+```{r}
+methane_emission_2020_selected <- methane_emissions %>% 
+  filter(Year == 2020) %>% 
+  dplyr::select(country_name, x1_size_of_government, x3_sound_money, x5_regulation, Value, quartile) %>% 
+  na.omit()
+
+emissions_lm_govt <- lm(Value ~ x1_size_of_government + x3_sound_money + x5_regulation, data = methane_emission_2020_selected)
+
+summary(emissions_lm_govt)
+```
+
+INTERPRET HERE
 
 ### Renewable Energy Consumption
 
-Many countries have ambitious goals in place to become carbon-neutral in the next few decades. Are countries on the right track? Let's look at the countries that consume the most energy: China, United States, India, and Russia. [@statista]
-
-First, let's take a look at the percentage of energy consumption that comes from renewable sources for each of these countries.
+Increasing the rate of renewable energy consumption is imperative in the fight against climate change. While it would be logical to assume that private and public ensurers alike would react to the impending climate crisis by increasing demand in renewable energy, this is not really the case. First, let's look at renewable energy consumption rates across each quartile from 2000 to 2020.
 
 ```{r}
-renewable_consumption_leaders <- renewable_consumption %>% 
-  filter(country_name %in% c("United States", "Russian Federation", "China", "India"))
+# group renewable consumption data by year and quartile
+renewable_consumption_summary <- renewable_consumption %>% 
+  group_by(Year, quartile) %>% 
+  summarize(avg_consumption = mean(Value, na.rm = TRUE)) %>% 
+  na.omit()
 
-renewable_consumption_leaders_plot <- ggplot(renewable_consumption_leaders, aes(x = Year, y = Value, color = country_name)) +
-  geom_line()
+# plot average renewable consumption rate by quartile
+renewable_consumption_quartile_plot <- ggplot(renewable_consumption_summary, aes(x = Year, y = avg_consumption, color = as.factor(quartile))) +
+  geom_line(size = 1.2) +
+  labs(title = "Renewable Energy Consumption Rates Across Economic Freedom Quartiles",
+       x = "Year",
+       y = "Average Renewable Energy Consumption Rate (%)",
+       color = "Economic Freedom Quartile") +
+  theme_minimal()
 
-renewable_consumption_leaders_plot
+# display plot
+renewable_consumption_quartile_plot
 ```
+
+The graph shows that the 4th quartile renewable energy consumption rate average is the highest among all quartiles, with the 3rd quartile being the second highest by a significant margin from 2000 all the way up until 2020. This is interesting as it reveals that countries with less economic freedom tend to have higher renewable energy consumption rates, possibly because of government regulation that mandates a certain level of consumption be renewable. However, there are alternative hypotheses as well. For instance, it could be that since we know countries that have less freedom tend to have lower GDP and overall economic output, that they simply need less energy overall and can therefore rely more on renewable energy consumption, which might be cheaper and more accessible in many of the poorer regions of the globe. Additionally, fostering a preference for renewable energy in poorer, less free countries can decrease the reliance on oil and natural gas, leading to energy portfolios that are more resilient to fluctuations and spikes in prices.
+
+Next, let's conduct a linear regression to examine the dynamic between economic freedom and renewable consumption for all quartiles.
+
+```{r}
+# conduct linear regression for renewable consumption
+renewable_consumption_lm <- lm(Value ~ economic_freedom_summary_index, data = renewable_consumption)
+
+# display regression results
+summary(renewable_consumption_lm)
+```
+
+DISCUSS RESULTS
 
 ### Renewable Energy Output
 
-Renewable energy output is valuable in determining a country's economic impact since energy that is consumed can be outputted in other countries.
+Renewable energy output is valuable in determining a country's economic impact since energy that is consumed can be exported to other countries for consumption. Furthermore, certain countries are better set up to capitalize on the economic gains of producing renewable energy due to regional climate conditions. For example, Costa Rica can produced so much renewable energy that it has enough to export it to countries in the Central American Regional Electricity Market. [@climatecouncil] Having renewable output rates closer to 100 bodes well for a countries long-term resilience and preparedness for increases in oil prices and the impending need for a total shift to renewable energy. These countries with higher rates are "ahead of the curve" but there are lots of variables that may still make energy demands difficult to meet due to variables outside of that country's control. Let's investigate how economic freedom and renewable energy output are related. Are countries with less economic freedom more likely to have higher renewable energy outputs since the government has more control over the market and regional demand for energy? Or are more free economies more likely to report higher renewable energy outputs due to \_\_\_\_\_\_\_\_\_\_\_.
 
 ```{r}
-renewable_output_leaders <- renewable_output %>% 
-  filter(country_name %in% c("United States", "Russian Federation", "China", "India"))
+# run linear regression of economic freedon on renewable energy output
+renewable_output_lm <- lm(Value ~ economic_freedom_summary_index, data = renewable_output)
 
-renewable_output_leaders_plot <- ggplot(renewable_output_leaders, aes(x = Year, y = Value, color = country_name)) +
-  geom_line()
+summary(renewable_output_lm)
+```
 
-renewable_output_leaders_plot
+```{r}
+ggplot(renewable_output, aes(x = economic_freedom_summary_index, y = Value)) +
+  geom_point() +  # add points
+  labs(title = "Scatter Plot of Value vs Economic Freedom Summary Index",
+       x = "Economic Freedom Summary Index",
+       y = "Value") +
+  theme_minimal()  # using a minimal theme for a clean look
+```
+
+DISCUSS
+
+```{r}
+# group renewable consumption data by year and quartile
+renewable_output_summary <- renewable_output %>% 
+  filter(Year <= 2015) %>% 
+  group_by(Year, quartile) %>% 
+  summarize(avg_output = mean(Value, na.rm = TRUE)) %>% 
+  na.omit()
+
+# plot average renewable consumption rate by quartile
+renewable_output_quartile_plot <- ggplot(renewable_output_summary, aes(x = Year, y = avg_output, color = as.factor(quartile))) +
+  geom_line(size = 1.2) +
+  labs(title = "Renewable Energy Output Rates Across Economic Freedom Quartiles",
+       x = "Year",
+       y = "Average Renewable Energy Output Rate (%)",
+       color = "Economic Freedom Quartile") +
+  theme_minimal()
+
+# display plot
+renewable_output_quartile_plot
 ```
 
 Next, let's investigate if there is a significant difference in renewable energy output across each quartile of economic freedom.
 
 ```{r}
-renewable_output_2020_quartile <- renewable_output %>% 
-  group_by(quartile) %>% 
-  summarize(mean_renewable_output = mean(Value, na.rm = TRUE),
-            std_renewable_output = sd(Value, na.rm = TRUE))
-
-renewable_output_2020_quartile
-```
-
-```{r}
 renewable_output_2015 <- renewable_output %>% 
-  filter(Year == 2015)
+  filter(Year == 2015) %>% 
+  na.omit()
 
 anova_ro <- aov(Value ~ quartile, data = renewable_output)
 
 summary(anova_ro)
 ```
 
+DISCUSS RESULTS.
+
 ### Forest Depletion
 
-Deforestation is a massive issue that exacerbates the climate crisis.
+Deforestation is a massive issue that exacerbates the climate crisis. Countries that are cutting down trees at higher rates for timber and clearing land for agriculture come at the expense of the health of ecosystems around the world. Are countries with more freedom cutting down more forests to exploit the profit it has to offer? Or are less free countries that are economically limited on the private side more likely to
 
 ```{r}
 forest_depletion_2020_quartile_summary <- forest_depletion %>% 
@@ -325,13 +400,35 @@ ggplot(forest_depletion_2020_quartile_summary, aes(x = factor(quartile), y = avg
   geom_bar(stat = "identity", position = position_dodge(), fill = "skyblue") +
   geom_errorbar(aes(ymin = avg_depletion - std_depletion, ymax = avg_depletion + std_depletion), 
                 width = 0.2, position = position_dodge(0.9)) +
-  labs(title = "Average Forest Depletion by Quartile in 2020",
+  labs(title = "Average Forest Depletion Index by Quartile in 2020",
        x = "Economic Freedom Quartile",
-       y = "Average Forest Depletion") +
+       y = "Average Forest Depletion Index") +
   theme_minimal()
 ```
 
 This visualization provides some strong takeaways.
+
+Now let's look at this over time
+
+```{r, message=FALSE}
+# Aggregating the forest depletion data by year and quartile
+forest_depletion_time_series <- forest_depletion %>%
+  group_by(Year, quartile) %>%
+  summarize(avg_depletion = mean(Value, na.rm = TRUE),
+            std_depletion = sd(Value, na.rm = TRUE)) %>%
+  na.omit()
+
+# Plotting a line graph with thicker lines
+ggplot(forest_depletion_time_series, aes(x = Year, y = avg_depletion, color = as.factor(quartile))) +
+  geom_line(size = 1.2) +  # Increase line thickness
+  labs(title = "Average Forest Depletion Score by Quartile (2000-2020)",
+       x = "Year",
+       y = "Average Forest Depletion Score",
+       color = "Economic Freedom Quartile") +
+  theme_minimal()
+
+
+```
 
 Let's run an ANOVA test to determine the significance here.
 
@@ -382,7 +479,89 @@ head(water_stress_sorted_correlations, 10)
 INTERPRET RESULTS
 
 ```{r}
-water_stress_lm <- lm(Value ~ data + data_4 + data_5, data = water_stress)
+water_stress_lm <- lm(Value ~ data + data_4 + data_5 + ie_state_ownership, data = water_stress)
 
 summary(water_stress_lm)
 ```
+
+DISCUSS RESULTS HERE.
+
+```{r}
+# Assuming 'data' is your dataset and it includes country, year, and various metrics
+# Filter the dataset for the year 2020
+data_2020 <- filter(freedom, Year == 2020)
+
+# Select relevant columns (metrics) for comparison
+relevant_data <- data_2020 %>% 
+  dplyr::select(country_name, economic_freedom_summary_index, data, data_3, x1_size_of_government, x2c_property_rights, x3a_money_growth, x3_sound_money, x4a_tariffs, x4di_financial_openness, x4_freedom_to_trade_internationally, x5aii_private_sector_credit, x5d_freedom_to_enter_markets_and_compete) %>%
+  na.omit()  # Remove rows with NA values
+
+# Normalize the data
+normalized_data <- as.data.frame(scale(relevant_data[,-1]))  # Exclude country_name for scaling
+normalized_data$country_name <- relevant_data$country_name
+
+# Calculate Euclidean distances
+switzerland_data <- normalized_data %>% filter(country_name == "Switzerland")
+distances <- apply(normalized_data[,-ncol(normalized_data)], 1, function(x) {
+  sqrt(sum((x - unlist(switzerland_data[,-ncol(switzerland_data)]))^2))
+})
+
+# Combine distances with country names
+distance_data <- data.frame(country_name = normalized_data$country_name, distance = distances)
+
+# Rank countries by distance
+similar_countries <- distance_data %>% 
+  arrange(distance) %>% 
+  filter(country_name != "Switzerland")
+
+# View the top similar countries
+head(similar_countries, 25)
+
+```
+
+### 
+
+### Similarity Function
+
+So what we just made can be turned into a function to compare lots of countries. Here is the function:
+
+```{r}
+find_similar_countries <- function(data, target_country, top_n = 25) {
+  # Filter the dataset for the year 2020
+  data_2020 <- filter(data, Year == 2020)
+
+  # Select relevant columns
+  relevant_data <- data_2020 %>%
+    dplyr::select(country_name, economic_freedom_summary_index, data, data_3, x1_size_of_government, x2c_property_rights, x3a_money_growth, x3_sound_money, x4a_tariffs, x4di_financial_openness, x4_freedom_to_trade_internationally, x5aii_private_sector_credit, x5d_freedom_to_enter_markets_and_compete) %>%
+    na.omit()
+
+  # Normalize the data
+  normalized_data <- as.data.frame(scale(relevant_data[,-1]))
+  normalized_data$country_name <- relevant_data$country_name
+
+  # Calculate Euclidean distances
+  target_country_data <- normalized_data %>% filter(country_name == target_country)
+  distances <- apply(normalized_data[,-ncol(normalized_data)], 1, function(x) {
+    sqrt(sum((x - unlist(target_country_data[,-ncol(target_country_data)]))^2))
+  })
+
+  # Combine distances with country names
+  distance_data <- data.frame(country_name = normalized_data$country_name, distance = distances)
+
+  # Rank countries by distance
+  similar_countries <- distance_data %>% 
+    arrange(distance) %>% 
+    filter(country_name != target_country)
+
+  # Return the top similar countries
+  head(similar_countries, top_n)
+}
+```
+
+Now, let's test the function.
+
+```{r}
+find_similar_countries(freedom_esg, "China", 100)
+```
+
+## Omitted Variable Bias
