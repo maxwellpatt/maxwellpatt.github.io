@@ -41,7 +41,7 @@ This analysis will consider several environmental outcomes pulled from the World
 
 ## Data Wrangling
 
-First, let's import the libraries we wlll need to conduct this analysis.
+First, let's import the libraries we will need to conduct this analysis.
 
 ```{r, echo=TRUE,message=FALSE}
 # import libraries
