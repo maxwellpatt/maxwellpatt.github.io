@@ -615,7 +615,7 @@ F-statistic: 355.7 on 3 and 3037 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>renewable_pct <span class="ot">&lt;-</span> renewable_consumption<span class="sc">$</span>Value <span class="sc">/</span> <span class="dv">100</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>rc_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(renewable_pct <span class="sc">~</span> economic_freedom_summary_index, <span class="at">family =</span> binomial, <span class="at">data =</span> renewable_consumption)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>rc_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(renewable_pct <span class="sc">~</span> economic_freedom_summary_index, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> renewable_consumption)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
 </div>
@@ -623,7 +623,7 @@ F-statistic: 355.7 on 3 and 3037 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:  glm(formula = renewable_pct ~ economic_freedom_summary_index, 
-    family = binomial, data = renewable_consumption)
+    family = "binomial", data = renewable_consumption)
 
 Coefficients:
                    (Intercept)  economic_freedom_summary_index  
@@ -963,16 +963,16 @@ F-statistic: 142.6 on 4 and 2339 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h3 class="anchored" data-anchor-id="similarity-function">Similarity Function</h3>
 <p>So what we just made can be turned into a function to compare lots of countries. Here is the function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>find_similar_countries_w_methane <span class="ot">&lt;-</span> <span class="cf">function</span>(data, target_country, <span class="at">top_n =</span> <span class="dv">25</span>) {</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter the dataset for the year 2020</span></span>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>find_similar_countries_w_methane <span class="ot">&lt;-</span> <span class="cf">function</span>(data, target_country, top_n) {</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter the dataset for the year 2020</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  data_2020 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select relevant columns</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select relevant columns (5 areas of economic freedom score and score itself)</span></span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  relevant_data <span class="ot">&lt;-</span> data_2020 <span class="sc">%&gt;%</span></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, economic_freedom_summary_index, x1_size_of_government, x2_legal_system_property_rights_with_gender_adjustment, x3_sound_money, x4_freedom_to_trade_internationally, x5_regulation) <span class="sc">%&gt;%</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, x1_size_of_government, x2_legal_system_property_rights_with_gender_adjustment, x3_sound_money, x4_freedom_to_trade_internationally, x5_regulation) <span class="sc">%&gt;%</span></span>
 <span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span>
 <span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalize the data</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># normalize the data</span></span>
 <span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  normalized_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scale</span>(relevant_data[,<span class="sc">-</span><span class="dv">1</span>]))</span>
 <span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  normalized_data<span class="sc">$</span>country_name <span class="ot">&lt;-</span> relevant_data<span class="sc">$</span>country_name</span>
 <span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -992,47 +992,48 @@ F-statistic: 142.6 on 4 and 2339 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country_name <span class="sc">!=</span> target_country)</span>
 <span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter methane emissions data for 2020</span></span>
-<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a>  emissions_2020 <span class="ot">&lt;-</span> <span class="fu">filter</span>(methane_emissions, Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
-<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Join the methane emissions data</span></span>
-<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a>  similar_countries_with_emissions <span class="ot">&lt;-</span> <span class="fu">merge</span>(similar_countries, emissions_2020, <span class="at">by =</span> <span class="st">"country_name"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, eucl_distance, Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eucl_distance)</span>
-<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return the top similar countries</span></span>
-<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(similar_countries_with_emissions, top_n)</span>
-<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a>  emissions_2020 <span class="ot">&lt;-</span> methane_emissions <span class="sc">%&gt;%</span> </span>
+<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
+<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Join the methane emissions data</span></span>
+<span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a>  similar_countries_with_emissions <span class="ot">&lt;-</span> <span class="fu">merge</span>(similar_countries, emissions_2020, <span class="at">by =</span> <span class="st">"country_name"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, eucl_distance, Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eucl_distance)</span>
+<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return the most similar countries</span></span>
+<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(similar_countries_with_emissions, top_n)</span>
+<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s test the function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find_similar_countries_w_methane</span>(freedom, <span class="st">"Denmark"</span>, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           country_name eucl_distance     Value
-1            Luxembourg     0.7318000 0.8815772
-2               Finland     0.7342867 0.8149538
-3             Australia     0.9688008 5.1250548
-4           Netherlands     0.9691750 0.8715177
-5                 Japan     1.0558955 0.2042065
-6                Sweden     1.0800896 0.4628503
-7                Norway     1.0815548 0.8072835
-8                Canada     1.0925807 2.6348554
-9           New Zealand     1.1156783 6.3341199
-10              Germany     1.1405345 0.5641788
-11              Ireland     1.1964686 3.0595097
-12              Iceland     1.2500208 1.4057751
-13       United Kingdom     1.2613322 0.7515615
-14              Estonia     1.3180414 0.8251958
-15              Austria     1.3206713 0.7696740
-16              Belgium     1.4859101 0.6910790
-17               Latvia     1.5998452 1.0275522
-18        United States     1.6395011 2.2570601
-19               France     1.7097647 0.8650367
-20              Czechia     1.7209772 1.1573900
-21 United Arab Emirates     1.7323338 6.1314669
-22                Spain     1.7583522 0.8382282
-23            Singapore     1.7786043 0.7646497
-24            Lithuania     1.8256855 1.0728030
-25                Malta     1.8824874 0.4429875</code></pre>
+1               Finland     0.6396362 0.8149538
+2            Luxembourg     0.6477164 0.8815772
+3           Netherlands     0.8955070 0.8715177
+4             Australia     0.9625143 5.1250548
+5                Sweden     0.9671643 0.4628503
+6                Norway     0.9784877 0.8072835
+7                 Japan     1.0060645 0.2042065
+8                Canada     1.0504405 2.6348554
+9           New Zealand     1.0715922 6.3341199
+10              Germany     1.0751399 0.5641788
+11              Ireland     1.1778313 3.0595097
+12              Austria     1.2092616 0.7696740
+13       United Kingdom     1.2144811 0.7515615
+14              Iceland     1.2204110 1.4057751
+15              Belgium     1.3046484 0.6910790
+16              Estonia     1.3125487 0.8251958
+17               France     1.5259000 0.8650367
+18 United Arab Emirates     1.5305686 6.1314669
+19               Latvia     1.5435357 1.0275522
+20        United States     1.6387359 2.2570601
+21                Spain     1.6560537 0.8382282
+22              Czechia     1.6687601 1.1573900
+23            Singapore     1.7456915 0.7646497
+24            Lithuania     1.7955099 1.0728030
+25                Malta     1.8393511 0.4429875</code></pre>
 </div>
 </div>
 <div class="cell">
