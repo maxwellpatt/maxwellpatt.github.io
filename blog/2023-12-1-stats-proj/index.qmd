@@ -324,7 +324,7 @@ The graph shows that the 4th quartile renewable energy consumption rate average 
 ```{r}
 renewable_pct <- renewable_consumption$Value / 100
 
-rc_glm <- glm(renewable_pct ~ economic_freedom_summary_index, family = binomial, data = renewable_consumption)
+rc_glm <- glm(renewable_pct ~ economic_freedom_summary_index, family = "binomial", data = renewable_consumption)
 
 rc_glm
 ```
@@ -540,16 +540,16 @@ head(similar_countries, 25)
 So what we just made can be turned into a function to compare lots of countries. Here is the function:
 
 ```{r}
-find_similar_countries_w_methane <- function(data, target_country, top_n = 25) {
-  # Filter the dataset for the year 2020
+find_similar_countries_w_methane <- function(data, target_country, top_n) {
+  # filter the dataset for the year 2020
   data_2020 <- filter(data, Year == 2020)
 
-  # Select relevant columns
+  # select relevant columns (5 areas of economic freedom score and score itself)
   relevant_data <- data_2020 %>%
-    dplyr::select(country_name, economic_freedom_summary_index, x1_size_of_government, x2_legal_system_property_rights_with_gender_adjustment, x3_sound_money, x4_freedom_to_trade_internationally, x5_regulation) %>%
+    dplyr::select(country_name, x1_size_of_government, x2_legal_system_property_rights_with_gender_adjustment, x3_sound_money, x4_freedom_to_trade_internationally, x5_regulation) %>%
     na.omit()
 
-  # Normalize the data
+  # normalize the data
   normalized_data <- as.data.frame(scale(relevant_data[,-1]))
   normalized_data$country_name <- relevant_data$country_name
 
@@ -569,14 +569,15 @@ find_similar_countries_w_methane <- function(data, target_country, top_n = 25) {
     filter(country_name != target_country)
   
     # Filter methane emissions data for 2020
-  emissions_2020 <- filter(methane_emissions, Year == 2020)
+  emissions_2020 <- methane_emissions %>% 
+    filter(Year == 2020)
 
   # Join the methane emissions data
   similar_countries_with_emissions <- merge(similar_countries, emissions_2020, by = "country_name") %>% 
     dplyr::select(country_name, eucl_distance, Value) %>% 
     arrange(eucl_distance)
 
-  # Return the top similar countries
+  # Return the most similar countries
   head(similar_countries_with_emissions, top_n)
 }
 ```
