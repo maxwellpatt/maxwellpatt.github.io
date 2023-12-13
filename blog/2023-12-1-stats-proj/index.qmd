@@ -24,11 +24,11 @@ While capitalism has the potential to foster innovation and generate funds that 
 
 There is certainly a level of subjectivity, or at least a certain amount of uncertainty, when scoring the freedom of an economy. As a result, it seems impossible to create a perfect score for economic freedom. However, this doesn't mean people haven't tried to create a spectrum to measure how free and open different economies are.
 
-The *Economic Freedom of the World: 2022 Annual Report* serves as the backbone of the analysis in this exploration. The dataset has a multitude of columns, the most important of which is gives each country an economic freedom index score on a scale from 1 to 10. According to the Fraser Institute, the pillars of their scoring of economic freedom depend on "personal choice, voluntary exchange, freedom to enter markets and compete, and security of the person and privately owned property." [@fraser] This economic freedom score is measured in five areas: size of government, legal system and property rights, sound money, freedom to trade internationally, and regulation.
+The *Economic Freedom of the World: 2022 Annual Report* serves as the backbone of the analysis in this exploration. The data set has a multitude of columns, the most important of which is gives each country an economic freedom index score on a scale from 1 to 10. According to the Fraser Institute, the pillars of their scoring of economic freedom depend on "personal choice, voluntary exchange, freedom to enter markets and compete, and security of the person and privately owned property." [@fraser] This economic freedom score is measured in five areas: size of government, legal system and property rights, sound money, freedom to trade internationally, and regulation.
 
-In addition to the economic freedom index column, there are a plethora of interesting variables that can be analyzed in this dataset.
+In addition to the economic freedom index column, there are a plethora of interesting variables that can be analyzed in this data set.
 
-The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-caputa GDP of \$48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of \$6,542. Furthermore, life expecancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 [@fraser] However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.
+The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-caputa GDP of \$48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of \$6,542. Furthermore, life expectancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 [@fraser] However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.
 
 ### Environmental Outcomes Analyzed
 
@@ -51,6 +51,7 @@ library(tidyr)
 library(forecast)
 library(randomForest)
 library(tidyverse)
+library(gplots)
 
 # clear environment for sanity
 rm(list = ls())
@@ -186,7 +187,7 @@ methane_emissions <- freedom_esg %>%
 
 ### Emissions
 
-In the first piece of analysis, let's look at the methane emissions data. The units for which the emissions are recorded in the dataset are metric tons of CO2 equivalent per capita.
+In the first piece of analysis, let's look at the methane emissions data. The units for which the emissions are recorded in the data set are metric tons of CO2 equivalent per capita.
 
 First, let's compare the average emission by economic freedom quartile from 2000 to 2020.
 
@@ -214,7 +215,7 @@ methane_emissions_plot_with_error
 
 Interesting, so the second quartile of economically free countries has the highest methane emissions by a significant amount across the entire time period. Overall, the emissions levels of all quartiles decreased from 2000 to 2020, a positive sign in the hopes of becoming a carbon-neutral planet.
 
-Next, let's perform a linear regression on the economic freedom index and methane emissions.
+Next, let's perform a linear regression on the economic freedom index and methane emissions to understand the effect of economic freedom on methane emissions. 
 
 ```{r}
 # run linear regression
@@ -238,7 +239,7 @@ summary(methane_lm_2019)
 
 ```
 
-Yikes! A negative adjusted r-squared value. This is a sign that the model is a poor fit for the data and is less informative than the mean of the dependent variable. It can also be due to overfitting, but this is not the case since we are only using one predictor variable. Maybe there is a combination of factors from the multitude of columns coming from the *freedom* dataset that could be useful and informative. Let's take a look.
+Yikes! Not any better. A negative adjusted r-squared value. This is a sign that the model is a poor fit for the data and is less informative than the mean of the dependent variable. It can also be due to overfitting, but this is not the case since we are only using one predictor variable. Maybe there is a combination of factors from the multitude of columns coming from the *freedom* data set that could be useful and informative. Let's take a look.
 
 The code below finds the 10 variables that have the strongest correlation to methane emissions.
 
@@ -271,6 +272,8 @@ methane_sorted_correlations <- methane_corr_results %>%
 # View the results
 head(methane_sorted_correlations, 10)
 ```
+
+These are the 10 variables that have the strongest correlation with methane emission levels. ADD DESCRIPTIONS OF AMBIGUOUS VARIABLES.
 
 Let's consider the hypothesis that a strong government with stable currency and lower regulatory influence will have higher methane emissions due to the amount of profitability that can be gained through traditional methane production of goods.
 
@@ -311,7 +314,7 @@ renewable_consumption_quartile_plot <- ggplot(renewable_consumption_summary, aes
   geom_line(size = 1.2) +
   labs(title = "Renewable Energy Consumption Rates Across Economic Freedom Quartiles",
        x = "Year",
-       y = "Average Renewable Energy Consumption Rate (%)",
+       y = "Average Renewable Energy Consumption Rate",
        color = "Economic Freedom Quartile") +
   theme_minimal()
 
@@ -420,9 +423,10 @@ ggplot(forest_depletion_2020_quartile_summary, aes(x = factor(quartile), y = avg
   theme_minimal()
 ```
 
-This visualization provides some strong takeaways.
+This visualization provides some strong takeaways. DISCUSS TAKEAWAYS HERE
 
-Now let's look at this over time
+
+Now let's look at this over time.
 
 ```{r, message=FALSE}
 # Aggregating the forest depletion data by year and quartile
@@ -458,7 +462,10 @@ summary(anova_fd)
 
 DISCUSS RESULTS HERE
 
+
 ### Water Stress
+
+INTRODUCE WATER STRESS HERE
 
 ```{r}
 # Ensure 'Value' is numeric
@@ -576,9 +583,32 @@ find_similar_countries_w_methane <- function(data, target_country, top_n) {
   similar_countries_with_emissions <- merge(similar_countries, emissions_2020, by = "country_name") %>% 
     dplyr::select(country_name, eucl_distance, Value) %>% 
     arrange(eucl_distance)
+  
+  top_countries <- head(similar_countries_with_emissions, top_n)
 
-  # Return the most similar countries
-  head(similar_countries_with_emissions, top_n)
+  # Combine the economic freedom dimensions and methane emissions into one dataframe
+  combined_data <- merge(relevant_data, top_countries, by = "country_name")
+  combined_data <- combined_data %>% 
+                    select(-eucl_distance) %>%
+                    pivot_longer(cols = -country_name, names_to = "variable", values_to = "value")
+
+  # Check if the combined_data has the required dimensions
+  if (nrow(combined_data) < 2 | ncol(combined_data) < 2) {
+    print("Not enough data to create a heatmap. Please select more countries or adjust the parameters.")
+    return(NULL)
+  }
+
+  # Create the heatmap
+  heatmap_data <- reshape2::dcast(combined_data, country_name ~ variable, value.var = "value")
+  heatmap.2(as.matrix(heatmap_data[, -1]), 
+            main = "Heatmap of Economic Freedom and Methane Emissions", 
+            notecol="black", 
+            density.info="none", 
+            trace="none", 
+            col=bluered(20), 
+            margin=c(8, 8), 
+            cexRow=1, 
+            cexCol=1.25)
 }
 ```
 

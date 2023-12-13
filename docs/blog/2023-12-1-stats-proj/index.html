@@ -239,9 +239,9 @@ div.csl-indent {
 <section id="what-is-economic-freedom" class="level3">
 <h3 class="anchored" data-anchor-id="what-is-economic-freedom">What is <em>Economic Freedom</em>?</h3>
 <p>There is certainly a level of subjectivity, or at least a certain amount of uncertainty, when scoring the freedom of an economy. As a result, it seems impossible to create a perfect score for economic freedom. However, this doesn’t mean people haven’t tried to create a spectrum to measure how free and open different economies are.</p>
-<p>The <em>Economic Freedom of the World: 2022 Annual Report</em> serves as the backbone of the analysis in this exploration. The dataset has a multitude of columns, the most important of which is gives each country an economic freedom index score on a scale from 1 to 10. According to the Fraser Institute, the pillars of their scoring of economic freedom depend on “personal choice, voluntary exchange, freedom to enter markets and compete, and security of the person and privately owned property.” <span class="citation" data-cites="fraser">(<a href="#ref-fraser" role="doc-biblioref">Gwartney 2022</a>)</span> This economic freedom score is measured in five areas: size of government, legal system and property rights, sound money, freedom to trade internationally, and regulation.</p>
-<p>In addition to the economic freedom index column, there are a plethora of interesting variables that can be analyzed in this dataset.</p>
-<p>The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-caputa GDP of $48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of $6,542. Furthermore, life expecancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 <span class="citation" data-cites="fraser">(<a href="#ref-fraser" role="doc-biblioref">Gwartney 2022</a>)</span> However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.</p>
+<p>The <em>Economic Freedom of the World: 2022 Annual Report</em> serves as the backbone of the analysis in this exploration. The data set has a multitude of columns, the most important of which is gives each country an economic freedom index score on a scale from 1 to 10. According to the Fraser Institute, the pillars of their scoring of economic freedom depend on “personal choice, voluntary exchange, freedom to enter markets and compete, and security of the person and privately owned property.” <span class="citation" data-cites="fraser">(<a href="#ref-fraser" role="doc-biblioref">Gwartney 2022</a>)</span> This economic freedom score is measured in five areas: size of government, legal system and property rights, sound money, freedom to trade internationally, and regulation.</p>
+<p>In addition to the economic freedom index column, there are a plethora of interesting variables that can be analyzed in this data set.</p>
+<p>The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-caputa GDP of $48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of $6,542. Furthermore, life expectancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 <span class="citation" data-cites="fraser">(<a href="#ref-fraser" role="doc-biblioref">Gwartney 2022</a>)</span> However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.</p>
 </section>
 <section id="environmental-outcomes-analyzed" class="level3">
 <h3 class="anchored" data-anchor-id="environmental-outcomes-analyzed">Environmental Outcomes Analyzed</h3>
@@ -387,7 +387,7 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
 <section id="emissions" class="level3">
 <h3 class="anchored" data-anchor-id="emissions">Emissions</h3>
-<p>In the first piece of analysis, let’s look at the methane emissions data. The units for which the emissions are recorded in the dataset are metric tons of CO2 equivalent per capita.</p>
+<p>In the first piece of analysis, let’s look at the methane emissions data. The units for which the emissions are recorded in the data set are metric tons of CO2 equivalent per capita.</p>
 <p>First, let’s compare the average emission by economic freedom quartile from 2000 to 2020.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create summary table for mean and stdev of methane emissions for each economic freedom quartile</span></span>
@@ -413,7 +413,7 @@ div.csl-indent {
 </div>
 </div>
 <p>Interesting, so the second quartile of economically free countries has the highest methane emissions by a significant amount across the entire time period. Overall, the emissions levels of all quartiles decreased from 2000 to 2020, a positive sign in the hopes of becoming a carbon-neutral planet.</p>
-<p>Next, let’s perform a linear regression on the economic freedom index and methane emissions.</p>
+<p>Next, let’s perform a linear regression on the economic freedom index and methane emissions to understand the effect of economic freedom on methane emissions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run linear regression</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>methane_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value <span class="sc">~</span> economic_freedom_summary_index, <span class="at">data =</span> methane_emissions)</span>
@@ -471,7 +471,7 @@ Multiple R-squared:  0.004061,  Adjusted R-squared:  -0.006534
 F-statistic: 0.3833 on 1 and 94 DF,  p-value: 0.5373</code></pre>
 </div>
 </div>
-<p>Yikes! A negative adjusted r-squared value. This is a sign that the model is a poor fit for the data and is less informative than the mean of the dependent variable. It can also be due to overfitting, but this is not the case since we are only using one predictor variable. Maybe there is a combination of factors from the multitude of columns coming from the <em>freedom</em> dataset that could be useful and informative. Let’s take a look.</p>
+<p>Yikes! Not any better. A negative adjusted r-squared value. This is a sign that the model is a poor fit for the data and is less informative than the mean of the dependent variable. It can also be due to overfitting, but this is not the case since we are only using one predictor variable. Maybe there is a combination of factors from the multitude of columns coming from the <em>freedom</em> data set that could be useful and informative. Let’s take a look.</p>
 <p>The code below finds the 10 variables that have the strongest correlation to methane emissions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure 'Value' is numeric</span></span>
@@ -515,6 +515,7 @@ F-statistic: 0.3833 on 1 and 94 DF,  p-value: 0.5373</code></pre>
 10                      x1d_top_marginal_tax_rate            0.2024452</code></pre>
 </div>
 </div>
+<p>These are the 10 variables that have the strongest correlation with methane emission levels.</p>
 <p>Let’s consider the hypothesis that a strong government with stable currency and lower regulatory influence will have higher methane emissions due to the amount of profitability that can be gained through traditional methane production of goods.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>methane_emission_2020_selected <span class="ot">&lt;-</span> methane_emissions <span class="sc">%&gt;%</span> </span>
@@ -598,7 +599,7 @@ F-statistic: 355.7 on 3 and 3037 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Consumption Rates Across Economic Freedom Quartiles"</span>,</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Renewable Energy Consumption Rate (%)"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Renewable Energy Consumption Rate"</span>,</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Economic Freedom Quartile"</span>) <span class="sc">+</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
