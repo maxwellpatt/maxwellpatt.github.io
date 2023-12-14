@@ -17,14 +17,13 @@ In the heart of winter, the greater Houston region found itself plunged into dar
 
 ## Background
 
-The February 2021 blackout in Houston transcends being a singular, isolated power outage, instead unfolding as a critical incident that checked the robustness of urban infrastructures against extreme weather conditions. This event provides a unique opportunity to analyze the resilience of a major metropolitan area's energy grid and its capacity to withstand unforeseen natural disasters. This particular incident in Houston, a city known for its dynamic growth and complex urban layout, becomes a focal point for examining urban resilience in the face of environmental challenges. The blackout serves as a view into understanding the repercussions of such events on a city's operational continuity and the well-being of its residents. Houston is a good example for examining the intersection of urban infrastructure with environmental circumstances, offering insights into the areas where improvements are needed to enhance city-wide resilience. The significance of this analysis lies in its potential to influence future urban planning and emergency response strategies. By investigating the impacts of the Houston blackout, valuable lessons can be learned about the importance of designing cities that are not only efficient under normal conditions but also resilient and adaptable in the face of  climate challenges. This blackout demonstrates the necessity of anticipating and preparing for extreme scenarios, ensuring that cities are not just places of progress and development, but also places of safety and stability for all civilians.
+The February 2021 blackout in Houston transcends being a singular, isolated power outage, instead unfolding as a critical incident that checked the robustness of urban infrastructures against extreme weather conditions. This event provides a unique opportunity to analyze the resilience of a major metropolitan area's energy grid and its capacity to withstand unforeseen natural disasters. This particular incident in Houston, a city known for its dynamic growth and complex urban layout, becomes a focal point for examining urban resilience in the face of environmental challenges. The blackout serves as a view into understanding the repercussions of such events on a city's operational continuity and the well-being of its residents. Houston is a good example for examining the intersection of urban infrastructure with environmental circumstances, offering insights into the areas where improvements are needed to enhance city-wide resilience. The significance of this analysis lies in its potential to influence future urban planning and emergency response strategies. By investigating the impacts of the Houston blackout, valuable lessons can be learned about the importance of designing cities that are not only efficient under normal conditions but also resilient and adaptable in the face of climate challenges. This blackout demonstrates the necessity of anticipating and preparing for extreme scenarios, ensuring that cities are not just places of progress and development, but also places of safety and stability for all civilians.
 
 ## Data and Methodology
 
 The analysis hinges on three key data sources: night light data [@nasa], OpenStreetMap data detailing roads and buildings [@osm], and American Community Survey (ACS) socio-economic data. OpenStreetMap and the Landsat data from NASA are regularly-updated databases that are available to the public. I employed R, utilizing libraries such as `stars`, `sf`, and `terra`, to manipulate and analyze these datasets. The methodology involved a step-by-step approach, beginning with the aggregation of night light intensity data to assess blackout areas. I then integrated this with road and building data to estimate the number of homes affected and concluded with an examination of socio-economic factors, offering insights into the recovery dynamics of different communities.
 
 **Research Question**: How did economic status influence the susceptibility and resilience of communities in Houston in the 2021 winter blackouts?
-
 
 Let's get to coding.
 
@@ -65,7 +64,7 @@ feb7 <- st_mosaic(feb7_h08v05, feb7_h0806)
 feb16 <- st_mosaic(feb16_h0805, feb16_h0806)
 ```
 
-Great. The next step involves creating a blackout mask to identify areas in Houston that lost power during the winter storms. This is done by calculating the change in light intensity, reclassifying this light internsity difference raster, and then converting the raster to a stars object. 
+Great. The next step involves creating a blackout mask to identify areas in Houston that lost power during the winter storms. This is done by calculating the change in light intensity, reclassifying this light internsity difference raster, and then converting the raster to a stars object.
 
 Now, we want to convert the blackout stars to a vector format and fix any invalid geometries using `st_make_valid()`. Let's visualize the blackout in vector format to check where we are at.
 
@@ -88,7 +87,6 @@ blackout_sf_valid_trans <- st_as_sf(blackout_stars, as_points = FALSE) %>%
   st_make_valid() %>% 
   st_transform(crs = 3083)
 ```
-
 
 The next piece of analysis involves defining the Houston metropolitan area and cropping the blackout mask to this area of interest. It is imperative that the coordinate reference systems align of these two spatial objects!
 
@@ -140,7 +138,6 @@ buffer <- highway_proj %>%
 blackout <- st_difference(cropped_blackout_proj, buffer)
 ```
 
-
 ### Finding Impacted Homes
 
 Next, we will look to find the number of homes that have been impacted by the blackouts. A buildings dataset will be loaded in and filtered for residential buildings. Then, we will filter for the homes that are in the blackout area and display this value.
@@ -169,7 +166,6 @@ print(paste("Number of impacted homes:", num_impacted_homes))
 ```
 
 As the results show, a grand total of 157,411 residential buildings were impacted by the blackouts. This total quantifies the extreme impact of the storms and highlights how many individuals and families faced the consequences of prolonged blackouts.
-
 
 ### Investigating Socioeconomic Factors
 
