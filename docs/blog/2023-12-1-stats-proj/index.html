@@ -203,7 +203,6 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#what-is-economic-freedom" id="toc-what-is-economic-freedom" class="nav-link" data-scroll-target="#what-is-economic-freedom">What is <em>Economic Freedom</em>?</a></li>
   <li><a href="#environmental-outcomes-analyzed" id="toc-environmental-outcomes-analyzed" class="nav-link" data-scroll-target="#environmental-outcomes-analyzed">Environmental Outcomes Analyzed</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a>
   <ul class="collapse">
@@ -217,7 +216,7 @@ div.csl-indent {
   <li><a href="#renewable-energy-output" id="toc-renewable-energy-output" class="nav-link" data-scroll-target="#renewable-energy-output">Renewable Energy Output</a></li>
   <li><a href="#forest-depletion" id="toc-forest-depletion" class="nav-link" data-scroll-target="#forest-depletion">Forest Depletion</a></li>
   <li><a href="#water-stress" id="toc-water-stress" class="nav-link" data-scroll-target="#water-stress">Water Stress</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   <li><a href="#similarity-function" id="toc-similarity-function" class="nav-link" data-scroll-target="#similarity-function">Similarity Function</a></li>
   </ul></li>
   <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias">Omitted Variable Bias</a></li>
@@ -233,27 +232,24 @@ div.csl-indent {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>When we scrutinize the relationship between capitalism and environmental impacts, we’re engaging in a complex dialogue about efficiency, freedom, and sustainability. Markets act as a powerful mechanism for efficient resource allocation. Yet market-based economies, with the intrinsic drive for growth, often neglect the environmental dimension and impact. This oversight manifests in a key shortcoming: the failure to incorporate environmental costs into the pricing of goods and services.</p>
-<p>The role of freedom in global economies brings about a dualistic impact on the environment. The positive aspects are rooted in the innovative potential and efficiency that economic freedom encourages. In a capitalist system, the competitive market can be a catalyst for discovering sustainable and economical production methods. Furthermore, the wealth generated in such systems can boost both private and public investments in environmental initiatives. Regulatory efficiency also stands out as an advantage, offering the ability to quickly adapt and respond to emerging environmental challenges. Unfortunately, there are many reasons why this idealized version falls short. At the end of the day, addressing the climate crisis is a collective action dilemma, since the actions of one person are negligible in the grand scheme of things. This makes it difficult for consumers to support climate-focused goods and services in exchange for relatively cheaper alternatives.</p>
-<p>Now, the ugly. Capitalism often leads to aggressive resource use, resulting in issues like deforestation, loss of biodiversity, and water pollution. The tendency of capitalism to prioritize short-term profit over long-term sustainability creates a blind spot for environmental considerations. This short-sighted focus on immediate financial returns often overshadows the broader, more enduring impacts on the environment. Additionally, the burden of environmental degradation in capitalist systems is not evenly distributed. Often, it’s the less affluent communities that bear the worst of this degradation, leading to a disparity in environmental impact and quality of life. In fact, the wealthiest 10 percent of the global population are responsible for half of global emissions. <span class="citation" data-cites="cnbc">(<a href="#ref-cnbc" role="doc-biblioref">Reid 2023</a>)</span></p>
+<p>The role of freedom in global economies brings about a dual impact on the environment. The positive aspects are rooted in the innovative potential and efficiency that economic freedom encourages. In a capitalist system, the competitive market can be a catalyst for discovering sustainable and economical production methods. Furthermore, the wealth generated in such systems can boost both private and public investments in environmental initiatives. Regulatory efficiency also stands out as an advantage, offering the ability to quickly adapt and respond to emerging environmental challenges. Unfortunately, there are many reasons why this idealized version falls short. At the end of the day, addressing the climate crisis is a collective action dilemma, since the actions of one person are negligible in the grand scheme of things. This makes it difficult for consumers to support climate-focused goods and services in exchange for relatively cheaper alternatives.</p>
+<p>Now, the ugly. Capitalism often leads to aggressive resource use, resulting in issues like deforestation, loss of biodiversity, and water pollution. The tendency of capitalism to prioritize short-term profit over long-term sustainability creates a blind spot for environmental considerations. This short-sighted focus on immediate financial returns often overshadows the broader, more enduring impacts on the environment. In fact, the wealthiest 10 percent of the global population are responsible for half of global emissions. <span class="citation" data-cites="cnbc">(<a href="#ref-cnbc" role="doc-biblioref">Reid 2023</a>)</span> Additionally, the burden of environmental degradation in capitalist systems is not evenly distributed. Often, it’s the less affluent communities that bear the worst of this degradation, leading to a disparity in environmental impact and quality of life.</p>
 <p>While capitalism has the potential to foster innovation and generate funds that could benefit environmental conservation, resource exploitation and prioritization of short-term profits present substantial challenges to achieving true environmental sustainability.</p>
 <section id="what-is-economic-freedom" class="level3">
 <h3 class="anchored" data-anchor-id="what-is-economic-freedom">What is <em>Economic Freedom</em>?</h3>
 <p>There is certainly a level of subjectivity, or at least a certain amount of uncertainty, when scoring the freedom of an economy. As a result, it seems impossible to create a perfect score for economic freedom. However, this doesn’t mean people haven’t tried to create a spectrum to measure how free and open different economies are.</p>
 <p>The <em>Economic Freedom of the World: 2022 Annual Report</em> serves as the backbone of the analysis in this exploration. The data set has a multitude of columns, the most important of which is gives each country an economic freedom index score on a scale from 1 to 10. According to the Fraser Institute, the pillars of their scoring of economic freedom depend on “personal choice, voluntary exchange, freedom to enter markets and compete, and security of the person and privately owned property.” <span class="citation" data-cites="fraser">(<a href="#ref-fraser" role="doc-biblioref">Gwartney 2022</a>)</span> This economic freedom score is measured in five areas: size of government, legal system and property rights, sound money, freedom to trade internationally, and regulation.</p>
 <p>In addition to the economic freedom index column, there are a plethora of interesting variables that can be analyzed in this data set.</p>
-<p>The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-caputa GDP of $48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of $6,542. Furthermore, life expectancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 <span class="citation" data-cites="fraser">(<a href="#ref-fraser" role="doc-biblioref">Gwartney 2022</a>)</span> However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.</p>
+<p>The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-capita GDP of $48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of $6,542. Furthermore, life expectancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 <span class="citation" data-cites="fraser">(<a href="#ref-fraser" role="doc-biblioref">Gwartney 2022</a>)</span> However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.</p>
 </section>
 <section id="environmental-outcomes-analyzed" class="level3">
 <h3 class="anchored" data-anchor-id="environmental-outcomes-analyzed">Environmental Outcomes Analyzed</h3>
 <p>This analysis will consider several environmental outcomes pulled from the World Bank website. These data include freshwater withdrawal as a proportion of available freshwater resources (water stress), net forest depletion as a percentage of GNI, renewable energy output as a percentage of total energy consumption, renewable energy consumption as a percentage of total energy consumption, and methane emissions in metric tons of CO2 per capita <span class="citation" data-cites="worldbank">(<a href="#ref-worldbank" role="doc-biblioref">WorldBank 2023</a>)</span> Combined with the economic freedom data, this will allow for the analysis to look at the relationship between economic freedom scores and related variables to environmental outcomes over time in different countries.</p>
 </section>
-<section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section"></h3>
-</section>
 </section>
 <section id="data-wrangling" class="level2">
 <h2 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h2>
-<p>First, let’s import the libraries we wlll need to conduct this analysis.</p>
+<p>First, let’s import the libraries we will need to conduct this analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
@@ -516,7 +512,7 @@ F-statistic: 0.3833 on 1 and 94 DF,  p-value: 0.5373</code></pre>
 10                      x1d_top_marginal_tax_rate            0.2024452</code></pre>
 </div>
 </div>
-<p>These are the 10 variables that have the strongest correlation with methane emission levels. ADD DESCRIPTIONS OF AMBIGUOUS VARIABLES.</p>
+<p>These are the 10 variables that have the strongest correlation with methane emission levels. For context: the data variable represents government consumption, data_4 represents the top marginal income tax rate, and data_5 represents top marginal tax rate.</p>
 <p>Let’s consider the hypothesis that a strong government with stable currency and lower regulatory influence will have higher methane emissions due to the amount of profitability that can be gained through traditional methane production of goods.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>methane_emission_2020_selected <span class="ot">&lt;-</span> methane_emissions <span class="sc">%&gt;%</span> </span>
@@ -551,99 +547,97 @@ Multiple R-squared:  0.02424,   Adjusted R-squared:  0.005599
 F-statistic:   1.3 on 3 and 157 DF,  p-value: 0.2764</code></pre>
 </div>
 </div>
-<p>INTERPRET HERE</p>
-<p>What about sound money? Does having more sound money bode well for carbon emissions?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>methane_sm_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> Value <span class="sc">~</span> x3_sound_money <span class="sc">+</span> x5_regulation <span class="sc">+</span> data, <span class="at">data =</span> renewable_consumption)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(methane_sm_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Value ~ x3_sound_money + x5_regulation + data, data = renewable_consumption)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--77.363 -17.510  -3.389  17.890  72.113 
-
-Coefficients:
-                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)    115.07453    2.83708  40.561  &lt; 2e-16 ***
-x3_sound_money  -3.19271    0.40412  -7.900 3.85e-15 ***
-x5_regulation   -5.23430    0.52510  -9.968  &lt; 2e-16 ***
-data            -1.02363    0.05894 -17.368  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 25.71 on 3037 degrees of freedom
-  (501 observations deleted due to missingness)
-Multiple R-squared:   0.26, Adjusted R-squared:  0.2593 
-F-statistic: 355.7 on 3 and 3037 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
+<p>The results of the regression show that the strong government variable set I put together do not strongly predict the methane emission levels. Interpreting the coefficients: a one unit increase in the size of government is associated with a .20041 kilogram decrease in methane emission levels holding all else constant, a one unit increase in sound money is associated with an increase in a .04109 kilogram increase in emission levels holding all else constant, and a one unit increase in regulation leads to a .07798 kilogram increase in emission levels holding all else constant. The adjusted R-squared value is very low, suggesting that the model explains very little of the variability in methane emission levels. The p-value of .274 speaks to the overall statistical insignificance of the model.</p>
+<p>Overall, there is not evidence that the variables in the freedom data set correlate strongly with methane emission outputs. Intuitively, this makes sense because essentially all nations generate some amount of their energy using methane since it is the traditional method of forming energy. Capitalist, socialist and communist countries alike are more likely to produce the amount of energy needed through whatever means necessary than to output lower or higher emissions based on market outcomes.</p>
 </section>
 <section id="renewable-energy-consumption" class="level3">
 <h3 class="anchored" data-anchor-id="renewable-energy-consumption">Renewable Energy Consumption</h3>
 <p>Increasing the rate of renewable energy consumption is imperative in the fight against climate change. While it would be logical to assume that private and public ensurers alike would react to the impending climate crisis by increasing demand in renewable energy, this is not really the case. First, let’s look at renewable energy consumption rates across each quartile from 2000 to 2020.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group renewable consumption data by year and quartile</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_summary <span class="ot">&lt;-</span> renewable_consumption <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, quartile) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_consumption =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group renewable consumption data by year and quartile</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_summary <span class="ot">&lt;-</span> renewable_consumption <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, quartile) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_consumption =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'Year'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot average renewable consumption rate by quartile</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_quartile_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(renewable_consumption_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> avg_consumption, <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Consumption Rates Across Economic Freedom Quartiles"</span>,</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Renewable Energy Consumption Rate"</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Economic Freedom Quartile"</span>) <span class="sc">+</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot average renewable consumption rate by quartile</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_quartile_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(renewable_consumption_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> avg_consumption, <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Consumption Rates Across Economic Freedom Quartiles"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Renewable Energy Consumption Rate"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Economic Freedom Quartile"</span>) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display plot</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_quartile_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display plot</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_quartile_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The graph shows that the 4th quartile renewable energy consumption rate average is the highest among all quartiles, with the 3rd quartile being the second highest by a significant margin from 2000 all the way up until 2020. This is interesting as it reveals that countries with less economic freedom tend to have higher renewable energy consumption rates, possibly because of government regulation that mandates a certain level of consumption be renewable. However, there are alternative hypotheses as well. For instance, it could be that since we know countries that have less freedom tend to have lower GDP and overall economic output, that they simply need less energy overall and can therefore rely more on renewable energy consumption, which might be cheaper and more accessible in many of the poorer regions of the globe. Additionally, fostering a preference for renewable energy in poorer, less free countries can decrease the reliance on oil and natural gas, leading to energy portfolios that are more resilient to fluctuations and spikes in prices.</p>
+<p>Next, let’s conduct a logit regression to examine the dynamic between economic freedom and renewable consumption for all quartiles. The renewable energy consumption data is right skewed and has a long right tail, so therefore it is a good fit to undergo a log transformation for analysis. We can implement a logit transformation which is best suited for dealing with percentage data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>renewable_pct <span class="ot">&lt;-</span> renewable_consumption<span class="sc">$</span>Value <span class="sc">/</span> <span class="dv">100</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>rc_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(renewable_pct <span class="sc">~</span> economic_freedom_summary_index, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> renewable_consumption)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>rc_glm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust values slightly if there are any 0s or 1s</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption<span class="sc">$</span>Value_adj <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(renewable_consumption<span class="sc">$</span>Value <span class="sc">/</span> <span class="dv">100</span>, .Machine<span class="sc">$</span>double.eps), <span class="dv">1</span> <span class="sc">-</span> .Machine<span class="sc">$</span>double.eps)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the logit transformation</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>renewable_consumption<span class="sc">$</span>Value_logit <span class="ot">&lt;-</span> <span class="fu">log</span>(renewable_consumption<span class="sc">$</span>Value_adj <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> renewable_consumption<span class="sc">$</span>Value_adj))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a subset of data where the logit-transformed Value is greater than 0</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>renewable_consumption_positive <span class="ot">&lt;-</span> <span class="fu">subset</span>(renewable_consumption, Value_logit <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regression model on the logit-transformed variable using only positive values</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>renewable_consumption_logit_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value_logit <span class="sc">~</span> economic_freedom_summary_index, <span class="at">data =</span> renewable_consumption_positive)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the summary of the linear regression model</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(renewable_consumption_logit_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Call:  glm(formula = renewable_pct ~ economic_freedom_summary_index, 
-    family = "binomial", data = renewable_consumption)
+Call:
+lm(formula = Value_logit ~ economic_freedom_summary_index, data = renewable_consumption_positive)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.74860 -0.59906 -0.03193  0.52698  2.20327 
 
 Coefficients:
-                   (Intercept)  economic_freedom_summary_index  
-                        2.9097                         -0.5383  
+                               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                     3.01012    0.17316  17.383   &lt;2e-16 ***
+economic_freedom_summary_index -0.28421    0.02867  -9.913   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Degrees of Freedom: 3061 Total (i.e. Null);  3060 Residual
-  (480 observations deleted due to missingness)
-Null Deviance:      1361 
-Residual Deviance: 1146     AIC: 3245</code></pre>
+Residual standard error: 0.8036 on 880 degrees of freedom
+  (159 observations deleted due to missingness)
+Multiple R-squared:  0.1005,    Adjusted R-squared:  0.09943 
+F-statistic: 98.27 on 1 and 880 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>Next, let’s conduct a linear regression to examine the dynamic between economic freedom and renewable consumption for all quartiles.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conduct linear regression for renewable consumption</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value <span class="sc">~</span> economic_freedom_summary_index, <span class="at">data =</span> renewable_consumption)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># display regression results</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(renewable_consumption_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exponentiate the coefficient to get odds</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>odds_efsi <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.28421</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert odds to probability</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>probability_efsi <span class="ot">&lt;-</span> odds_efsi <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds_efsi)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(probability_efsi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4294219</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conduct linear regression for renewable consumption</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>renewable_consumption_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value <span class="sc">~</span> economic_freedom_summary_index, <span class="at">data =</span> renewable_consumption)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># display regression results</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(renewable_consumption_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -672,10 +666,10 @@ F-statistic: 650.6 on 1 and 3060 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h3 class="anchored" data-anchor-id="renewable-energy-output">Renewable Energy Output</h3>
 <p>Renewable energy output is valuable in determining a country’s economic impact since energy that is consumed can be exported to other countries for consumption. Furthermore, certain countries are better set up to capitalize on the economic gains of producing renewable energy due to regional climate conditions. For example, Costa Rica can produced so much renewable energy that it has enough to export it to countries in the Central American Regional Electricity Market. <span class="citation" data-cites="climatecouncil">(<a href="#ref-climatecouncil" role="doc-biblioref">Council 2022</a>)</span> Having renewable output rates closer to 100 bodes well for a countries long-term resilience and preparedness for increases in oil prices and the impending need for a total shift to renewable energy. These countries with higher rates are “ahead of the curve” but there are lots of variables that may still make energy demands difficult to meet due to variables outside of that country’s control. Let’s investigate how economic freedom and renewable energy output are related. Are countries with less economic freedom more likely to have higher renewable energy outputs since the government has more control over the market and regional demand for energy? Or are more free economies more likely to report higher renewable energy outputs due to ___________.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run linear regression of economic freedon on renewable energy output</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>renewable_output_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value <span class="sc">~</span> economic_freedom_summary_index, <span class="at">data =</span> renewable_output)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(renewable_output_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run linear regression of economic freedon on renewable energy output</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>renewable_output_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value <span class="sc">~</span> economic_freedom_summary_index, <span class="at">data =</span> renewable_output)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(renewable_output_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -699,12 +693,12 @@ F-statistic: 50.88 on 1 and 2237 DF,  p-value: 1.321e-12</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(renewable_output, <span class="fu">aes</span>(<span class="at">x =</span> economic_freedom_summary_index, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  <span class="co"># add points</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter Plot of Value vs Economic Freedom Summary Index"</span>,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Economic Freedom Summary Index"</span>,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Value"</span>) <span class="sc">+</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="co"># using a minimal theme for a clean look</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(renewable_output, <span class="fu">aes</span>(<span class="at">x =</span> economic_freedom_summary_index, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>  <span class="co"># add points</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter Plot of Value vs Economic Freedom Summary Index"</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Economic Freedom Summary Index"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Renewable Energy Output"</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="co"># using a minimal theme for a clean look</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 1303 rows containing missing values (`geom_point()`).</code></pre>
 </div>
@@ -714,38 +708,38 @@ F-statistic: 50.88 on 1 and 2237 DF,  p-value: 1.321e-12</code></pre>
 </div>
 <p>DISCUSS</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group renewable consumption data by year and quartile</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>renewable_output_summary <span class="ot">&lt;-</span> renewable_output <span class="sc">%&gt;%</span> </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">2015</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, quartile) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_output =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group renewable consumption data by year and quartile</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>renewable_output_summary <span class="ot">&lt;-</span> renewable_output <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">2015</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, quartile) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_output =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'Year'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot average renewable consumption rate by quartile</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>renewable_output_quartile_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(renewable_output_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> avg_output, <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Output Rates Across Economic Freedom Quartiles"</span>,</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Renewable Energy Output Rate (%)"</span>,</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Economic Freedom Quartile"</span>) <span class="sc">+</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># display plot</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>renewable_output_quartile_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot average renewable consumption rate by quartile</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>renewable_output_quartile_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(renewable_output_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> avg_output, <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Output Rates Across Economic Freedom Quartiles"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Renewable Energy Output Rate (%)"</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Economic Freedom Quartile"</span>) <span class="sc">+</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># display plot</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>renewable_output_quartile_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Next, let’s investigate if there is a significant difference in renewable energy output across each quartile of economic freedom.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>renewable_output<span class="sc">$</span>quartile <span class="ot">&lt;-</span> <span class="fu">factor</span>(renewable_output<span class="sc">$</span>quartile)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>anova_ro <span class="ot">&lt;-</span> <span class="fu">aov</span>(Value <span class="sc">~</span> quartile, <span class="at">data =</span> renewable_output)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_ro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>renewable_output<span class="sc">$</span>quartile <span class="ot">&lt;-</span> <span class="fu">factor</span>(renewable_output<span class="sc">$</span>quartile)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>anova_ro <span class="ot">&lt;-</span> <span class="fu">aov</span>(Value <span class="sc">~</span> quartile, <span class="at">data =</span> renewable_output)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_ro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df  Sum Sq Mean Sq F value   Pr(&gt;F)    
 quartile       3   62414   20805   18.79 4.93e-12 ***
@@ -761,22 +755,22 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 <h3 class="anchored" data-anchor-id="forest-depletion">Forest Depletion</h3>
 <p>Deforestation is a massive issue that exacerbates the climate crisis. Countries that are cutting down trees at higher rates for timber and clearing land for agriculture come at the expense of the health of ecosystems around the world. Are countries with more freedom cutting down more forests to exploit the profit it has to offer? Or are less free countries that are economically limited on the private side more likely to</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>forest_depletion_2020_quartile_summary <span class="ot">&lt;-</span> forest_depletion <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(quartile) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_depletion =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">std_depletion =</span> <span class="fu">sd</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>forest_depletion_2020_quartile_summary <span class="ot">&lt;-</span> forest_depletion <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(quartile) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_depletion =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">std_depletion =</span> <span class="fu">sd</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(forest_depletion_2020_quartile_summary, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(quartile), <span class="at">y =</span> avg_depletion)) <span class="sc">+</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(), <span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> avg_depletion <span class="sc">-</span> std_depletion, <span class="at">ymax =</span> avg_depletion <span class="sc">+</span> std_depletion), </span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Forest Depletion Index by Quartile in 2020"</span>,</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Economic Freedom Quartile"</span>,</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Forest Depletion Index"</span>) <span class="sc">+</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(forest_depletion_2020_quartile_summary, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(quartile), <span class="at">y =</span> avg_depletion)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(), <span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> avg_depletion <span class="sc">-</span> std_depletion, <span class="at">ymax =</span> avg_depletion <span class="sc">+</span> std_depletion), </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Forest Depletion Index by Quartile in 2020"</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Economic Freedom Quartile"</span>,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Forest Depletion Index"</span>) <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -784,34 +778,34 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 <p>This visualization provides some strong takeaways. DISCUSS TAKEAWAYS HERE</p>
 <p>Now let’s look at this over time.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregating the forest depletion data by year and quartile</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>forest_depletion_time_series <span class="ot">&lt;-</span> forest_depletion <span class="sc">%&gt;%</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, quartile) <span class="sc">%&gt;%</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_depletion =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">std_depletion =</span> <span class="fu">sd</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting a line graph with thicker lines</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(forest_depletion_time_series, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> avg_depletion, <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span>  <span class="co"># Increase line thickness</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Forest Depletion Score by Quartile (2000-2020)"</span>,</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Forest Depletion Score"</span>,</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Economic Freedom Quartile"</span>) <span class="sc">+</span></span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregating the forest depletion data by year and quartile</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>forest_depletion_time_series <span class="ot">&lt;-</span> forest_depletion <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, quartile) <span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_depletion =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">std_depletion =</span> <span class="fu">sd</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting a line graph with thicker lines</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(forest_depletion_time_series, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> avg_depletion, <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span>  <span class="co"># Increase line thickness</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Forest Depletion Score by Quartile (2000-2020)"</span>,</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Forest Depletion Score"</span>,</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Economic Freedom Quartile"</span>) <span class="sc">+</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Let’s run an ANOVA test to determine the significance here.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>forest_depletion_2020 <span class="ot">&lt;-</span> forest_depletion <span class="sc">%&gt;%</span> </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>anova_fd <span class="ot">&lt;-</span> <span class="fu">aov</span>(Value <span class="sc">~</span> quartile, <span class="at">data =</span> forest_depletion_2020)</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_fd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>forest_depletion_2020 <span class="ot">&lt;-</span> forest_depletion <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>anova_fd <span class="ot">&lt;-</span> <span class="fu">aov</span>(Value <span class="sc">~</span> quartile, <span class="at">data =</span> forest_depletion_2020)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_fd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 quartile     1  34.33   34.33   14.73 0.000228 ***
@@ -826,33 +820,33 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 class="anchored" data-anchor-id="water-stress">Water Stress</h3>
 <p>INTRODUCE WATER STRESS HERE</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure 'Value' is numeric</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>water_stress<span class="sc">$</span>Value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(water_stress<span class="sc">$</span>Value)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only numeric columns (excluding 'Value' for now)</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>water_stress_numeric <span class="ot">&lt;-</span> water_stress <span class="sc">%&gt;%</span> </span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Value)</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate correlation of each numeric column with the 'Value' column</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>water_stress_correlations <span class="ot">&lt;-</span> <span class="fu">sapply</span>(water_stress_numeric, <span class="cf">function</span>(x) {</span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.numeric</span>(x)) {</span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">cor</span>(x, water_stress<span class="sc">$</span>Value, <span class="at">use =</span> <span class="st">"complete.obs"</span>))</span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)</span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a dataframe for easier viewing</span></span>
-<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>water_stress_correlation_results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(water_stress_correlations)</span>
-<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by the absolute value of correlation to find the strongest correlations</span></span>
-<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>water_stress_sorted_correlations <span class="ot">&lt;-</span> water_stress_correlation_results <span class="sc">%&gt;%</span> </span>
-<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"series"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(water_stress_correlation_results)))</span>
-<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="co"># View the results</span></span>
-<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(water_stress_sorted_correlations, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure 'Value' is numeric</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>water_stress<span class="sc">$</span>Value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(water_stress<span class="sc">$</span>Value)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only numeric columns (excluding 'Value' for now)</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>water_stress_numeric <span class="ot">&lt;-</span> water_stress <span class="sc">%&gt;%</span> </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Value)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate correlation of each numeric column with the 'Value' column</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>water_stress_correlations <span class="ot">&lt;-</span> <span class="fu">sapply</span>(water_stress_numeric, <span class="cf">function</span>(x) {</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">cor</span>(x, water_stress<span class="sc">$</span>Value, <span class="at">use =</span> <span class="st">"complete.obs"</span>))</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NA</span>)</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a dataframe for easier viewing</span></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>water_stress_correlation_results <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(water_stress_correlations)</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by the absolute value of correlation to find the strongest correlations</span></span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>water_stress_sorted_correlations <span class="ot">&lt;-</span> water_stress_correlation_results <span class="sc">%&gt;%</span> </span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"series"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(water_stress_correlation_results)))</span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a><span class="co"># View the results</span></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(water_stress_sorted_correlations, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                           series water_stress_correlations
 1                                          data_4                -0.3370701
@@ -869,9 +863,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>INTERPRET RESULTS</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>water_stress_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value <span class="sc">~</span> data <span class="sc">+</span> data_4 <span class="sc">+</span> data_5 <span class="sc">+</span> ie_state_ownership, <span class="at">data =</span> water_stress)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(water_stress_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>water_stress_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Value <span class="sc">~</span> data <span class="sc">+</span> data_4 <span class="sc">+</span> data_5 <span class="sc">+</span> ie_state_ownership, <span class="at">data =</span> water_stress)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(water_stress_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -900,35 +894,35 @@ F-statistic: 142.6 on 4 and 2339 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>DISCUSS RESULTS HERE.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming 'data' is your dataset and it includes country, year, and various metrics</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the dataset for the year 2020</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>data_2020 <span class="ot">&lt;-</span> <span class="fu">filter</span>(freedom, Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant columns (metrics) for comparison</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>relevant_data <span class="ot">&lt;-</span> data_2020 <span class="sc">%&gt;%</span> </span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, economic_freedom_summary_index, data, data_3, x1_size_of_government, x2c_property_rights, x3a_money_growth, x3_sound_money, x4a_tariffs, x4di_financial_openness, x4_freedom_to_trade_internationally, x5aii_private_sector_credit, x5d_freedom_to_enter_markets_and_compete) <span class="sc">%&gt;%</span></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()  <span class="co"># Remove rows with NA values</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the data</span></span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>normalized_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scale</span>(relevant_data[,<span class="sc">-</span><span class="dv">1</span>]))  <span class="co"># Exclude country_name for scaling</span></span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>normalized_data<span class="sc">$</span>country_name <span class="ot">&lt;-</span> relevant_data<span class="sc">$</span>country_name</span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Euclidean distances</span></span>
-<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>switzerland_data <span class="ot">&lt;-</span> normalized_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country_name <span class="sc">==</span> <span class="st">"Switzerland"</span>)</span>
-<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">apply</span>(normalized_data[,<span class="sc">-</span><span class="fu">ncol</span>(normalized_data)], <span class="dv">1</span>, <span class="cf">function</span>(x) {</span>
-<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">unlist</span>(switzerland_data[,<span class="sc">-</span><span class="fu">ncol</span>(switzerland_data)]))<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine distances with country names</span></span>
-<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>distance_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">country_name =</span> normalized_data<span class="sc">$</span>country_name, <span class="at">distance =</span> distances)</span>
-<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank countries by distance</span></span>
-<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>similar_countries <span class="ot">&lt;-</span> distance_data <span class="sc">%&gt;%</span> </span>
-<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(distance) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_name <span class="sc">!=</span> <span class="st">"Switzerland"</span>)</span>
-<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a><span class="co"># View the top similar countries</span></span>
-<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(similar_countries, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming 'data' is your dataset and it includes country, year, and various metrics</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the dataset for the year 2020</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>data_2020 <span class="ot">&lt;-</span> <span class="fu">filter</span>(freedom, Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant columns (metrics) for comparison</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>relevant_data <span class="ot">&lt;-</span> data_2020 <span class="sc">%&gt;%</span> </span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, economic_freedom_summary_index, data, data_3, x1_size_of_government, x2c_property_rights, x3a_money_growth, x3_sound_money, x4a_tariffs, x4di_financial_openness, x4_freedom_to_trade_internationally, x5aii_private_sector_credit, x5d_freedom_to_enter_markets_and_compete) <span class="sc">%&gt;%</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()  <span class="co"># Remove rows with NA values</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the data</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>normalized_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scale</span>(relevant_data[,<span class="sc">-</span><span class="dv">1</span>]))  <span class="co"># Exclude country_name for scaling</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>normalized_data<span class="sc">$</span>country_name <span class="ot">&lt;-</span> relevant_data<span class="sc">$</span>country_name</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Euclidean distances</span></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>switzerland_data <span class="ot">&lt;-</span> normalized_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country_name <span class="sc">==</span> <span class="st">"Switzerland"</span>)</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">apply</span>(normalized_data[,<span class="sc">-</span><span class="fu">ncol</span>(normalized_data)], <span class="dv">1</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">unlist</span>(switzerland_data[,<span class="sc">-</span><span class="fu">ncol</span>(switzerland_data)]))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine distances with country names</span></span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>distance_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">country_name =</span> normalized_data<span class="sc">$</span>country_name, <span class="at">distance =</span> distances)</span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank countries by distance</span></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>similar_countries <span class="ot">&lt;-</span> distance_data <span class="sc">%&gt;%</span> </span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(distance) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_name <span class="sc">!=</span> <span class="st">"Switzerland"</span>)</span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a><span class="co"># View the top similar countries</span></span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(similar_countries, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    country_name distance
 146       Taiwan 1.554085
@@ -959,97 +953,364 @@ F-statistic: 142.6 on 4 and 2339 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="section-1" class="level3">
-<h3 class="anchored" data-anchor-id="section-1"></h3>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
 </section>
 <section id="similarity-function" class="level3">
 <h3 class="anchored" data-anchor-id="similarity-function">Similarity Function</h3>
 <p>So what we just made can be turned into a function to compare lots of countries. Here is the function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>find_similar_countries_w_methane <span class="ot">&lt;-</span> <span class="cf">function</span>(data, target_country, top_n) {</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter the dataset for the year 2020</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  data_2020 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select relevant columns (5 areas of economic freedom score and score itself)</span></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  relevant_data <span class="ot">&lt;-</span> data_2020 <span class="sc">%&gt;%</span></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, x1_size_of_government, x2_legal_system_property_rights_with_gender_adjustment, x3_sound_money, x4_freedom_to_trade_internationally, x5_regulation) <span class="sc">%&gt;%</span></span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># normalize the data</span></span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  normalized_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scale</span>(relevant_data[,<span class="sc">-</span><span class="dv">1</span>]))</span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  normalized_data<span class="sc">$</span>country_name <span class="ot">&lt;-</span> relevant_data<span class="sc">$</span>country_name</span>
-<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate Euclidean distances</span></span>
-<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>  target_country_data <span class="ot">&lt;-</span> normalized_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country_name <span class="sc">==</span> target_country)</span>
-<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>  distances <span class="ot">&lt;-</span> <span class="fu">apply</span>(normalized_data[,<span class="sc">-</span><span class="fu">ncol</span>(normalized_data)], <span class="dv">1</span>, <span class="cf">function</span>(x) {</span>
-<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">unlist</span>(target_country_data[,<span class="sc">-</span><span class="fu">ncol</span>(target_country_data)]))<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine distances with country names</span></span>
-<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>  distance_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">country_name =</span> normalized_data<span class="sc">$</span>country_name, </span>
-<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>                              <span class="at">eucl_distance =</span> distances)</span>
-<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rank countries by distance</span></span>
-<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>  similar_countries <span class="ot">&lt;-</span> distance_data <span class="sc">%&gt;%</span> </span>
-<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eucl_distance) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country_name <span class="sc">!=</span> target_country)</span>
-<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter methane emissions data for 2020</span></span>
-<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a>  emissions_2020 <span class="ot">&lt;-</span> methane_emissions <span class="sc">%&gt;%</span> </span>
-<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
-<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Join the methane emissions data</span></span>
-<span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a>  similar_countries_with_emissions <span class="ot">&lt;-</span> <span class="fu">merge</span>(similar_countries, emissions_2020, <span class="at">by =</span> <span class="st">"country_name"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, eucl_distance, Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eucl_distance)</span>
-<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a>  top_countries <span class="ot">&lt;-</span> <span class="fu">head</span>(similar_countries_with_emissions, top_n)</span>
-<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine the economic freedom dimensions and methane emissions into one dataframe</span></span>
-<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(relevant_data, top_countries, <span class="at">by =</span> <span class="st">"country_name"</span>)</span>
-<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span> </span>
-<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">select</span>(<span class="sc">-</span>eucl_distance) <span class="sc">%&gt;%</span></span>
-<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>country_name, <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
-<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if the combined_data has the required dimensions</span></span>
-<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(combined_data) <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">|</span> <span class="fu">ncol</span>(combined_data) <span class="sc">&lt;</span> <span class="dv">2</span>) {</span>
-<span id="cb51-48"><a href="#cb51-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"Not enough data to create a heatmap. Please select more countries or adjust the parameters."</span>)</span>
-<span id="cb51-49"><a href="#cb51-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb51-50"><a href="#cb51-50" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb51-51"><a href="#cb51-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-52"><a href="#cb51-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create the heatmap</span></span>
-<span id="cb51-53"><a href="#cb51-53" aria-hidden="true" tabindex="-1"></a>  heatmap_data <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">dcast</span>(combined_data, country_name <span class="sc">~</span> variable, <span class="at">value.var =</span> <span class="st">"value"</span>)</span>
-<span id="cb51-54"><a href="#cb51-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">heatmap.2</span>(<span class="fu">as.matrix</span>(heatmap_data[, <span class="sc">-</span><span class="dv">1</span>]), </span>
-<span id="cb51-55"><a href="#cb51-55" aria-hidden="true" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">"Heatmap of Economic Freedom and Methane Emissions"</span>, </span>
-<span id="cb51-56"><a href="#cb51-56" aria-hidden="true" tabindex="-1"></a>            <span class="at">notecol=</span><span class="st">"black"</span>, </span>
-<span id="cb51-57"><a href="#cb51-57" aria-hidden="true" tabindex="-1"></a>            <span class="at">density.info=</span><span class="st">"none"</span>, </span>
-<span id="cb51-58"><a href="#cb51-58" aria-hidden="true" tabindex="-1"></a>            <span class="at">trace=</span><span class="st">"none"</span>, </span>
-<span id="cb51-59"><a href="#cb51-59" aria-hidden="true" tabindex="-1"></a>            <span class="at">col=</span><span class="fu">bluered</span>(<span class="dv">20</span>), </span>
-<span id="cb51-60"><a href="#cb51-60" aria-hidden="true" tabindex="-1"></a>            <span class="at">margin=</span><span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">8</span>), </span>
-<span id="cb51-61"><a href="#cb51-61" aria-hidden="true" tabindex="-1"></a>            <span class="at">cexRow=</span><span class="dv">1</span>, </span>
-<span id="cb51-62"><a href="#cb51-62" aria-hidden="true" tabindex="-1"></a>            <span class="at">cexCol=</span><span class="fl">1.25</span>)</span>
-<span id="cb51-63"><a href="#cb51-63" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>find_similar_countries_w_methane <span class="ot">&lt;-</span> <span class="cf">function</span>(data, target_country, top_n) {</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter the dataset for the year 2020</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  data_2020 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select relevant columns (5 areas of economic freedom score and score itself)</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  relevant_data <span class="ot">&lt;-</span> data_2020 <span class="sc">%&gt;%</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, x1_size_of_government, x2_legal_system_property_rights_with_gender_adjustment, x3_sound_money, x4_freedom_to_trade_internationally, x5_regulation) <span class="sc">%&gt;%</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># normalize the data</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  normalized_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scale</span>(relevant_data[,<span class="sc">-</span><span class="dv">1</span>]))</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>  normalized_data<span class="sc">$</span>country_name <span class="ot">&lt;-</span> relevant_data<span class="sc">$</span>country_name</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate Euclidean distances</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>  target_country_data <span class="ot">&lt;-</span> normalized_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country_name <span class="sc">==</span> target_country)</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>  distances <span class="ot">&lt;-</span> <span class="fu">apply</span>(normalized_data[,<span class="sc">-</span><span class="fu">ncol</span>(normalized_data)], <span class="dv">1</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sqrt</span>(<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">unlist</span>(target_country_data[,<span class="sc">-</span><span class="fu">ncol</span>(target_country_data)]))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine distances with country names</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>  distance_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">country_name =</span> normalized_data<span class="sc">$</span>country_name, </span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>                              <span class="at">eucl_distance =</span> distances)</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rank countries by distance</span></span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>  similar_countries <span class="ot">&lt;-</span> distance_data <span class="sc">%&gt;%</span> </span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eucl_distance) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country_name <span class="sc">!=</span> target_country)</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter methane emissions data for 2020</span></span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a>  emissions_2020 <span class="ot">&lt;-</span> methane_emissions <span class="sc">%&gt;%</span> </span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>)</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Join the methane emissions data</span></span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a>  similar_countries_with_emissions <span class="ot">&lt;-</span> <span class="fu">merge</span>(similar_countries, emissions_2020, <span class="at">by =</span> <span class="st">"country_name"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(country_name, eucl_distance, Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(eucl_distance)</span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb49-38"><a href="#cb49-38" aria-hidden="true" tabindex="-1"></a>  top_countries <span class="ot">&lt;-</span> <span class="fu">head</span>(similar_countries_with_emissions, top_n)</span>
+<span id="cb49-39"><a href="#cb49-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-40"><a href="#cb49-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine the economic freedom dimensions and methane emissions into one dataframe</span></span>
+<span id="cb49-41"><a href="#cb49-41" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(relevant_data, top_countries, <span class="at">by =</span> <span class="st">"country_name"</span>)</span>
+<span id="cb49-42"><a href="#cb49-42" aria-hidden="true" tabindex="-1"></a>  combined_data <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span> </span>
+<span id="cb49-43"><a href="#cb49-43" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">select</span>(<span class="sc">-</span>eucl_distance) <span class="sc">%&gt;%</span></span>
+<span id="cb49-44"><a href="#cb49-44" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>country_name, <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb49-45"><a href="#cb49-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if the combined_data has the required dimensions</span></span>
+<span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(combined_data) <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">|</span> <span class="fu">ncol</span>(combined_data) <span class="sc">&lt;</span> <span class="dv">2</span>) {</span>
+<span id="cb49-48"><a href="#cb49-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"Not enough data to create a heatmap. Please select more countries or adjust the parameters."</span>)</span>
+<span id="cb49-49"><a href="#cb49-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb49-50"><a href="#cb49-50" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb49-51"><a href="#cb49-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-52"><a href="#cb49-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create the heatmap</span></span>
+<span id="cb49-53"><a href="#cb49-53" aria-hidden="true" tabindex="-1"></a>  heatmap_data <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">dcast</span>(combined_data, country_name <span class="sc">~</span> variable, <span class="at">value.var =</span> <span class="st">"value"</span>)</span>
+<span id="cb49-54"><a href="#cb49-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">heatmap.2</span>(<span class="fu">as.matrix</span>(heatmap_data[, <span class="sc">-</span><span class="dv">1</span>]), </span>
+<span id="cb49-55"><a href="#cb49-55" aria-hidden="true" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">"Heatmap of Economic Freedom and Methane Emissions"</span>, </span>
+<span id="cb49-56"><a href="#cb49-56" aria-hidden="true" tabindex="-1"></a>            <span class="at">notecol=</span><span class="st">"black"</span>, </span>
+<span id="cb49-57"><a href="#cb49-57" aria-hidden="true" tabindex="-1"></a>            <span class="at">density.info=</span><span class="st">"none"</span>, </span>
+<span id="cb49-58"><a href="#cb49-58" aria-hidden="true" tabindex="-1"></a>            <span class="at">trace=</span><span class="st">"none"</span>, </span>
+<span id="cb49-59"><a href="#cb49-59" aria-hidden="true" tabindex="-1"></a>            <span class="at">col=</span><span class="fu">bluered</span>(<span class="dv">20</span>), </span>
+<span id="cb49-60"><a href="#cb49-60" aria-hidden="true" tabindex="-1"></a>            <span class="at">margin=</span><span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">8</span>), </span>
+<span id="cb49-61"><a href="#cb49-61" aria-hidden="true" tabindex="-1"></a>            <span class="at">cexRow=</span><span class="dv">1</span>, </span>
+<span id="cb49-62"><a href="#cb49-62" aria-hidden="true" tabindex="-1"></a>            <span class="at">cexCol=</span><span class="fl">1.25</span>)</span>
+<span id="cb49-63"><a href="#cb49-63" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s test the function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find_similar_countries_w_methane</span>(freedom, <span class="st">"Denmark"</span>, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find_similar_countries_w_methane</span>(freedom, <span class="st">"Denmark"</span>, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>function_regression <span class="ot">&lt;-</span> lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>function_regression <span class="ot">&lt;-</span> lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="omitted-variable-bias" class="level2">
+<h2 class="anchored" data-anchor-id="omitted-variable-bias">Omitted Variable Bias</h2>
+<p>First, let’s read in the GDP data from WorldBank.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>gdp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"blog/2023-12-1-stats-proj/data/gdp/gdp_data_clean.csv"</span>), <span class="at">fill =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next up is manipulating the data so it can be joined with freedom_esg.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape the GDP dataset</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>gdp_long <span class="ot">&lt;-</span> gdp <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"X"</span>), <span class="at">names_to =</span> <span class="st">"Year"</span>, <span class="at">values_to =</span> <span class="st">"GDP"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.numeric</span>(<span class="fu">sub</span>(<span class="st">"X"</span>, <span class="st">""</span>, Year)))</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the freedom_esg dataset</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>freedom_esg <span class="ot">&lt;-</span> freedom_esg <span class="sc">%&gt;%</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.numeric</span>(Year))</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the datasets</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(gdp_long, freedom_esg, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Country.Name"</span> <span class="ot">=</span> <span class="st">"country_name"</span>, <span class="st">"Year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test 1: Check column types</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Type of Country.Code in gdp_long:"</span>, <span class="fu">class</span>(gdp_long<span class="sc">$</span>Country.Code)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Type of Country.Code in gdp_long: character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Type of country_code in freedom_esg:"</span>, <span class="fu">class</span>(freedom_esg<span class="sc">$</span>country_code)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Type of country_code in freedom_esg: character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Type of Year in gdp_long:"</span>, <span class="fu">class</span>(gdp_long<span class="sc">$</span>Year)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Type of Year in gdp_long: numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Type of Year in freedom_esg:"</span>, <span class="fu">class</span>(freedom_esg<span class="sc">$</span>Year)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Type of Year in freedom_esg: numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test 2: Compare unique values</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Unique Country Codes in gdp_long:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Unique Country Codes in gdp_long:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">unique</span>(gdp_long<span class="sc">$</span>Country.Code))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "ABW" "AFE" "AFG" "AFW" "AGO" "ALB" "AND" "ARB" "ARE" "ARG" "ARM" "ASM"
+ [13] "ATG" "AUS" "AUT" "AZE" "BDI" "BEL" "BEN" "BFA" "BGD" "BGR" "BHR" "BHS"
+ [25] "BIH" "BLR" "BLZ" "BMU" "BOL" "BRA" "BRB" "BRN" "BTN" "BWA" "CAF" "CAN"
+ [37] "CEB" "CHE" "CHI" "CHL" "CHN" "CIV" "CMR" "COD" "COG" "COL" "COM" "CPV"
+ [49] "CRI" "CSS" "CUB" "CUW" "CYM" "CYP" "CZE" "DEU" "DJI" "DMA" "DNK" "DOM"
+ [61] "DZA" "EAP" "EAR" "EAS" "ECA" "ECS" "ECU" "EGY" "EMU" "ERI" "ESP" "EST"
+ [73] "ETH" "EUU" "FCS" "FIN" "FJI" "FRA" "FRO" "FSM" "GAB" "GBR" "GEO" "GHA"
+ [85] "GIB" "GIN" "GMB" "GNB" "GNQ" "GRC" "GRD" "GRL" "GTM" "GUM" "GUY" "HIC"
+ [97] "HKG" "HND" "HPC" "HRV" "HTI" "HUN" "IBD" "IBT" "IDA" "IDB" "IDN" "IDX"
+[109] "IMN" "IND" "INX" "IRL" "IRN" "IRQ" "ISL" "ISR" "ITA" "JAM" "JOR" "JPN"
+[121] "KAZ" "KEN" "KGZ" "KHM" "KIR" "KNA" "KOR" "KWT" "LAC" "LAO" "LBN" "LBR"
+[133] "LBY" "LCA" "LCN" "LDC" "LIC" "LIE" "LKA" "LMC" "LMY" "LSO" "LTE" "LTU"
+[145] "LUX" "LVA" "MAC" "MAF" "MAR" "MCO" "MDA" "MDG" "MDV" "MEA" "MEX" "MHL"
+[157] "MIC" "MKD" "MLI" "MLT" "MMR" "MNA" "MNE" "MNG" "MNP" "MOZ" "MRT" "MUS"
+[169] "MWI" "MYS" "NAC" "NAM" "NCL" "NER" "NGA" "NIC" "NLD" "NOR" "NPL" "NRU"
+[181] "NZL" "OED" "OMN" "OSS" "PAK" "PAN" "PER" "PHL" "PLW" "PNG" "POL" "PRE"
+[193] "PRI" "PRK" "PRT" "PRY" "PSE" "PSS" "PST" "PYF" "QAT" "ROU" "RUS" "RWA"
+[205] "SAS" "SAU" "SDN" "SEN" "SGP" "SLB" "SLE" "SLV" "SMR" "SOM" "SRB" "SSA"
+[217] "SSD" "SSF" "SST" "STP" "SUR" "SVK" "SVN" "SWE" "SWZ" "SXM" "SYC" "SYR"
+[229] "TCA" "TCD" "TEA" "TEC" "TGO" "THA" "TJK" "TKM" "TLA" "TLS" "TMN" "TON"
+[241] "TSA" "TSS" "TTO" "TUN" "TUR" "TUV" "TZA" "UGA" "UKR" "UMC" "URY" "USA"
+[253] "UZB" "VCT" "VEN" "VGB" "VIR" "VNM" "VUT" "WLD" "WSM" "XKX" "YEM" "ZAF"
+[265] "ZMB" "ZWE"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Unique Country Codes in freedom_esg:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Unique Country Codes in freedom_esg:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">unique</span>(freedom_esg<span class="sc">$</span>country_code))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "ALB" "DZA" "AGO" "ARG" "ARM" "AUS" "AUT" "AZE" "BHS" "BHR" "BGD" "BRB"
+ [13] "BLR" "BEL" "BLZ" "BEN" "BTN" "BOL" "BIH" "BWA" "BRA" "BRN" "BGR" "BFA"
+ [25] "BDI" "CPV" "KHM" "CMR" "CAN" "CAF" "TCD" "CHL" "CHN" "COL" "COM" "COD"
+ [37] "COG" "CRI" "HRV" "CYP" "CZE" "DNK" "DJI" "DOM" "ECU" "EGY" "SLV" "EST"
+ [49] "SWZ" "ETH" "FJI" "FIN" "FRA" "GAB" "GMB" "GEO" "DEU" "GHA" "GRC" "GTM"
+ [61] "GIN" "GNB" "GUY" "HTI" "HND" "HUN" "ISL" "IND" "IDN" "IRN" "IRQ" "IRL"
+ [73] "ISR" "ITA" "JAM" "JPN" "JOR" "KAZ" "KEN" "KOR" "KWT" "KGZ" "LAO" "LVA"
+ [85] "LBN" "LSO" "LBR" "LBY" "LTU" "LUX" "MDG" "MWI" "MYS" "MLI" "MLT" "MRT"
+ [97] "MUS" "MEX" "MDA" "MNG" "MNE" "MAR" "MOZ" "MMR" "NAM" "NPL" "NLD" "NZL"
+[109] "NIC" "NER" "NGA" "MKD" "NOR" "OMN" "PAK" "PAN" "PNG" "PRY" "PER" "PHL"
+[121] "POL" "PRT" "QAT" "ROU" "RUS" "RWA" "SAU" "SEN" "SRB" "SYC" "SLE" "SGP"
+[133] "SVK" "SVN" "SOM" "ZAF" "ESP" "LKA" "SDN" "SUR" "SWE" "CHE" "SYR" "TJK"
+[145] "TZA" "THA" "TLS" "TGO" "TTO" "TUN" "UGA" "UKR" "ARE" "GBR" "USA" "URY"
+[157] "VEN" "VNM" "YEM" "ZMB" "ZWE"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Unique Years in gdp_long:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Unique Years in gdp_long:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">unique</span>(gdp_long<span class="sc">$</span>Year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974
+[16] 1975 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988 1989
+[31] 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003 2004
+[46] 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019
+[61] 2020 2021 2022   NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Unique Years in freedom_esg:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Unique Years in freedom_esg:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">unique</span>(freedom_esg<span class="sc">$</span>Year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014
+[16] 2015 2016 2017 2018 2019 2020 2021</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test 3: Check for missing values</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Missing values in Country.Code of gdp_long:"</span>, <span class="fu">sum</span>(<span class="fu">is.na</span>(gdp_long<span class="sc">$</span>Country.Code))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Missing values in Country.Code of gdp_long: 0"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Missing values in country_code of freedom_esg:"</span>, <span class="fu">sum</span>(<span class="fu">is.na</span>(freedom_esg<span class="sc">$</span>country_code))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Missing values in country_code of freedom_esg: 0"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Missing values in Year of gdp_long:"</span>, <span class="fu">sum</span>(<span class="fu">is.na</span>(gdp_long<span class="sc">$</span>Year))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Missing values in Year of gdp_long: 266"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Missing values in Year of freedom_esg:"</span>, <span class="fu">sum</span>(<span class="fu">is.na</span>(freedom_esg<span class="sc">$</span>Year))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Missing values in Year of freedom_esg: 0"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>num_unique_countries <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span> </span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">unique_countries =</span> <span class="fu">n_distinct</span>(Country.Name)) <span class="sc">%&gt;%</span></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(unique_countries)</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the number</span></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(num_unique_countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 98</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>countries_per_quartile <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(quartile) <span class="sc">%&gt;%</span></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">num_countries =</span> <span class="fu">n_distinct</span>(Country.Name))</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(countries_per_quartile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  quartile num_countries
+     &lt;dbl&gt;         &lt;int&gt;
+1        1            34
+2        2            33
+3        3            26
+4        4            24</code></pre>
+</div>
+</div>
+<p>Let’s visualize GDP versus methane emissions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>gdp_methane <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(series_name <span class="sc">==</span> <span class="st">"Methane emissions (metric tons of CO2 equivalent per capita)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gdp_methane, <span class="fu">aes</span>(<span class="at">x =</span> GDP, <span class="at">y =</span> Value, <span class="at">color=</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"purple"</span>, <span class="st">"orange"</span>, <span class="st">"yellow"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Methane Emissions Per Capita vs GDP"</span>,</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"GDP"</span>,</span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Methane Emissions (tons per capital)"</span>,</span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Quartile"</span>) <span class="sc">+</span></span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Now let’s do renewable energy consumption versus GDP.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Renewable Energy Consumption</span></span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>renewable_energy_data <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span></span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(series_name <span class="sc">==</span> <span class="st">"Renewable energy consumption (% of total final energy consumption)"</span>)</span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scatter plot</span></span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(renewable_energy_data, <span class="fu">aes</span>(<span class="at">x =</span> Value, <span class="at">y =</span> GDP, <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"yellow"</span>)) <span class="sc">+</span>  <span class="co"># Adjust the colors as needed</span></span>
+<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Consumption vs GDP"</span>,</span>
+<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Renewable Energy Consumption (% of Total Final Energy Consumption)"</span>,</span>
+<span id="cb92-11"><a href="#cb92-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"GDP (current US$)"</span>,</span>
+<span id="cb92-12"><a href="#cb92-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Quartile"</span>) <span class="sc">+</span></span>
+<span id="cb92-13"><a href="#cb92-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let’s try log scaling the data since its a bit wacky.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(renewable_energy_data, <span class="fu">aes</span>(<span class="at">x =</span> Value, <span class="at">y =</span> <span class="fu">log</span>(GDP), <span class="at">color =</span> <span class="fu">as.factor</span>(quartile))) <span class="sc">+</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span>  <span class="co"># Adding transparency</span></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#FFB6C1"</span>, <span class="st">"blue"</span>, <span class="st">"yellow"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Consumption vs GDP"</span>,</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Renewable Energy Consumption (% of Total Final Energy Consumption)"</span>,</span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Log of GDP (current US$)"</span>,</span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Quartile"</span>) <span class="sc">+</span></span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_data, <span class="fu">aes</span>(<span class="at">x =</span> Value, <span class="at">y =</span> <span class="fu">log</span>(GDP))) <span class="sc">+</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(quartile), <span class="at">shape =</span> <span class="fu">as.factor</span>(quartile)), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"lightblue"</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"pink"</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"orange"</span>)) <span class="sc">+</span></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">16</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="dv">17</span>)) <span class="sc">+</span>  <span class="co"># Shapes for points: 16 is a circle, 17 is a triangle</span></span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Renewable Energy Consumption vs GDP"</span>,</span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Renewable Energy Consumption (% of Total Final Energy Consumption)"</span>,</span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Log of GDP (current US$)"</span>,</span>
+<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Quartile"</span>,</span>
+<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">shape =</span> <span class="st">"Quartile"</span>) <span class="sc">+</span></span>
+<span id="cb94-10"><a href="#cb94-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb94-11"><a href="#cb94-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">subset</span>(combined_data, quartile <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)),</span>
+<span id="cb94-12"><a href="#cb94-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(quartile <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"1st Quartile"</span>, <span class="st">"4th Quartile"</span>)),</span>
+<span id="cb94-13"><a href="#cb94-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="fl">1.5</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>)  <span class="co"># Adjust hjust and vjust for label positions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1330 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the data for the first and fourth quartiles</span></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>quartile_1 <span class="ot">&lt;-</span> gdp_methane <span class="sc">%&gt;%</span> </span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(quartile <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a>quartile_4 <span class="ot">&lt;-</span> gdp_methane <span class="sc">%&gt;%</span> </span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(quartile <span class="sc">==</span> <span class="dv">4</span>)</span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct a t-test for renewable energy consumption</span></span>
+<span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>t_test_renewable <span class="ot">&lt;-</span> <span class="fu">t.test</span>(quartile_1<span class="sc">$</span>Value, quartile_4<span class="sc">$</span>Value)</span>
+<span id="cb96-11"><a href="#cb96-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-12"><a href="#cb96-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t_test_renewable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
 
+data:  quartile_1$Value and quartile_4$Value
+t = 0.92624, df = 190.86, p-value = 0.3555
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.1674770  0.4640134
+sample estimates:
+mean of x mean of y 
+ 1.265436  1.117168 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct a t-test for GDP</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>t_test_gdp <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="fu">log</span>(quartile_1<span class="sc">$</span>GDP, <span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)), <span class="fu">log</span>(quartile_4<span class="sc">$</span>GDP, <span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>))) <span class="co"># Log transform GDP if skewed</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t_test_gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  log(quartile_1$GDP, base = exp(1)) and log(quartile_4$GDP, base = exp(1))
+t = 5.0521, df = 163.29, p-value = 1.159e-06
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.6657831 1.5201483
+sample estimates:
+mean of x mean of y 
+ 26.00394  24.91098 </code></pre>
+</div>
+</div>
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Omitted Variable Bias</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-climatecouncil" class="csl-entry" role="listitem">
 Council, Climate. 2022. <span>“11 Countries Leading the Charge on Renewable Energy.”</span> <a href="https://www.climatecouncil.org.au/11-countries-leading-the-charge-on-renewable-energy/">https://www.climatecouncil.org.au/11-countries-leading-the-charge-on-renewable-energy/</a>.
 </div>

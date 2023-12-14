@@ -10,6 +10,7 @@
   bibliography: references.bib
   output: 
     html_document:
+      fontsize: 9px
       code_folding: hide
 ---
 
@@ -17,9 +18,9 @@
 
 When we scrutinize the relationship between capitalism and environmental impacts, we're engaging in a complex dialogue about efficiency, freedom, and sustainability. Markets act as a powerful mechanism for efficient resource allocation. Yet market-based economies, with the intrinsic drive for growth, often neglect the environmental dimension and impact. This oversight manifests in a key shortcoming: the failure to incorporate environmental costs into the pricing of goods and services.
 
-The role of freedom in global economies brings about a dualistic impact on the environment. The positive aspects are rooted in the innovative potential and efficiency that economic freedom encourages. In a capitalist system, the competitive market can be a catalyst for discovering sustainable and economical production methods. Furthermore, the wealth generated in such systems can boost both private and public investments in environmental initiatives. Regulatory efficiency also stands out as an advantage, offering the ability to quickly adapt and respond to emerging environmental challenges. Unfortunately, there are many reasons why this idealized version falls short. At the end of the day, addressing the climate crisis is a collective action dilemma, since the actions of one person are negligible in the grand scheme of things. This makes it difficult for consumers to support climate-focused goods and services in exchange for relatively cheaper alternatives.
+The role of freedom in global economies brings about a dual impact on the environment. The positive aspects are rooted in the innovative potential and efficiency that economic freedom encourages. In a capitalist system, the competitive market can be a catalyst for discovering sustainable and economical production methods. Furthermore, the wealth generated in such systems can boost both private and public investments in environmental initiatives. Regulatory efficiency also stands out as an advantage, offering the ability to quickly adapt and respond to emerging environmental challenges. Unfortunately, there are many reasons why this idealized version falls short. At the end of the day, addressing the climate crisis is a collective action dilemma, since the actions of one person are negligible in the grand scheme of things. This makes it difficult for consumers to support climate-focused goods and services in exchange for relatively cheaper alternatives.
 
-Now, the ugly. Capitalism often leads to aggressive resource use, resulting in issues like deforestation, loss of biodiversity, and water pollution. The tendency of capitalism to prioritize short-term profit over long-term sustainability creates a blind spot for environmental considerations. This short-sighted focus on immediate financial returns often overshadows the broader, more enduring impacts on the environment. Additionally, the burden of environmental degradation in capitalist systems is not evenly distributed. Often, it's the less affluent communities that bear the worst of this degradation, leading to a disparity in environmental impact and quality of life. In fact, the wealthiest 10 percent of the global population are responsible for half of global emissions. [@cnbc]
+Now, the ugly. Capitalism often leads to aggressive resource use, resulting in issues like deforestation, loss of biodiversity, and water pollution. The tendency of capitalism to prioritize short-term profit over long-term sustainability creates a blind spot for environmental considerations. This short-sighted focus on immediate financial returns often overshadows the broader, more enduring impacts on the environment. In fact, the wealthiest 10 percent of the global population are responsible for half of global emissions. [@cnbc] Additionally, the burden of environmental degradation in capitalist systems is not evenly distributed. Often, it's the less affluent communities that bear the worst of this degradation, leading to a disparity in environmental impact and quality of life.
 
 While capitalism has the potential to foster innovation and generate funds that could benefit environmental conservation, resource exploitation and prioritization of short-term profits present substantial challenges to achieving true environmental sustainability.
 
@@ -31,13 +32,12 @@ The *Economic Freedom of the World: 2022 Annual Report* serves as the backbone o
 
 In addition to the economic freedom index column, there are a plethora of interesting variables that can be analyzed in this data set.
 
-The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-caputa GDP of \$48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of \$6,542. Furthermore, life expectancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 [@fraser] However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.
+The report discusses how countries that are have higher levels of economic freedom outperform less free countries in indicators of well being. Countries in the top quartile of economic freedom saw an average per-capita GDP of \$48,251 in 2020, while countries in the bottom quartile for economic freedom had an average of \$6,542. Furthermore, life expectancy in the top quartile was 80.4 years and 66 years in the bottom quartile in 2020 [@fraser] However, do these positive impacts of higher economic freedom also lead to better environmental outcomes? This analysis will put this question to the test.
 
 ### Environmental Outcomes Analyzed
 
 This analysis will consider several environmental outcomes pulled from the World Bank website. These data include freshwater withdrawal as a proportion of available freshwater resources (water stress), net forest depletion as a percentage of GNI, renewable energy output as a percentage of total energy consumption, renewable energy consumption as a percentage of total energy consumption, and methane emissions in metric tons of CO2 per capita [@worldbank] Combined with the economic freedom data, this will allow for the analysis to look at the relationship between economic freedom scores and related variables to environmental outcomes over time in different countries.
 
-### 
 
 ## Data Wrangling
 
@@ -162,6 +162,7 @@ write.csv(freedom_esg, "freedom_esg.csv", row.names = FALSE)
 
 Sweet! Now we have the dataset we will be working with in the analysis.
 
+
 ### Data Filtering
 
 For convenience, I have created a dataframe for each of the environmental indicators to make the analysis smoother.
@@ -185,6 +186,7 @@ renewable_consumption <- freedom_esg %>%
 methane_emissions <- freedom_esg %>% 
   filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
 ```
+
 
 ## Analysis
 
@@ -276,7 +278,7 @@ methane_sorted_correlations <- methane_corr_results %>%
 head(methane_sorted_correlations, 10)
 ```
 
-These are the 10 variables that have the strongest correlation with methane emission levels. ADD DESCRIPTIONS OF AMBIGUOUS VARIABLES.
+These are the 10 variables that have the strongest correlation with methane emission levels. For context: the data variable represents government consumption, data_4 represents the top marginal income tax rate, and data_5 represents top marginal tax rate. 
 
 Let's consider the hypothesis that a strong government with stable currency and lower regulatory influence will have higher methane emissions due to the amount of profitability that can be gained through traditional methane production of goods.
 
@@ -291,15 +293,10 @@ emissions_lm_govt <- lm(Value ~ x1_size_of_government + x3_sound_money + x5_regu
 summary(emissions_lm_govt)
 ```
 
-INTERPRET HERE
+The results of the regression show that the strong government variable set I put together do not strongly predict the methane emission levels. Interpreting the coefficients: a one unit increase in the size of government is associated with a .20041 kilogram decrease in methane emission levels holding all else constant, a one unit increase in sound money is associated with an increase in a .04109 kilogram increase in emission levels holding all else constant, and a one unit increase in regulation leads to a .07798 kilogram increase in emission levels holding all else constant. The adjusted R-squared value is very low, suggesting that the model explains very little of the variability in methane emission levels. The p-value of .274 speaks to the overall statistical insignificance of the model.
 
-What about sound money? Does having more sound money bode well for carbon emissions?
+Overall, there is not evidence that the variables in the freedom data set correlate strongly with methane emission outputs. Intuitively, this makes sense because essentially all nations generate some amount of their energy using methane since it is the traditional method of forming energy. Capitalist, socialist and communist countries alike are more likely to produce the amount of energy needed through whatever means necessary than to output lower or higher emissions based on market outcomes.
 
-```{r}
-methane_sm_lm <- lm(formula = Value ~ x3_sound_money + x5_regulation + data, data = renewable_consumption)
-
-summary(methane_sm_lm)
-```
 
 ### Renewable Energy Consumption
 
@@ -327,15 +324,37 @@ renewable_consumption_quartile_plot
 
 The graph shows that the 4th quartile renewable energy consumption rate average is the highest among all quartiles, with the 3rd quartile being the second highest by a significant margin from 2000 all the way up until 2020. This is interesting as it reveals that countries with less economic freedom tend to have higher renewable energy consumption rates, possibly because of government regulation that mandates a certain level of consumption be renewable. However, there are alternative hypotheses as well. For instance, it could be that since we know countries that have less freedom tend to have lower GDP and overall economic output, that they simply need less energy overall and can therefore rely more on renewable energy consumption, which might be cheaper and more accessible in many of the poorer regions of the globe. Additionally, fostering a preference for renewable energy in poorer, less free countries can decrease the reliance on oil and natural gas, leading to energy portfolios that are more resilient to fluctuations and spikes in prices.
 
+Next, let's conduct a logit regression to examine the dynamic between economic freedom and renewable consumption for all quartiles. The renewable energy consumption data is right skewed and has a long right tail, so therefore it is a good fit to undergo a log transformation for analysis. We can implement a logit transformation which is best suited for dealing with percentage data. 
+
+
 ```{r}
-renewable_pct <- renewable_consumption$Value / 100
+# Adjust values slightly if there are any 0s or 1s
+renewable_consumption$Value_adj <- pmin(pmax(renewable_consumption$Value / 100, .Machine$double.eps), 1 - .Machine$double.eps)
 
-rc_glm <- glm(renewable_pct ~ economic_freedom_summary_index, family = "binomial", data = renewable_consumption)
+# Apply the logit transformation
+renewable_consumption$Value_logit <- log(renewable_consumption$Value_adj / (1 - renewable_consumption$Value_adj))
 
-rc_glm
+# Create a subset of data where the logit-transformed Value is greater than 0
+renewable_consumption_positive <- subset(renewable_consumption, Value_logit > 0)
+
+# Fit a linear regression model on the logit-transformed variable using only positive values
+renewable_consumption_logit_lm <- lm(Value_logit ~ economic_freedom_summary_index, data = renewable_consumption_positive)
+
+# Display the summary of the linear regression model
+summary(renewable_consumption_logit_lm)
+
 ```
 
-Next, let's conduct a linear regression to examine the dynamic between economic freedom and renewable consumption for all quartiles.
+```{r}
+# Exponentiate the coefficient to get odds
+odds_efsi <- exp(-0.28421)
+
+# Convert odds to probability
+probability_efsi <- odds_efsi / (1 + odds_efsi)
+
+print(probability_efsi)
+```
+
 
 ```{r}
 # conduct linear regression for renewable consumption
@@ -363,7 +382,7 @@ ggplot(renewable_output, aes(x = economic_freedom_summary_index, y = Value)) +
   geom_point() +  # add points
   labs(title = "Scatter Plot of Value vs Economic Freedom Summary Index",
        x = "Economic Freedom Summary Index",
-       y = "Value") +
+       y = "Renewable Energy Output") +
   theme_minimal()  # using a minimal theme for a clean look
 ```
 
@@ -626,3 +645,172 @@ function_regression <- lm
 ```
 
 ## Omitted Variable Bias
+
+First, let's read in the GDP data from WorldBank.
+
+```{r}
+gdp <- read.csv(here("blog/2023-12-1-stats-proj/data/gdp/gdp_data_clean.csv"), fill = TRUE)
+```
+
+
+Next up is manipulating the data so it can be joined with freedom_esg.
+
+```{r}
+# Reshape the GDP dataset
+gdp_long <- gdp %>%
+  pivot_longer(cols = starts_with("X"), names_to = "Year", values_to = "GDP") %>%
+  mutate(Year = as.numeric(sub("X", "", Year)))
+
+# Prepare the freedom_esg dataset
+freedom_esg <- freedom_esg %>%
+  mutate(Year = as.numeric(Year))
+
+# Join the datasets
+combined_data <- left_join(gdp_long, freedom_esg, by = c("Country.Name" = "country_name", "Year")) %>% 
+  drop_na()
+
+```
+
+```{r}
+# Test 1: Check column types
+print(paste("Type of Country.Code in gdp_long:", class(gdp_long$Country.Code)))
+print(paste("Type of country_code in freedom_esg:", class(freedom_esg$country_code)))
+print(paste("Type of Year in gdp_long:", class(gdp_long$Year)))
+print(paste("Type of Year in freedom_esg:", class(freedom_esg$Year)))
+
+# Test 2: Compare unique values
+print("Unique Country Codes in gdp_long:")
+print(unique(gdp_long$Country.Code))
+print("Unique Country Codes in freedom_esg:")
+print(unique(freedom_esg$country_code))
+print("Unique Years in gdp_long:")
+print(unique(gdp_long$Year))
+print("Unique Years in freedom_esg:")
+print(unique(freedom_esg$Year))
+
+# Test 3: Check for missing values
+print(paste("Missing values in Country.Code of gdp_long:", sum(is.na(gdp_long$Country.Code))))
+print(paste("Missing values in country_code of freedom_esg:", sum(is.na(freedom_esg$country_code))))
+print(paste("Missing values in Year of gdp_long:", sum(is.na(gdp_long$Year))))
+print(paste("Missing values in Year of freedom_esg:", sum(is.na(freedom_esg$Year))))
+
+num_unique_countries <- combined_data %>% 
+  summarise(unique_countries = n_distinct(Country.Name)) %>%
+  pull(unique_countries)
+
+# Print the number
+print(num_unique_countries)
+
+countries_per_quartile <- combined_data %>% 
+  group_by(quartile) %>%
+  summarise(num_countries = n_distinct(Country.Name))
+
+# Print the results
+print(countries_per_quartile)
+
+```
+
+
+Let's visualize GDP versus methane emissions.
+
+```{r}
+gdp_methane <- combined_data %>% 
+  filter(series_name == "Methane emissions (metric tons of CO2 equivalent per capita)")
+```
+
+
+```{r}
+ggplot(gdp_methane, aes(x = GDP, y = Value, color= as.factor(quartile))) +
+  geom_point() +
+  scale_color_manual(values = c("purple", "orange", "yellow", "red")) +
+  labs(title = "Methane Emissions Per Capita vs GDP",
+       x = "GDP",
+       y = "Methane Emissions (tons per capital)",
+       color = "Quartile") +
+  theme_minimal()
+
+```
+
+Now let's do renewable energy consumption versus GDP.
+```{r}
+# Filter for Renewable Energy Consumption
+renewable_energy_data <- combined_data %>%
+  filter(series_name == "Renewable energy consumption (% of total final energy consumption)")
+
+# Create the scatter plot
+ggplot(renewable_energy_data, aes(x = Value, y = GDP, color = as.factor(quartile))) +
+  geom_point() +
+  scale_color_manual(values = c("red", "blue", "green", "yellow")) +  # Adjust the colors as needed
+  labs(title = "Renewable Energy Consumption vs GDP",
+       x = "Renewable Energy Consumption (% of Total Final Energy Consumption)",
+       y = "GDP (current US$)",
+       color = "Quartile") +
+  theme_minimal()
+```
+
+Let's try log scaling the data since its a bit wacky.
+
+```{r}
+ggplot(renewable_energy_data, aes(x = Value, y = log(GDP), color = as.factor(quartile))) +
+  geom_point(alpha = 0.7) +  # Adding transparency
+  scale_color_manual(values = c("#FFB6C1", "blue", "yellow", "red")) +
+  labs(title = "Renewable Energy Consumption vs GDP",
+       x = "Renewable Energy Consumption (% of Total Final Energy Consumption)",
+       y = "Log of GDP (current US$)",
+       color = "Quartile") +
+  theme_minimal()
+
+```
+
+
+```{r}
+ggplot(combined_data, aes(x = Value, y = log(GDP))) +
+  geom_point(aes(color = as.factor(quartile), shape = as.factor(quartile)), alpha = 0.6) +
+  scale_color_manual(values = c("1" = "darkblue", "2" = "lightblue", "3" = "pink", "4" = "orange")) +
+  scale_shape_manual(values = c("1" = 16, "4" = 17)) +  # Shapes for points: 16 is a circle, 17 is a triangle
+  labs(title = "Renewable Energy Consumption vs GDP",
+       x = "Renewable Energy Consumption (% of Total Final Energy Consumption)",
+       y = "Log of GDP (current US$)",
+       color = "Quartile",
+       shape = "Quartile") +
+  theme_minimal() +
+  geom_text(data = subset(combined_data, quartile %in% c(1, 4)),
+            aes(label = ifelse(quartile == 1, "1st Quartile", "4th Quartile")),
+            hjust = 1.5, vjust = 1.5)  # Adjust hjust and vjust for label positions
+
+```
+
+```{r}
+library(dplyr)
+
+# Subset the data for the first and fourth quartiles
+quartile_1 <- gdp_methane %>% 
+  filter(quartile == 1)
+quartile_4 <- gdp_methane %>% 
+  filter(quartile == 4)
+
+# Conduct a t-test for renewable energy consumption
+t_test_renewable <- t.test(quartile_1$Value, quartile_4$Value)
+
+print(t_test_renewable)
+
+# Conduct a t-test for GDP
+t_test_gdp <- t.test(log(quartile_1$GDP, base = exp(1)), log(quartile_4$GDP, base = exp(1))) # Log transform GDP if skewed
+print(t_test_gdp)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
