@@ -12,17 +12,18 @@ library(tidyverse)
 ```
 
 ```{r}
-dec2_data <- read.csv(here('data/12-3-fantrax-stats.csv')) %>% 
+print(here)
+dec15_data <- read.csv('data/12-15-fantrax-data.csv') %>% 
   clean_names()
 ```
 
 Let's look at the average fantasy points per game of the top 20 scorers on each fantasy team
 
 ```{r}
-fantasy_team_stats_top20 <- dec2_data %>%
+fantasy_team_stats_top10 <- dec15_data %>%
   group_by(status) %>%
   arrange(desc(fp_g)) %>%
-  slice_max(order_by = fp_g, n = 20) %>%
+  slice_max(order_by = fp_g, n = 10) %>%
   summarise(mean_fps_game = mean(fp_g),
             age_top_20 = mean(age)) %>% 
   arrange(desc(mean_fps_game))
@@ -33,9 +34,9 @@ fantasy_team_stats_top20
 Which teams have drafted the best to win this season based on ADP?
 
 ```{r}
-dec2_data$adp <- as.numeric(dec2_data$adp)
+dec15_data$adp <- as.numeric(dec15_data$adp)
 
-top10_adp <- dec2_data %>% 
+top10_adp <- dec15_data %>% 
   group_by(status) %>% 
   arrange(desc(fp_g)) %>%
   slice_max(order_by = fp_g, n = 6) %>%
@@ -89,7 +90,7 @@ print(team_data)
 Cool! Now, let's look at the most promising young players in this dynasty format.
 
 ```{r}
-under25 <- dec2_data %>% 
+under25 <- dec15_data %>% 
   filter(age < 25, fp_g > 20)
 ```
 
