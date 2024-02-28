@@ -173,5 +173,26 @@
     "title": "",
     "section": "",
     "text": "title: “Exploring the Dynamic Between Economic Freedom and Environmental Outcomes” description: “A Statistical Climate Investigation” author: - name: Maxwell Patterson - affiliation: Master of Environmental Data Science Program - affiliation-url: https://ucsb-meds.github.io/ date: 12-15-2023 categories: [R, MEDS, Stats] bibliography: references.bib output: html_document: fontsize: 9px code_folding: hide"
+  },
+  {
+    "objectID": "blog/2024-2-28-data-viz-proj/index.html#analysis",
+    "href": "blog/2024-2-28-data-viz-proj/index.html#analysis",
+    "title": "Fantasy Basketball Analysis",
+    "section": "Analysis",
+    "text": "Analysis\n\nPlot 1\n\n\nPlot 2\n\n\nPlot 3"
+  },
+  {
+    "objectID": "blog/2024-2-28-data-viz-proj/index.html#setting-the-scene",
+    "href": "blog/2024-2-28-data-viz-proj/index.html#setting-the-scene",
+    "title": "Fantasy Basketball Analysis",
+    "section": "Setting the Scene",
+    "text": "Setting the Scene\n\nQuestion\n\n\nData\n\n\nApproach"
+  },
+  {
+    "objectID": "blog/2024-2-28-data-viz-proj/index.html#takeaways",
+    "href": "blog/2024-2-28-data-viz-proj/index.html#takeaways",
+    "title": "Fantasy Basketball Analysis",
+    "section": "Takeaways",
+    "text": "Takeaways"
   }
 ]

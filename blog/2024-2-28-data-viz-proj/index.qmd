@@ -12,3 +12,40 @@
       fontsize: 9px
       code_folding: hide
 ---
+
+## Introduction
+
+
+### Background
+
+
+### Things to Note
+
+
+## Setting the Scene
+
+
+### Question 
+
+
+### Data
+
+
+### Approach
+
+
+## Analysis
+
+
+### Plot 1
+
+
+### Plot 2
+
+
+### Plot 3
+
+
+## Takeaways
+
+
