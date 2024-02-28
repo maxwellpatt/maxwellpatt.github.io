@@ -1,1 +1,14 @@
-
+---
+  title: "Fantasy Basketball Analysis"
+  description: "Visualizing the dynamics between fantasy scoring and age across the league"
+  author:
+    - name: Maxwell Patterson
+    - affiliation: Master of Environmental Data Science Program
+    - affiliation-url: https://ucsb-meds.github.io/
+  date: 02-28-2024
+  categories: [R, MEDS]
+  output: 
+    html_document:
+      fontsize: 9px
+      code_folding: hide
+---
