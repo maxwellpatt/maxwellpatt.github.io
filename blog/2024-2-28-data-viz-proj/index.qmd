@@ -15,37 +15,80 @@
 
 ## Introduction
 
+-   Discuss the purpose of this blog post
+    -   For data viz class
+    -   Building 3 visuals to answer an overarching question
 
 ### Background
 
+-   What exactly is a dynasty league? How does it make for interesting
 
-### Things to Note
+```{=html}
+<!-- -->
+```
+-   League is active and engaging
 
+    -   "What other league gets reprimanded for talking too much ball?" - Danny
+
+```{=html}
+<!-- -->
+```
+-   Talk a little bit about team drafting strategy and how teams have changed over the course of the season
+
+-   There are only a few contending teams -- Bikini Bottom drafted win-now, and then made even more win-now trades to create a powerhouse roster
+
+    -   This caused teams to pivot their strategies -- ex: Swell trading KD, PG, etc, Las Vegas blowing it up, Scottsdale revamping their young core
 
 ## Setting the Scene
 
+### Question
 
-### Question 
-
+What are the dynamics between fantasy scoring and age across the rosters in the fantasy league?
 
 ### Data
 
+#### Columns of Interest
+
+-   Age
+
+-   Fantasy scoring columns (f_pts, fp_g)
+
+-   Fantasy team
+
+-   Summary tables
+
+#### Limitations
+
+-   
 
 ### Approach
 
+1.  graphic form (you are **not** limited to just those fundamental chart types discussed in weeks 3 & 4 -- explore other advanced chart types and don\'t be afraid to get really creative with it; check out some of these awesome [data viz creators](https://samanthacsik.github.io/EDS-240-data-viz/resources.html#inspirational-data-visualization-creators) to find inspiration)
+
+2.  text (e.g. titles, captions, annotations, axis labels, axis ticks, alt text)
+
+3.  themes (i.e. all non-data plot elements; these should be intentionally modified and visually-pleasing)
+
+4.  colors
+
+5.  typography
+
+6.  general design (e.g. group order, spacing, text orientation, data-ink ratio, creating a visual hierarchy, avoiding information overload)
+
+7.  contextualizing your data
+
+8.  centering your primary message
+
+9.  considering accessibility (e.g. colorblind-friendly palettes / contrast, alt text)
+
+10. applying a DEI lens to your design (e.g. considering the people / communities / places represented in your data, consider how you frame your questions / issue)
 
 ## Analysis
 
-
 ### Plot 1
-
 
 ### Plot 2
 
-
 ### Plot 3
 
-
 ## Takeaways
-
-

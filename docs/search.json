@@ -170,9 +170,9 @@
   {
     "objectID": "blog/2024-2-28-data-viz-proj/index.html",
     "href": "blog/2024-2-28-data-viz-proj/index.html",
-    "title": "",
+    "title": "Fantasy Basketball Analysis",
     "section": "",
-    "text": "title: “Exploring the Dynamic Between Economic Freedom and Environmental Outcomes” description: “A Statistical Climate Investigation” author: - name: Maxwell Patterson - affiliation: Master of Environmental Data Science Program - affiliation-url: https://ucsb-meds.github.io/ date: 12-15-2023 categories: [R, MEDS, Stats] bibliography: references.bib output: html_document: fontsize: 9px code_folding: hide"
+    "text": "Discuss the purpose of this blog post\n\nFor data viz class\nBuilding 3 visuals to answer an overarching question\n\n\n\n\n\nWhat exactly is a dynasty league? How does it make for interesting\n\n\n\nLeague is active and engaging\n\n“What other league gets reprimanded for talking too much ball?” - Danny\n\n\n\n\nTalk a little bit about team drafting strategy and how teams have changed over the course of the season\nThere are only a few contending teams – Bikini Bottom drafted win-now, and then made even more win-now trades to create a powerhouse roster\n\nThis caused teams to pivot their strategies – ex: Swell trading KD, PG, etc, Las Vegas blowing it up, Scottsdale revamping their young core"
   },
   {
     "objectID": "blog/2024-2-28-data-viz-proj/index.html#analysis",
@@ -186,7 +186,7 @@
     "href": "blog/2024-2-28-data-viz-proj/index.html#setting-the-scene",
     "title": "Fantasy Basketball Analysis",
     "section": "Setting the Scene",
-    "text": "Setting the Scene\n\nQuestion\n\n\nData\n\n\nApproach"
+    "text": "Setting the Scene\n\nQuestion\nWhat are the dynamics between fantasy scoring and age across the rosters in the fantasy league?\n\n\nData\n\nColumns of Interest\n\nAge\nFantasy scoring columns (f_pts, fp_g)\nFantasy team\nSummary tables\n\n\n\nLimitations\n\n\n\n\n\n\nApproach\n\ngraphic form (you are not limited to just those fundamental chart types discussed in weeks 3 & 4 – explore other advanced chart types and don't be afraid to get really creative with it; check out some of these awesome data viz creators to find inspiration)\ntext (e.g. titles, captions, annotations, axis labels, axis ticks, alt text)\nthemes (i.e. all non-data plot elements; these should be intentionally modified and visually-pleasing)\ncolors\ntypography\ngeneral design (e.g. group order, spacing, text orientation, data-ink ratio, creating a visual hierarchy, avoiding information overload)\ncontextualizing your data\ncentering your primary message\nconsidering accessibility (e.g. colorblind-friendly palettes / contrast, alt text)\napplying a DEI lens to your design (e.g. considering the people / communities / places represented in your data, consider how you frame your questions / issue)"
   },
   {
     "objectID": "blog/2024-2-28-data-viz-proj/index.html#takeaways",
@@ -194,5 +194,12 @@
     "title": "Fantasy Basketball Analysis",
     "section": "Takeaways",
     "text": "Takeaways"
+  },
+  {
+    "objectID": "blog/2024-2-28-data-viz-proj/index.html#introduction",
+    "href": "blog/2024-2-28-data-viz-proj/index.html#introduction",
+    "title": "Fantasy Basketball Analysis",
+    "section": "",
+    "text": "Discuss the purpose of this blog post\n\nFor data viz class\nBuilding 3 visuals to answer an overarching question\n\n\n\n\n\nWhat exactly is a dynasty league? How does it make for interesting\n\n\n\nLeague is active and engaging\n\n“What other league gets reprimanded for talking too much ball?” - Danny\n\n\n\n\nTalk a little bit about team drafting strategy and how teams have changed over the course of the season\nThere are only a few contending teams – Bikini Bottom drafted win-now, and then made even more win-now trades to create a powerhouse roster\n\nThis caused teams to pivot their strategies – ex: Swell trading KD, PG, etc, Las Vegas blowing it up, Scottsdale revamping their young core"
   }
 ]
