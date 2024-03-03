@@ -1,12 +1,12 @@
 ---
-  title: "Fantasy Basketball Analysis"
-  description: "Visualizing the dynamics between fantasy scoring and age across the league"
+  title: "The Dynamics of Dynasty: A Fantasy Basketball Visual Exploration"
+  description: "Visualizing the dynamics between fantasy scoring and age in the A.S.S. League"
   author:
     - name: Maxwell Patterson
     - affiliation: Master of Environmental Data Science Program
     - affiliation-url: https://ucsb-meds.github.io/
   date: 02-28-2024
-  categories: [R, MEDS]
+  categories: [R, MEDS, Sports]
   output: 
     html_document:
       fontsize: 9px
@@ -15,80 +15,192 @@
 
 ## Introduction
 
--   Discuss the purpose of this blog post
-    -   For data viz class
-    -   Building 3 visuals to answer an overarching question
+I am excited to dive into some fantasy basketball data visualizations in this blog post. One of our classes this quarter, Data Visualization and Communication (EDS240), has really opened my eyes to how critical data communication is through visual means, how the smallest changes that an observer might not bat a second glance at can change everything, and how narrative is imperative in forming a visual for a specific (or general) audience. Building beautiful, crisp visualizations takes time, and the course has been a fun and informative deep dive on the different layers that go into building these visuals.
+
+A.L. Linall Jr frames the power of visualization well: "Visualization and belief in a pattern of reality activates the creative power of realization." (CITE). Interpreting raw data is not fun for anyone, but staring at a beautiful scatter plot, stacked area plot, ridge line plot, or heat map can make the process of digesting data more enjoyable. Further, a detailed and aesthetically pleasing visual can guide the observer towards a key takeaway that the creator intended. It is almost impossible to remove all biases and keep all of the important information from a dataset when creating a visual. Therefore, it is important to keep in mind what story the visualization is feeding you into as a consumer.
+
+For this final assignment, I will be constructing three different visuals that investigate the dynamic of a dynasty format fantasy basketball league that I am in. Each visual will be tailored for a certain audience: one for a general audience without domain expertise, one that would go well in a presentation, and one for domain experts, or people who know a lot about how dynasty leagues work. Let's dive in!
 
 ### Background
 
--   What exactly is a dynasty league? How does it make for interesting
+I have been in this fantasy basketball league for a few years, but we just switched over to a dynasty format this offseason. Dynasty league formats exist for all fantasy sports, and they are leagues where managers keep their entire roster each season. Most fantasy leagues are redraft format, where there is a full draft each year where teams draft entirely new rosters. In the dynasty format, there is simply a rookie draft where managers only select from the rookie player pool to keep building their rosters. In this sense, a dynasty league is more like being a GM of an NBA team, where players are kept year over year and new players are acquired through trades or the rookie draft. Personally, I have loved this format as it completely changes the dynamic of assessing a player's value. More on this later.
 
-```{=html}
-<!-- -->
-```
--   League is active and engaging
+Starting a dynasty league can be tricky. The most important distinction between redraft versus dynasty leagues is that all league members must be in it for the long haul - having a team bail after a year or two, for whatever reason, can cause issues if the league is not able to find a replacement. Also, some people might not be as excited about the dynasty format because they may not ever have the opportunity to draft certain players, especially top-end young players, because their value is higher in dynasty formats than redraft leagues. While the dynasty format is not for everyone, I am lucky to be in a league where everyone is engaged, active, and excited about the format. As rookie league member Danny put it, "What other league gets reprimanded for talking too much ball at work?".
 
-    -   "What other league gets reprimanded for talking too much ball?" - Danny
+Leading up to the draft, I think there was a balance of teams that wanted to draft young players and compete for a championship in future years and teams that wanted to get players that could help them be competitive this season. This played out accordingly on draft night, with only two or three teams going young player heavy while the rest of the league went with a more diverse selection of young and older players. However, as the season went on, a few teams really pivoted their dynasty strategy (especially my team) to get younger due to how strong the top of the league is this season. The Bikini Bottom Ballers solidified themselves as one of the greatest dynasty rosters ever assembled, ending the season with a 17-1 record and having over 4000 more fantasy points than the second closest team. During the season, the Ballers acquired even more win-now talent to add on to the players and now have a roster full of win-now players: Kevin Durant, Anthony Davis, Giannis Antetokounmpo, Kawhi Leonard, and Kyrie Irving to name a few. The Ballers are the clear favorites to win the championship this season, but it will be interesting to see how long their reign over the league lasts with many of their players being older and beginning to decline. Anyways, I'm getting ahead of myself as these will be investigated in the following visuals.
 
-```{=html}
-<!-- -->
-```
--   Talk a little bit about team drafting strategy and how teams have changed over the course of the season
-
--   There are only a few contending teams -- Bikini Bottom drafted win-now, and then made even more win-now trades to create a powerhouse roster
-
-    -   This caused teams to pivot their strategies -- ex: Swell trading KD, PG, etc, Las Vegas blowing it up, Scottsdale revamping their young core
+For more context, my roster transitioned from win-now to building for the future over the course of the season. I had some talented older players on my roster in the beginning of the season, like Kevin Durant and Paul George. Once I realized that the Ballers had such a strong roster that would be hard to beat come playoff time, I made a bunch of trades to build around my teams cornerstone, and arguably the most valuable dynasty asset of all time: Victor Wembanyama. While he is just a rookie, Wemby has put up some insane numbers this season and is looking like he will be a top player as early as next season. Wemby is only 20 years old and is already averaging over 50 fantasy points per game, vaulting himself into unprecedented terrain when it comes to rookie fantasy performance in the modern era. In a recent league survey, the Santa Barbara Swell (my team, by the way the team names and logos in the league are pretty epic) was voted as the team that others would most want to swap rosters with. What an honor!
 
 ## Setting the Scene
 
-### Question
-
-What are the dynamics between fantasy scoring and age across the rosters in the fantasy league?
+**Question: What are the dynamics between age and fantasy scoring across teams in the fantasy league? Which teams are going all in now, and which are looking to build rosters with talented younger players?**
 
 ### Data
 
+Now it's time to do a little exploration to understand the data that is being worked with. The platform we use for the league, Fantrax, allows for easy downloading of data in CSV formats. I'll start by importing the data, doing some simple cleaning so it will be ready for further wrangling and analysis. This code is hidden for the reader's convenience so we can get right to the data exploration.
+
+```{r, echo=FALSE}
+rm(list=ls())
+```
+
+```{r, echo=FALSE, message=FALSE}
+# Setting working directory to blog post
+setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2024-2-28-data-viz-proj")
+
+# Installing some libraries
+library(here)
+library(dplyr)
+library(tidyverse)
+library(janitor)
+
+# Defining data and image paths within blog
+data_path <- here("blog", "2024-2-28-data-viz-proj", "data")
+image_path <-here("blog", "2024-2-28-data-viz-proj", "images")
+
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+# Import Fantrax data
+fantrax_raw <- read_csv(here(data_path, "fantrax_02_26_24_blog.csv"))
+
+# Convert column names to snake case with the janitor package
+fantrax_data <- fantrax_raw %>% 
+  janitor::clean_names()
+
+# Redefine team names 
+teams <- c("STARKS", "SERP", "SDP", "Orcas", "maxpat01", "Jmarr237", "HBC", "GBRAYERS", "CCC", "BIGFOOTS", "BBB", "$C/$")
+
+new_team_names <- c(STARKS = "Winterfell", SERP = "Slytherin", SDP = "San Diego",
+                    Orcas = "Anacortes", maxpat01 = "Santa Barbara", Jmarr237 = "Malibu",
+                    HBC = "Helsinki", GBRAYERS = "Scottsdale", CCC = "Cream City",
+                    BIGFOOTS = "Beaverton", BBB = "Bikini Bottom", "$C/$" = "Las Vegas")
+
+# Removing columns, updating types and fantasy team names
+rostered <- fantrax_data %>% 
+  rename(fantasy_team = status) %>% 
+  filter(fantasy_team %in% teams) %>% 
+  mutate(
+    adp = as.numeric(adp),
+    fantasy_team = case_when(
+      fantasy_team %in% names(new_team_names) ~ new_team_names[fantasy_team],
+      TRUE ~ fantasy_team  # This keeps the original name if not specified in new_team_names
+    )
+  ) %>% 
+  select(-id, -opponent, -percent_d, -ros, -x)
+  
+```
+
 #### Columns of Interest
 
--   Age
+Below is a list of the column names in the cleaned data set (`rostered`):
 
--   Fantasy scoring columns (f_pts, fp_g)
+```{r}
+colnames(rostered)
+```
 
--   Fantasy team
-
--   Summary tables
+Most of the columns in the data now are statistical categories for each NBA player, like points, rebounds, assists, turnovers, etc. The columns that will be most important for this analysis are the age (`age`), fantasy scoring (`f_pts` and `fp_g`), and fantasy team (`fantasy_team`) columns. Throughout the analysis, summary tables utilizing information from these columns will be generated as needed.
 
 #### Limitations
 
--   
+I was hoping that Fantrax would save the fantasy team that each player was on at a certain point in the season, but unfortunately this is not the case. For example, I traded for Jalen Duren right before the trade deadline on February 9th, but when downloading data from the first week of the season, it says that Duren was on my roster at this time. I was curious to see if I could track how fantasy rosters changed over the course of the season, but this reality makes that nearly impossible to do as I would have to enter data manually. Instead, I will focus on data from February 26th, which is just 2 weeks out of the fantasy playoffs and gives a good sense of where teams are at towards the end of the season in terms of roster construction.
 
 ### Approach
 
-1.  graphic form (you are **not** limited to just those fundamental chart types discussed in weeks 3 & 4 -- explore other advanced chart types and don\'t be afraid to get really creative with it; check out some of these awesome [data viz creators](https://samanthacsik.github.io/EDS-240-data-viz/resources.html#inspirational-data-visualization-creators) to find inspiration)
+For the three graphs, I will be creating a scatter plot, a ridge line plot, and a sunburst plot for the domain expert, general audience, and presentation groups respectively. Each of the plots takes a different look at the dynamic between age and fantasy scoring across each of the fantasy teams. The motivation for choosing each specific graphic form will be discussed after each graph is shown in the next section.
 
-2.  text (e.g. titles, captions, annotations, axis labels, axis ticks, alt text)
+While I played around with different basketball related themes, I will be going with a simple background that is a similar color to NBA courts. Two graphs have all of the team logos (scatter and ridge line), and the sunburst plot is extremely colorful with lots going on, so I opted for keeping the background simple and minimizing distractions from the visualizations. I defined custom colors based on teams logos that are used in the sunburst plot to add to the aesthetics of the visual as there are lots of colors going on. Additionally, I chose the Courier font as the go-to for all three visuals, as it is a crisp and easy-going font that has just the right amount of character.
 
-3.  themes (i.e. all non-data plot elements; these should be intentionally modified and visually-pleasing)
-
-4.  colors
-
-5.  typography
-
-6.  general design (e.g. group order, spacing, text orientation, data-ink ratio, creating a visual hierarchy, avoiding information overload)
-
-7.  contextualizing your data
-
-8.  centering your primary message
-
-9.  considering accessibility (e.g. colorblind-friendly palettes / contrast, alt text)
-
-10. applying a DEI lens to your design (e.g. considering the people / communities / places represented in your data, consider how you frame your questions / issue)
+While DEI has been highlighted in our lecture materials and some other assignments in EDS 240, this analysis does not fit into the category of DEI application.
 
 ## Analysis
 
-### Plot 1
+### Plot 1: Scatter plot
 
-### Plot 2
+```{r}
+# Importing libraries
+library(ggimage)
 
-### Plot 3
+# Calculate average age and fantasy points per game by fantasy team
+team_averages <- rostered %>%
+  group_by(fantasy_team) %>%
+  summarise(
+    AverageAge = mean(age, na.rm = TRUE),
+    AverageFpG = mean(fp_g, na.rm = TRUE)
+  ) 
+
+# Add logo and logo path for each team
+team_averages$logo_path <- c("blog/2024-2-28-data-viz-proj/images/orcas.png", "blog/2024-2-28-data-viz-proj/images/bigfoots.png", 
+                             "blog/2024-2-28-data-viz-proj/images/BBB.png", "blog/2024-2-28-data-viz-proj/images/crusaders.png",
+                             "blog/2024-2-28-data-viz-proj/images/hounds.png", "blog/2024-2-28-data-viz-proj/images/scorpions.png",
+                             "blog/2024-2-28-data-viz-proj/images/milkers.png", "blog/2024-2-28-data-viz-proj/images/pilots.png", 
+                             "blog/2024-2-28-data-viz-proj/images/swell.png", "blog/2024-2-28-data-viz-proj/images/stotches.png",
+                             "blog/2024-2-28-data-viz-proj/images/serpents.png", "blog/2024-2-28-data-viz-proj/images/starks.png")
+
+scatter <- ggplot(team_averages, aes(x = AverageAge, y = AverageFpG)) +
+  geom_image(aes(image = logo_path), size = 0.12, alpha = 0.7) +
+  scale_size_continuous(range = c(3, 12)) + # Adjust size range for points
+  labs(
+    title = "Fantasy Scoring versus Age by Team",
+    x = "Average Age",
+    y = "Average Fantasy Points Per Game"
+  ) +
+  theme_bw() +
+  theme(
+    text = element_text(family = "Courier"),
+    plot.background = element_rect(fill = "antiquewhite")
+  ) +
+  expand_limits(x = c(min(team_averages$AverageAge) - 1, max(team_averages$AverageAge) + 1),
+                y = c(min(team_averages$AverageFpG) - 1, max(team_averages$AverageFpG) + 1)) # Stretch axes
+```
+
+-   Discuss primary message
+
+```{=html}
+<!-- -->
+```
+-   Discuss scatter plot choice
+
+-   Discuss text on plot
+
+-   Discuss annotation decisions
+
+### Plot 2: Ridge line plot
+
+```{r}
+# Calculate the average age for each fantasy team 
+# Used for filling ridge plots
+team_avg_age <- rostered %>%
+  group_by(fantasy_team) %>%
+  summarise(AverageAge = mean(age, na.rm = TRUE))
+
+# Merge the average age data with full data
+rostered <- rostered %>%
+  left_join(team_avg_age, by = "fantasy_team")
+
+```
+
+-   Discuss primary message
+
+```{=html}
+<!-- -->
+```
+-   Discuss ridge line plot choice
+
+-   Discuss how age color palette is colorblind-friendly
+
+-   Discuss order of ridges
+
+### Plot 3: Sunburst plot
+
+-   Discuss primary message
+
+```{=html}
+<!-- -->
+```
+-   Discuss sunburst plot choice
+
+-   Discuss text on plot
+
+-   Discuss how color palette is colorblind-friendly
 
 ## Takeaways
