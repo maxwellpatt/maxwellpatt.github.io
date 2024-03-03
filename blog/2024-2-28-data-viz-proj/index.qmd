@@ -116,12 +116,44 @@ While DEI has been highlighted in our lecture materials and some other assignmen
 
 ### Plot 1: Scatter plot
 
-```{r}
+```{r, echo=FALSE}
+# Selecting top 10 assets from each fantasy team
+swell_assets <- c("Anthony Edwards")
+scorpions_assets <- c("Evan Mobley")
+ballers_assets <- c("")
+crusaders_assets <- c("")
+starks_assets <- c("")
+pilots_assets <- c("")
+hounds_assets <- c("")
+stotches_assets <- c("")
+bigfoots_assets <- c("")
+milkers_assets <- c("")
+serpents_assets <- c("")
+orcas_assets <- c("")
+
+# Joining top assets from each team into single vector
+top_assets <- c(swell_assets, scorpions_assets, ballers_assets, crusaders_assets, 
+                starks_assets, pilots_assets, hounds_assets, stotches_assets,
+                bigfoots_assets, milkers_assets, serpents_assets, orcas_assets)
+
+# Filtering for top assets in the player data
+top_assets <- rostered %>% 
+  filter(player %in% top_assets)
+```
+
+```{r, message=FALSE}
 # Importing libraries
 library(ggimage)
 
-# Calculate average age and fantasy points per game by fantasy team
-team_averages <- rostered %>%
+# Rank players within each team by their fp_g and filter for the top 12
+top_players <- rostered %>%
+  group_by(fantasy_team) %>%
+  mutate(rank = rank(-fp_g)) %>% # Rank players based on fp_g, '-' for descending order
+  filter(rank <= 10) %>%
+  ungroup()
+
+# Calculate average age and fantasy points per game by fantasy team (top 12 players)
+team_averages <- top_players %>%
   group_by(fantasy_team) %>%
   summarise(
     AverageAge = mean(age, na.rm = TRUE),
@@ -129,16 +161,15 @@ team_averages <- rostered %>%
   ) 
 
 # Add logo and logo path for each team
-team_averages$logo_path <- c("blog/2024-2-28-data-viz-proj/images/orcas.png", "blog/2024-2-28-data-viz-proj/images/bigfoots.png", 
-                             "blog/2024-2-28-data-viz-proj/images/BBB.png", "blog/2024-2-28-data-viz-proj/images/crusaders.png",
-                             "blog/2024-2-28-data-viz-proj/images/hounds.png", "blog/2024-2-28-data-viz-proj/images/scorpions.png",
-                             "blog/2024-2-28-data-viz-proj/images/milkers.png", "blog/2024-2-28-data-viz-proj/images/pilots.png", 
-                             "blog/2024-2-28-data-viz-proj/images/swell.png", "blog/2024-2-28-data-viz-proj/images/stotches.png",
-                             "blog/2024-2-28-data-viz-proj/images/serpents.png", "blog/2024-2-28-data-viz-proj/images/starks.png")
+team_averages$logo_path <- c("images/orcas_logo.png", "images/bigfoots_logo.png", 
+                             "images/ballers_logo.png", "images/crusaders_logo.png",
+                             "images/hounds_logo.png", "images/scorpions_logo.png",
+                             "images/milkers_logo.png", "images/pilots_logo.png", 
+                             "images/swell_logo.png", "images/stotches_logo.png",
+                             "images/serpents_logo.png", "images/starks_logo.png")
 
 scatter <- ggplot(team_averages, aes(x = AverageAge, y = AverageFpG)) +
-  geom_image(aes(image = logo_path), size = 0.12, alpha = 0.7) +
-  scale_size_continuous(range = c(3, 12)) + # Adjust size range for points
+  geom_image(aes(image = logo_path), size = 0.11, alpha = 0.7) +
   labs(
     title = "Fantasy Scoring versus Age by Team",
     x = "Average Age",
@@ -147,10 +178,14 @@ scatter <- ggplot(team_averages, aes(x = AverageAge, y = AverageFpG)) +
   theme_bw() +
   theme(
     text = element_text(family = "Courier"),
-    plot.background = element_rect(fill = "antiquewhite")
-  ) +
+    plot.background = element_rect(fill = "antiquewhite"),# Set background color
+    panel.grid.major = element_line(color = "#f7f7f7"), # Grid lines fainter color
+    panel.grid.minor = element_line(colour = "#f7f7f7") # Grid lines fainter color
+  ) + 
   expand_limits(x = c(min(team_averages$AverageAge) - 1, max(team_averages$AverageAge) + 1),
                 y = c(min(team_averages$AverageFpG) - 1, max(team_averages$AverageFpG) + 1)) # Stretch axes
+
+scatter
 ```
 
 -   Discuss primary message
@@ -167,8 +202,10 @@ scatter <- ggplot(team_averages, aes(x = AverageAge, y = AverageFpG)) +
 ### Plot 2: Ridge line plot
 
 ```{r}
-# Calculate the average age for each fantasy team 
-# Used for filling ridge plots
+# Installing new packages
+library(ggridges)
+
+# Calculate the average age for each fantasy team
 team_avg_age <- rostered %>%
   group_by(fantasy_team) %>%
   summarise(AverageAge = mean(age, na.rm = TRUE))
@@ -176,6 +213,58 @@ team_avg_age <- rostered %>%
 # Merge the average age data with full data
 rostered <- rostered %>%
   left_join(team_avg_age, by = "fantasy_team")
+
+# Order the teams by average fp_g
+team_order <- rostered %>%
+  group_by(fantasy_team) %>%
+  summarise(AverageFpG = mean(fp_g, na.rm = TRUE)) %>%
+  arrange(desc(AverageFpG)) %>%
+  pull(fantasy_team)
+
+# Make sure data is ordered correctly for plotting
+rostered$fantasy_team <- factor(rostered$fantasy_team, levels = team_order)
+
+# Define team logos for ridge plot 
+logos <- data.frame(team = c("Anacortes", "Beaverton", "Bikini Bottom",
+                             "Cream City", "Helsinki", "Las Vegas", "Malibu",
+                             "San Diego", "Santa Barbara", "Scottsdale", 
+                             "Slytherin", "Winterfell"),
+                    logo = c("images/orcas_logo.png", "images/bigfoots_logo.png", 
+                             "images/ballers_logo.png", "images/crusaders_logo.png",
+                             "images/hounds_logo.png", "images/scorpions_logo.png",
+                             "images/milkers_logo.png", "images/pilots_logo.png", 
+                             "images/swell_logo.png", "images/stotches_logo.png",
+                             "images/serpents_logo.png", "images/starks_logo.png"))
+
+# Create ridge plot
+ridge_plot <- ggplot(rostered, aes(x = fp_g, y = fantasy_team, fill = AverageAge)) + geom_density_ridges(
+    aes(height = ..density..), 
+    alpha = 0.5, 
+    scale = 2, 
+    rel_min_height = 0.02
+  ) +
+  scale_fill_gradientn(
+    colors = c("green", "yellow", "red"), 
+    limits = c(min(rostered$AverageAge), max(rostered$AverageAge)),
+    name = "Average Age"
+  ) +
+  labs(title = "Fantasy Scoring Distribution by Team",
+       x = "Fantasy Points per Game",
+       y = "") +
+  theme_ridges(grid = FALSE) +
+  theme(
+    text = element_text(family = "Courier"),
+    plot.background = element_rect(fill = "antiquewhite"), 
+    panel.background = element_blank(), 
+    axis.title = element_text(size = 11), 
+    axis.text.y = element_text(size = 10), 
+  ) 
+
+# Add team logos to ridge plot
+ridge_logos <- ridge_plot + 
+  geom_image(data = logos, aes(x = -20, y = team, image = logo), size = 0.07, inherit.aes = FALSE)
+
+ridge_logos
 
 ```
 
@@ -191,6 +280,90 @@ rostered <- rostered %>%
 -   Discuss order of ridges
 
 ### Plot 3: Sunburst plot
+
+```{r, message = FALSE}
+# Importing new libraries
+library(data.table)
+library(plotly)
+library(tidyr)
+
+# Categorize each player into age group bin
+rostered <- rostered %>%
+  mutate(age_group = case_when(
+    age < 25 ~ "Under 25",
+    age >= 25 & age <= 29 ~ "25-29",
+    age > 29 ~ "Over 30"
+  ))
+
+# Group by fantasy team and age group, then summarize total fantasy points
+age_group_summary <- rostered %>%
+  group_by(fantasy_team, age_group) %>%
+  summarize(fantasy_points = sum(f_pts, na.rm = TRUE), .groups = 'drop')
+
+as.sunburstDF <- function(DF, value_column = NULL, add_root = FALSE){
+  require(data.table)
+  
+  if(is.data.table(DF)){
+    DT <- copy(DF)
+  } else {
+    DT <- data.table(DF, stringsAsFactors = FALSE)
+  }
+  
+  if(add_root){
+    DT[, root := "Total"]
+  }
+  
+  colNamesDT <- names(DT)
+  hierarchy_columns <- setdiff(colNamesDT, value_column)
+  DT[, (hierarchy_columns) := lapply(.SD, as.factor), .SDcols = hierarchy_columns]
+  
+  if(is.null(value_column)){
+    if(add_root){
+      setcolorder(DT, c("root", names(DF)))
+    }
+  } else {
+    setnames(DT, value_column, "values", skip_absent=TRUE)
+    if(add_root){
+      setcolorder(DT, c("root", setdiff(names(DF), value_column), "values"))
+    } else {
+      setcolorder(DT, c(setdiff(names(DF), value_column), "values"))
+    }
+  }
+  
+  hierarchyList <- list()
+  for(i in seq_along(hierarchy_columns)){
+    current_columns <- colNamesDT[1:i]
+    if(is.null(value_column)){
+      currentDT <- unique(DT[, ..current_columns][, values := .N, by = current_columns], by = current_columns)
+    } else {
+      currentDT <- DT[, lapply(.SD, sum, na.rm = TRUE), by=current_columns, .SDcols = "values"]
+    }
+    setnames(currentDT, length(current_columns), "labels")
+    hierarchyList[[i]] <- currentDT
+  }
+  
+  hierarchyDT <- rbindlist(hierarchyList, use.names = TRUE, fill = TRUE)
+  
+  parent_columns <- setdiff(names(hierarchyDT), c("labels", "values"))
+  hierarchyDT[, parents := apply(.SD, 1, function(x){ifelse(all(is.na(x)), NA_character_, paste(x[!is.na(x)], collapse = " - "))}), .SDcols = parent_columns]
+  hierarchyDT[, ids := apply(.SD, 1, function(x){paste(x[!is.na(x)], collapse = " - ")}), .SDcols = c("parents", "labels")]
+  hierarchyDT[, c(parent_columns) := NULL]
+  
+  return(hierarchyDT)
+}
+
+sunburst_data <- as.sunburstDF(age_group_summary, value_column = "fantasy_points", add_root = TRUE)
+
+plot_ly(data = sunburst_data,
+        ids = ~ids,
+        labels = ~labels,
+        parents = ~parents,
+        values = ~values,
+        type = 'sunburst',
+        branchvalues = 'total')
+```
+
+-   Function adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>
 
 -   Discuss primary message
 
