@@ -15,11 +15,11 @@
 
 ## Introduction
 
-I am excited to dive into some fantasy basketball data visualizations in this blog post. One of our classes this quarter, Data Visualization and Communication (EDS240), has really opened my eyes to how critical data communication is through visual means, how the smallest changes that an observer might not bat a second glance at can change everything, and how narrative is imperative in forming a visual for a specific (or general) audience. Building beautiful, crisp visualizations takes time, and the course has been a fun and informative deep dive on the different layers that go into building these visuals.
+In this blog post, I'll dive into some fantasy basketball data visualizations. One of our classes this quarter, Data Visualization and Communication (EDS240), has really opened my eyes to how critical data communication is through visual means, how the smallest changes that an observer might not bat a second glance at can change everything, and how narrative is imperative in creating a visual for a specific (or general) audience. Building beautiful, crisp visualizations takes time and attention to details, and the class has been a fun and informative deep dive on the different layers that go into building these kind of visuals.
 
 A.L. Linall Jr frames the power of visualization well: "Visualization and belief in a pattern of reality activates the creative power of realization." (CITE). Interpreting raw data is not fun for anyone, but staring at a beautiful scatter plot, stacked area plot, ridge line plot, or heat map can make the process of digesting data more enjoyable. Further, a detailed and aesthetically pleasing visual can guide the observer towards a key takeaway that the creator intended. It is almost impossible to remove all biases and keep all of the important information from a dataset when creating a visual. Therefore, it is important to keep in mind what story the visualization is feeding you into as a consumer.
 
-For this final assignment, I will be constructing three different visuals that investigate the dynamic of a dynasty format fantasy basketball league that I am in. Each visual will be tailored for a certain audience: one for a general audience without domain expertise, one that would go well in a presentation, and one for domain experts, or people who know a lot about how dynasty leagues work. Let's dive in!
+For this final assignment, I will be constructing three different visuals that investigate the dynamic of a dynasty format fantasy basketball league that I am in. Each visual will be tailored for a certain audience: one for a general audience without domain expertise, one that would go well in a presentation, and one for domain experts, or people who know a lot about how dynasty leagues work.
 
 ### Background
 
@@ -98,7 +98,7 @@ Below is a list of the column names in the cleaned data set (`rostered`):
 colnames(rostered)
 ```
 
-Most of the columns in the data now are statistical categories for each NBA player, like points, rebounds, assists, turnovers, etc. The columns that will be most important for this analysis are the age (`age`), fantasy scoring (`f_pts` and `fp_g`), and fantasy team (`fantasy_team`) columns. Throughout the analysis, summary tables utilizing information from these columns will be generated as needed.
+Most of the columns in the data are statistical categories, like points, rebounds, assists, turnovers, etc. The columns that are most important for this analysis are the age (`age`), fantasy scoring (`f_pts` and `fp_g`), and fantasy team (`fantasy_team`) columns. Throughout the analysis, summary tables utilizing information from these columns will be generated as needed.
 
 #### Limitations
 
@@ -118,41 +118,36 @@ While DEI has been highlighted in our lecture materials and some other assignmen
 
 ```{r, echo=FALSE}
 # Selecting top 10 assets from each fantasy team
-swell_assets <- c("Anthony Edwards")
-scorpions_assets <- c("Evan Mobley")
-ballers_assets <- c("")
-crusaders_assets <- c("")
-starks_assets <- c("")
-pilots_assets <- c("")
-hounds_assets <- c("")
-stotches_assets <- c("")
-bigfoots_assets <- c("")
-milkers_assets <- c("")
-serpents_assets <- c("")
-orcas_assets <- c("")
+swell_assets <- c("Anthony Edwards", "Victor Wembanyama", "Desmond Bane", "Jaren Jackson", "Jalen Duren", "Keyonte George", "Grayson Allen", "Marvin Bagley", "Precious Achiuwa", "Jaden McDaniels")
+scorpions_assets <- c("Evan Mobley", "Jayson Tatum", "Coby White", "Mark Williams", "Darius Garland", "Amen Thompson", "Jalen Green", "Tari Eason", "Trey Murphy", "Bilal Coulibaly")
+ballers_assets <- c("Giannis Antetokounmpo", "Anthony Davis", "Domantas Sabonis", "Kevin Durant", "Kawhi Leonard", "Kyrie Irving", "DeMar DeRozan", "Julius Randle", "CJ McCollum", "Nikola Vucevic")
+crusaders_assets <- c("Nikola Jokic", "Donovan Mitchell", "Stephen Curry", "Jamal Murray", "Derrick White", "Devin Vassell", "Walker Kessler", "Jusuf Nurkic", "Daniel Gafford", "Onyeka Okongwu")
+starks_assets <- c("Luka Doncic", "Lauri Markkanen", "Jimmy Butler", "Kristaps Porzingis", "Pascal Siakam", "Zion Williamson", "Jaylen Brown", "Tyler Herro", "Mikal Bridges", "Brandin Podziemski")
+pilots_assets <- c("Devin Booker", "LaMelo Ball", "Dejounte Murray", "Karl-Anthony Towns", "Brandon Ingram", "Deandre Ayton", "Tyus Jones", "OG Anunoby", "Keegan Murray", "Brandon Miller")
+hounds_assets <- c("Shai Gilgeous-Alexander", "Jalen Williams", "D'Angelo Russell", "Michael Porter", "Aaron Gordon", "RJ Barrett", "Jerami Grant", "Cole Anthony", "Dennis Schroder", "Jordan Clarkson")
+stotches_assets <- c("Tyrese Haliburton", "Ja Morant", "Tyrese Maxey", "Alperen Sengun", "Jakob Poeltl", "Deni Avdija", "Keldon Johnson", "Jaime Jaquez", "Ivica Zubac", "Ben Simmons")
+bigfoots_assets <- c("De'Aaron Fox", "Jalen Brunson", "Kyle Kuzma", "Anfernee Simons", "Collin Sexton", "Malik Monk", "Dereck Lively", "Donte DiVincenzo", "Herbert Jones", "Jordan Poole")
+milkers_assets <- c("LeBron James", "James Harden", "Bam Adebayo", "Damian Lillard", "Fred VanVleet", "Paul George", "Miles Bridges", "Jarrett Allen", "Terry Rozier", "Myles Turner")
+serpents_assets <- c("Chet Holmgren", "Cade Cunningham", "Paolo Banchero", "Jalen Johnson", "Zach LaVine", "Jabari Smith", "Immanuel Quickley", "Shaedon Sharpe", "Jeremy Sochan", "Ausar Thompson")
+orcas_assets <- c("Joel Embiid", "Trae Young", "Scottie Barnes", "Nicolas Claxton", "Franz Wagner", "Austin Reaves", "Cameron Thomas", "Jonathan Kuminga", "Jaden Ivey", "Mitchell Robinson")
 
 # Joining top assets from each team into single vector
 top_assets <- c(swell_assets, scorpions_assets, ballers_assets, crusaders_assets, 
                 starks_assets, pilots_assets, hounds_assets, stotches_assets,
                 bigfoots_assets, milkers_assets, serpents_assets, orcas_assets)
-
-# Filtering for top assets in the player data
-top_assets <- rostered %>% 
-  filter(player %in% top_assets)
 ```
 
-```{r, message=FALSE}
+```{r, message=FALSE, fig.width=7, out.width='100%'}
 # Importing libraries
 library(ggimage)
 
-# Rank players within each team by their fp_g and filter for the top 12
+# Rank players within each team by their fp_g and filter for the top 10 assets
 top_players <- rostered %>%
   group_by(fantasy_team) %>%
-  mutate(rank = rank(-fp_g)) %>% # Rank players based on fp_g, '-' for descending order
-  filter(rank <= 10) %>%
-  ungroup()
+  filter(player %in% top_assets)
 
-# Calculate average age and fantasy points per game by fantasy team (top 12 players)
+
+# Calculate average age and fantasy points per game by fantasy team (top 10 assets)
 team_averages <- top_players %>%
   group_by(fantasy_team) %>%
   summarise(
@@ -161,17 +156,17 @@ team_averages <- top_players %>%
   ) 
 
 # Add logo and logo path for each team
-team_averages$logo_path <- c("images/orcas_logo.png", "images/bigfoots_logo.png", 
+team_averages$logo_path <- c("images/orcas_logo.png", "images/bigfoots_logo.png",
                              "images/ballers_logo.png", "images/crusaders_logo.png",
                              "images/hounds_logo.png", "images/scorpions_logo.png",
-                             "images/milkers_logo.png", "images/pilots_logo.png", 
+                             "images/milkers_logo.png", "images/pilots_logo.png",
                              "images/swell_logo.png", "images/stotches_logo.png",
                              "images/serpents_logo.png", "images/starks_logo.png")
 
 scatter <- ggplot(team_averages, aes(x = AverageAge, y = AverageFpG)) +
-  geom_image(aes(image = logo_path), size = 0.11, alpha = 0.7) +
+  geom_image(aes(image = logo_path), size = 0.09, alpha = 0.7) +
   labs(
-    title = "Fantasy Scoring versus Age by Team",
+    title = "Fantasy Scoring versus Age of Top 10 Assets per Team",
     x = "Average Age",
     y = "Average Fantasy Points Per Game"
   ) +
@@ -185,25 +180,96 @@ scatter <- ggplot(team_averages, aes(x = AverageAge, y = AverageFpG)) +
   expand_limits(x = c(min(team_averages$AverageAge) - 1, max(team_averages$AverageAge) + 1),
                 y = c(min(team_averages$AverageFpG) - 1, max(team_averages$AverageFpG) + 1)) # Stretch axes
 
-scatter
+scatter +
+  geom_text( # BB text
+    x = 29.5,
+    y = 47.5,
+    label = "One first round pick",
+    size = 3,
+    color = "black",
+    hjust = "inward",
+  ) +
+  annotate( # BB arrow
+    geom = "curve",
+    x = 29.7, xend = 30.6,
+    y = 47.5, yend = 47.5,
+    curvature = -.02,
+    arrow = arrow(length = unit(0.1, "cm"))
+  ) +
+  geom_text( # MM text
+    x = 32,
+    y = 36.5,
+    label = "Two first round picks",
+    size = 3,
+    color = "black",
+    hjust = "inward"
+  ) +
+  annotate( ## MM arrow
+    geom = "curve",
+    x = 31, xend = 30.65,
+    y = 36.8, yend = 41,
+    curvature = .6,
+    arrow = arrow(length = unit(0.1, "cm"))
+  ) +
+  geom_text( # SB text
+    x = 20.5,
+    y = 36.65,
+    label = "Seven first round picks",
+    size = 3,
+    color = "black",
+    hjust = "inward"
+  ) +
+  annotate( ## SB arrow
+    geom = "curve",
+    x = 22.6, xend = 23.2,
+    y = 35.6, yend = 33,
+    curvature = -0.55,
+    arrow = arrow(length = unit(0.1, "cm"))
+  ) +
+  geom_text( # CC text
+    x = 29.2,
+    y = 35.4,
+    label = "One first round pick",
+    size = 3,
+    color = "black",
+    hjust = "inward"
+  ) +
+  annotate( ## CC arrow
+    geom = "curve",
+    x = 28.2, xend = 27.35,
+    y = 35.9, yend = 39.1,
+    curvature = 0.5,
+    arrow = arrow(length = unit(0.1, "cm"))
+  ) +
+  geom_text( # SD text
+    x = 23.2,
+    y = 42,
+    label = "Two first round picks",
+    size = 3,
+    color = "black",
+    hjust = "inward"
+  ) +
+  annotate( ## SD arrow
+    geom = "curve",
+    x = 24.7, xend = 25.22,
+    y = 41.1, yend = 38,
+    curvature = -0.3,
+    arrow = arrow(length = unit(0.1, "cm"))
+  )  
+  
+  
 ```
 
--   Discuss primary message
+This plot investigates the average age and fantasy points per game of the top 10 assets on each fantasy team. While there is no perfect number of assets to choose (5, 10, 15), there are 10 starting spots for each night of fantasy play, so it seemed like an appropriate choice. The plot reveals that teams whose top assets are older tend to have higher average fantasy points scoring. A scatter plot is a great plot to visualize this relationship as it clearly displays each team's top assets as individual points, allowing for the direct observation of the relationship between average age and fantasy points per game.
 
-```{=html}
-<!-- -->
-```
--   Discuss scatter plot choice
-
--   Discuss text on plot
-
--   Discuss annotation decisions
+Annotations are added to provide more context on the draft capital of specific teams that have an interesting number of first round picks. In the beginning of the season, each team had 3 first round picks: 2025, 2026, and 2027 (or the next 3 years for the case of future seasons). Teams can trade these picks around, which is a big part of what makes fantasy leagues exciting and unique from redraft leagues. The best teams in the league tend to have less draft capital as they traded it away to acquire win-now players. Also of note, the Santa Barbara Swell owning 7 first round picks is likely to set the franchise up well in the long-term. Teams not labeled either have 3 or 4 first round picks over the next 3 years.
 
 ### Plot 2: Ridge line plot
 
-```{r}
+```{r, warning=FALSE, message=FALSE, fig.width=8, out.width='100%'}
 # Installing new packages
 library(ggridges)
+library(viridis)
 
 # Calculate the average age for each fantasy team
 team_avg_age <- rostered %>%
@@ -236,19 +302,48 @@ logos <- data.frame(team = c("Anacortes", "Beaverton", "Bikini Bottom",
                              "images/swell_logo.png", "images/stotches_logo.png",
                              "images/serpents_logo.png", "images/starks_logo.png"))
 
+# Adding new column for player images 
+logos$player <- NA
+logos$player_xcoord <- NA 
+
+# Adding player image and x-loc paths
+logos[logos$team == "Anacortes", "player"] <- "images/embiid.png"
+logos[logos$team == "Anacortes", "player_xcoord"] <- 71
+logos[logos$team == "Winterfell", "player"] <- "images/luka.png"
+logos[logos$team == "Winterfell", "player_xcoord"] <- 71
+logos[logos$team == "Cream City", "player"] <- "images/jokic.png"
+logos[logos$team == "Cream City", "player_xcoord"] <- 71
+logos[logos$team == "Santa Barbara", "player"] <- "images/wemby.png"
+logos[logos$team == "Santa Barbara", "player_xcoord"] <- 57
+logos[logos$team == "Scottsdale", "player"] <- "images/hali.png"
+logos[logos$team == "Scottsdale", "player_xcoord"] <- 61
+logos[logos$team == "Helsinki", "player"] <- "images/sga.png"
+logos[logos$team == "Helsinki", "player_xcoord"] <- 68
+logos[logos$team == "Las Vegas", "player"] <- "images/tatum.png"
+logos[logos$team == "Las Vegas", "player_xcoord"] <- 55
+logos[logos$team == "Slytherin", "player"] <- "images/chet.png"
+logos[logos$team == "Slytherin", "player_xcoord"] <- 52
+logos[logos$team == "Beaverton", "player"] <- "images/fox.png"
+logos[logos$team == "Beaverton", "player_xcoord"] <- 55
+logos[logos$team == "San Diego", "player"] <- "images/book.png"
+logos[logos$team == "San Diego", "player_xcoord"] <- 56
+logos[logos$team == "Bikini Bottom", "player"] <- "images/giannis.png"
+logos[logos$team == "Bikini Bottom", "player_xcoord"] <- 68
+logos[logos$team == "Malibu", "player"] <- "images/lebron.png"
+logos[logos$team == "Malibu", "player_xcoord"] <- 58
+
 # Create ridge plot
 ridge_plot <- ggplot(rostered, aes(x = fp_g, y = fantasy_team, fill = AverageAge)) + geom_density_ridges(
     aes(height = ..density..), 
     alpha = 0.5, 
     scale = 2, 
-    rel_min_height = 0.02
+    rel_min_height = 0.05,
+    trim = TRUE,
+    adjust = 0.2
   ) +
-  scale_fill_gradientn(
-    colors = c("green", "yellow", "red"), 
-    limits = c(min(rostered$AverageAge), max(rostered$AverageAge)),
-    name = "Average Age"
-  ) +
+  scale_fill_viridis_c(name = "Average Age", option = "A") +
   labs(title = "Fantasy Scoring Distribution by Team",
+       subtitle = "Includes a heatshot of each team's best player",
        x = "Fantasy Points per Game",
        y = "") +
   theme_ridges(grid = FALSE) +
@@ -258,30 +353,29 @@ ridge_plot <- ggplot(rostered, aes(x = fp_g, y = fantasy_team, fill = AverageAge
     panel.background = element_blank(), 
     axis.title = element_text(size = 11), 
     axis.text.y = element_text(size = 10), 
+    plot.subtitle = element_text(size = 9) 
+    
   ) 
 
 # Add team logos to ridge plot
-ridge_logos <- ridge_plot + 
-  geom_image(data = logos, aes(x = -20, y = team, image = logo), size = 0.07, inherit.aes = FALSE)
+ridge_images <- ridge_plot + 
+  geom_image(data = logos, aes(x = -20, y = team, image = logo), size = 0.07, inherit.aes = FALSE) +
+  geom_image(data = logos, aes(x = player_xcoord, y = team, image = player), size = 0.1, inherit.aes = FALSE)
 
-ridge_logos
+ridge_images
+
+ggsave("images/ridge_images.png", ridge_images, width = 10, height = 6)
+
 
 ```
 
--   Discuss primary message
+This plot shows the fantasy points per game for players on each fantasy team. The visualization captures the distribution and density of fantasy points, highlighting the variance in player performance across different teams. It lets viewers easily compare the scoring potential and depth of talent on each fantasy team, allowing the ridge line plot to shine. A head shot of the best player on each fantasy team is added for additional context about each team. The ridges are ordered from lowest fantasy team on the top and highest fantasy scoring team on the bottom of the plot. A colorblind-friendly fill is used for average team age as well using the `viridis` package.
 
-```{=html}
-<!-- -->
-```
--   Discuss ridge line plot choice
-
--   Discuss how age color palette is colorblind-friendly
-
--   Discuss order of ridges
+The main takeaways of the plot are that Bikini Bottom has the best top-end talent in the fantasy league, Malibu has lots of very good players on its roster, and the most common scoring range for players is roughly 20 to 30 fantasy points. Also, rosters that have more high-scoring players tend to be older.
 
 ### Plot 3: Sunburst plot
 
-```{r, message = FALSE}
+```{r, message = FALSE, fig.width=7, out.width='100%'}
 # Importing new libraries
 library(data.table)
 library(plotly)
@@ -363,17 +457,10 @@ plot_ly(data = sunburst_data,
         branchvalues = 'total')
 ```
 
--   Function adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>
+The function for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>
 
--   Discuss primary message
-
-```{=html}
-<!-- -->
-```
--   Discuss sunburst plot choice
-
--   Discuss text on plot
-
--   Discuss how color palette is colorblind-friendly
+This sunburst plot breaks down the total fantasy scoring in the league, by both team and then age groups within each team. This is the perfect opportunity to utilize a sunburst plot, since it effectively illustrates hierarchical relationships and proportions in a visually compact and intuitive manner. The sunburst plot's outer ring shows age group contributions to total fantasy points for each team, highlighting the impact of age diversity on each fantasy roster. It distinguishes between teams relying on youth versus experience, efficiently mapping the league's age and scoring dynamics in a single, clear visual. Text is easily integrated using `plotly` to reveal the number of fantasy points in each section of the plot.
 
 ## Takeaways
+
+The exploration of the A.S.S. League's dynamics through these visualizations reveals some interesting insights into the dynamic between player age and fantasy performance, shedding light on strategic roster constructions across the league. Teams that have older players tend to be the higher fantasy scoring teams, while lower scoring teams are filled with young players who fantasy managers hope will continue to develop and increase their fantassy output. Notably, the Bikini Bottom Ballers' dominance this season, powered by some elite assets, underscores the potential short-term merits (winning a championship) of investing in win-now talent. However, the Santa Barbara Swell's forward-looking approach, amassing an impressive stack of first-round picks and building around a once-in-a-lifetime prospect in Victor Wembanyama, signals a promising focus towards long-term dominance. This strategy contrast underlines the league's evolving nature, where teams aim for championships in distinct timeframes. As we head into the fantasy playoffs, the unfolding narratives in the league will certainly add another thrilling chapter to the A.S.S. League's storied history, with every team vying not just for this season's glory but for a lasting legacy.

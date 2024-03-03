@@ -1,0 +1,17 @@
+---
+  title: "The Expressivity of Neural Networks"
+  description: ""
+  author:
+    - name: Maxwell Patterson
+    - affiliation: Brown University
+  date: 5-11-2023
+  categories: [Python, ML]
+  output: 
+    html_document:
+      fontsize: 9px
+      code_folding: hide
+---
+
+`{{{< pdf Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2023-12-7-neural-net-exp/exp_of_nn.pdf width=100% >}}}`
+
+

@@ -211,9 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>I am excited to dive into some fantasy basketball data visualizations in this blog post. One of our classes this quarter, Data Visualization and Communication (EDS240), has really opened my eyes to how critical data communication is through visual means, how the smallest changes that an observer might not bat a second glance at can change everything, and how narrative is imperative in forming a visual for a specific (or general) audience. Building beautiful, crisp visualizations takes time, and the course has been a fun and informative deep dive on the different layers that go into building these visuals.</p>
+<p>In this blog post, I’ll dive into some fantasy basketball data visualizations. One of our classes this quarter, Data Visualization and Communication (EDS240), has really opened my eyes to how critical data communication is through visual means, how the smallest changes that an observer might not bat a second glance at can change everything, and how narrative is imperative in creating a visual for a specific (or general) audience. Building beautiful, crisp visualizations takes time and attention to details, and the class has been a fun and informative deep dive on the different layers that go into building these kind of visuals.</p>
 <p>A.L. Linall Jr frames the power of visualization well: “Visualization and belief in a pattern of reality activates the creative power of realization.” (CITE). Interpreting raw data is not fun for anyone, but staring at a beautiful scatter plot, stacked area plot, ridge line plot, or heat map can make the process of digesting data more enjoyable. Further, a detailed and aesthetically pleasing visual can guide the observer towards a key takeaway that the creator intended. It is almost impossible to remove all biases and keep all of the important information from a dataset when creating a visual. Therefore, it is important to keep in mind what story the visualization is feeding you into as a consumer.</p>
-<p>For this final assignment, I will be constructing three different visuals that investigate the dynamic of a dynasty format fantasy basketball league that I am in. Each visual will be tailored for a certain audience: one for a general audience without domain expertise, one that would go well in a presentation, and one for domain experts, or people who know a lot about how dynasty leagues work. Let’s dive in!</p>
+<p>For this final assignment, I will be constructing three different visuals that investigate the dynamic of a dynasty format fantasy basketball league that I am in. Each visual will be tailored for a certain audience: one for a general audience without domain expertise, one that would go well in a presentation, and one for domain experts, or people who know a lot about how dynasty leagues work.</p>
 <section id="background" class="level3">
 <h3 class="anchored" data-anchor-id="background">Background</h3>
 <p>I have been in this fantasy basketball league for a few years, but we just switched over to a dynasty format this offseason. Dynasty league formats exist for all fantasy sports, and they are leagues where managers keep their entire roster each season. Most fantasy leagues are redraft format, where there is a full draft each year where teams draft entirely new rosters. In the dynasty format, there is simply a rookie draft where managers only select from the rookie player pool to keep building their rosters. In this sense, a dynasty league is more like being a GM of an NBA team, where players are kept year over year and new players are acquired through trades or the rookie draft. Personally, I have loved this format as it completely changes the dynamic of assessing a player’s value. More on this later.</p>
@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [21] "x3d"          "x2d"         </code></pre>
 </div>
 </div>
-<p>Most of the columns in the data now are statistical categories for each NBA player, like points, rebounds, assists, turnovers, etc. The columns that will be most important for this analysis are the age (<code>age</code>), fantasy scoring (<code>f_pts</code> and <code>fp_g</code>), and fantasy team (<code>fantasy_team</code>) columns. Throughout the analysis, summary tables utilizing information from these columns will be generated as needed.</p>
+<p>Most of the columns in the data are statistical categories, like points, rebounds, assists, turnovers, etc. The columns that are most important for this analysis are the age (<code>age</code>), fantasy scoring (<code>f_pts</code> and <code>fp_g</code>), and fantasy team (<code>fantasy_team</code>) columns. Throughout the analysis, summary tables utilizing information from these columns will be generated as needed.</p>
 </section>
 <section id="limitations" class="level4">
 <h4 class="anchored" data-anchor-id="limitations">Limitations</h4>
@@ -263,249 +263,329 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing libraries</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggimage)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank players within each team by their fp_g and filter for the top 12</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Rank players within each team by their fp_g and filter for the top 10 assets</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>top_players <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team) <span class="sc">%&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>fp_g)) <span class="sc">%&gt;%</span> <span class="co"># Rank players based on fp_g, '-' for descending order</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rank <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average age and fantasy points per game by fantasy team (top 12 players)</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>team_averages <span class="ot">&lt;-</span> top_players <span class="sc">%&gt;%</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team) <span class="sc">%&gt;%</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">AverageAge =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">AverageFpG =</span> <span class="fu">mean</span>(fp_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add logo and logo path for each team</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>team_averages<span class="sc">$</span>logo_path <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"images/orcas_logo.png"</span>, <span class="st">"images/bigfoots_logo.png"</span>, </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/ballers_logo.png"</span>, <span class="st">"images/crusaders_logo.png"</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/hounds_logo.png"</span>, <span class="st">"images/scorpions_logo.png"</span>,</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/milkers_logo.png"</span>, <span class="st">"images/pilots_logo.png"</span>, </span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/swell_logo.png"</span>, <span class="st">"images/stotches_logo.png"</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/serpents_logo.png"</span>, <span class="st">"images/starks_logo.png"</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(team_averages, <span class="fu">aes</span>(<span class="at">x =</span> AverageAge, <span class="at">y =</span> AverageFpG)) <span class="sc">+</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="fu">aes</span>(<span class="at">image =</span> logo_path), <span class="at">size =</span> <span class="fl">0.11</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fantasy Scoring versus Age by Team"</span>,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Average Age"</span>,</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Fantasy Points Per Game"</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Courier"</span>),</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"antiquewhite"</span>),<span class="co"># Set background color</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#f7f7f7"</span>), <span class="co"># Grid lines fainter color</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"#f7f7f7"</span>) <span class="co"># Grid lines fainter color</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fu">min</span>(team_averages<span class="sc">$</span>AverageAge) <span class="sc">-</span> <span class="dv">1</span>, <span class="fu">max</span>(team_averages<span class="sc">$</span>AverageAge) <span class="sc">+</span> <span class="dv">1</span>),</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="fu">min</span>(team_averages<span class="sc">$</span>AverageFpG) <span class="sc">-</span> <span class="dv">1</span>, <span class="fu">max</span>(team_averages<span class="sc">$</span>AverageFpG) <span class="sc">+</span> <span class="dv">1</span>)) <span class="co"># Stretch axes</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>scatter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(player <span class="sc">%in%</span> top_assets)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average age and fantasy points per game by fantasy team (top 10 assets)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>team_averages <span class="ot">&lt;-</span> top_players <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team) <span class="sc">%&gt;%</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">AverageAge =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">AverageFpG =</span> <span class="fu">mean</span>(fp_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add logo and logo path for each team</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>team_averages<span class="sc">$</span>logo_path <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"images/orcas_logo.png"</span>, <span class="st">"images/bigfoots_logo.png"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/ballers_logo.png"</span>, <span class="st">"images/crusaders_logo.png"</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/hounds_logo.png"</span>, <span class="st">"images/scorpions_logo.png"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/milkers_logo.png"</span>, <span class="st">"images/pilots_logo.png"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/swell_logo.png"</span>, <span class="st">"images/stotches_logo.png"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/serpents_logo.png"</span>, <span class="st">"images/starks_logo.png"</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(team_averages, <span class="fu">aes</span>(<span class="at">x =</span> AverageAge, <span class="at">y =</span> AverageFpG)) <span class="sc">+</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="fu">aes</span>(<span class="at">image =</span> logo_path), <span class="at">size =</span> <span class="fl">0.09</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Fantasy Scoring versus Age of Top 10 Assets per Team"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Average Age"</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Fantasy Points Per Game"</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Courier"</span>),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"antiquewhite"</span>),<span class="co"># Set background color</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#f7f7f7"</span>), <span class="co"># Grid lines fainter color</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"#f7f7f7"</span>) <span class="co"># Grid lines fainter color</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fu">min</span>(team_averages<span class="sc">$</span>AverageAge) <span class="sc">-</span> <span class="dv">1</span>, <span class="fu">max</span>(team_averages<span class="sc">$</span>AverageAge) <span class="sc">+</span> <span class="dv">1</span>),</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="fu">min</span>(team_averages<span class="sc">$</span>AverageFpG) <span class="sc">-</span> <span class="dv">1</span>, <span class="fu">max</span>(team_averages<span class="sc">$</span>AverageFpG) <span class="sc">+</span> <span class="dv">1</span>)) <span class="co"># Stretch axes</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>scatter <span class="sc">+</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="co"># BB text</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">29.5</span>,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">47.5</span>,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"One first round pick"</span>,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="st">"inward"</span>,</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>( <span class="co"># BB arrow</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">29.7</span>, <span class="at">xend =</span> <span class="fl">30.6</span>,</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">47.5</span>, <span class="at">yend =</span> <span class="fl">47.5</span>,</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">curvature =</span> <span class="sc">-</span>.<span class="dv">02</span>,</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"cm"</span>))</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="co"># MM text</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">32</span>,</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">36.5</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Two first round picks"</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="st">"inward"</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>( <span class="do">## MM arrow</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">31</span>, <span class="at">xend =</span> <span class="fl">30.65</span>,</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">36.8</span>, <span class="at">yend =</span> <span class="dv">41</span>,</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">curvature =</span> .<span class="dv">6</span>,</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"cm"</span>))</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="co"># SB text</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">20.5</span>,</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">36.65</span>,</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Seven first round picks"</span>,</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="st">"inward"</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>( <span class="do">## SB arrow</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">22.6</span>, <span class="at">xend =</span> <span class="fl">23.2</span>,</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">35.6</span>, <span class="at">yend =</span> <span class="dv">33</span>,</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">curvature =</span> <span class="sc">-</span><span class="fl">0.55</span>,</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"cm"</span>))</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="co"># CC text</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">29.2</span>,</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">35.4</span>,</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"One first round pick"</span>,</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="st">"inward"</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>( <span class="do">## CC arrow</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">28.2</span>, <span class="at">xend =</span> <span class="fl">27.35</span>,</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">35.9</span>, <span class="at">yend =</span> <span class="fl">39.1</span>,</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>    <span class="at">curvature =</span> <span class="fl">0.5</span>,</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"cm"</span>))</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="co"># SD text</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">23.2</span>,</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="dv">42</span>,</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Two first round picks"</span>,</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="st">"inward"</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>( <span class="do">## SD arrow</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"curve"</span>,</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">24.7</span>, <span class="at">xend =</span> <span class="fl">25.22</span>,</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">41.1</span>, <span class="at">yend =</span> <span class="dv">38</span>,</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">curvature =</span> <span class="sc">-</span><span class="fl">0.3</span>,</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"cm"</span>))</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
-<ul>
-<li>Discuss primary message</li>
-</ul>
-<!-- -->
-<ul>
-<li><p>Discuss scatter plot choice</p></li>
-<li><p>Discuss text on plot</p></li>
-<li><p>Discuss annotation decisions</p></li>
-</ul>
+<p>This plot investigates the average age and fantasy points per game of the top 10 assets on each fantasy team. While there is no perfect number of assets to choose (5, 10, 15), there are 10 starting spots for each night of fantasy play, so it seemed like an appropriate choice. The plot reveals that teams whose top assets are older tend to have higher average fantasy points scoring. A scatter plot is a great plot to visualize this relationship as it clearly displays each team’s top assets as individual points, allowing for the direct observation of the relationship between average age and fantasy points per game.</p>
+<p>Annotations are added to provide more context on the draft capital of specific teams that have an interesting number of first round picks. In the beginning of the season, each team had 3 first round picks: 2025, 2026, and 2027 (or the next 3 years for the case of future seasons). Teams can trade these picks around, which is a big part of what makes fantasy leagues exciting and unique from redraft leagues. The best teams in the league tend to have less draft capital as they traded it away to acquire win-now players. Also of note, the Santa Barbara Swell owning 7 first round picks is likely to set the franchise up well in the long-term. Teams not labeled either have 3 or 4 first round picks over the next 3 years.</p>
 </section>
 <section id="plot-2-ridge-line-plot" class="level3">
 <h3 class="anchored" data-anchor-id="plot-2-ridge-line-plot">Plot 2: Ridge line plot</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Installing new packages</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average age for each fantasy team</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>team_avg_age <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageAge =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the average age data with full data</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>rostered <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(team_avg_age, <span class="at">by =</span> <span class="st">"fantasy_team"</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Order the teams by average fp_g</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>team_order <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team) <span class="sc">%&gt;%</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageFpG =</span> <span class="fu">mean</span>(fp_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(AverageFpG)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(fantasy_team)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure data is ordered correctly for plotting</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>rostered<span class="sc">$</span>fantasy_team <span class="ot">&lt;-</span> <span class="fu">factor</span>(rostered<span class="sc">$</span>fantasy_team, <span class="at">levels =</span> team_order)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Define team logos for ridge plot </span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>logos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">team =</span> <span class="fu">c</span>(<span class="st">"Anacortes"</span>, <span class="st">"Beaverton"</span>, <span class="st">"Bikini Bottom"</span>,</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Cream City"</span>, <span class="st">"Helsinki"</span>, <span class="st">"Las Vegas"</span>, <span class="st">"Malibu"</span>,</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"San Diego"</span>, <span class="st">"Santa Barbara"</span>, <span class="st">"Scottsdale"</span>, </span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Slytherin"</span>, <span class="st">"Winterfell"</span>),</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                    <span class="at">logo =</span> <span class="fu">c</span>(<span class="st">"images/orcas_logo.png"</span>, <span class="st">"images/bigfoots_logo.png"</span>, </span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/ballers_logo.png"</span>, <span class="st">"images/crusaders_logo.png"</span>,</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/hounds_logo.png"</span>, <span class="st">"images/scorpions_logo.png"</span>,</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/milkers_logo.png"</span>, <span class="st">"images/pilots_logo.png"</span>, </span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/swell_logo.png"</span>, <span class="st">"images/stotches_logo.png"</span>,</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/serpents_logo.png"</span>, <span class="st">"images/starks_logo.png"</span>))</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Create ridge plot</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>ridge_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rostered, <span class="fu">aes</span>(<span class="at">x =</span> fp_g, <span class="at">y =</span> fantasy_team, <span class="at">fill =</span> AverageAge)) <span class="sc">+</span> <span class="fu">geom_density_ridges</span>(</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">height =</span> ..density..), </span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> <span class="dv">2</span>, </span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">rel_min_height =</span> <span class="fl">0.02</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"yellow"</span>, <span class="st">"red"</span>), </span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="fu">min</span>(rostered<span class="sc">$</span>AverageAge), <span class="fu">max</span>(rostered<span class="sc">$</span>AverageAge)),</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Average Age"</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fantasy Scoring Distribution by Team"</span>,</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fantasy Points per Game"</span>,</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ridges</span>(<span class="at">grid =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Courier"</span>),</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"antiquewhite"</span>), </span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(), </span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>), </span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), </span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Add team logos to ridge plot</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>ridge_logos <span class="ot">&lt;-</span> ridge_plot <span class="sc">+</span> </span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="at">data =</span> logos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">20</span>, <span class="at">y =</span> team, <span class="at">image =</span> logo), <span class="at">size =</span> <span class="fl">0.07</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>ridge_logos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
-ℹ Please use `after_stat(density)` instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Picking joint bandwidth of 4.71</code></pre>
-</div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average age for each fantasy team</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>team_avg_age <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageAge =</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the average age data with full data</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>rostered <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(team_avg_age, <span class="at">by =</span> <span class="st">"fantasy_team"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Order the teams by average fp_g</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>team_order <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team) <span class="sc">%&gt;%</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">AverageFpG =</span> <span class="fu">mean</span>(fp_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(AverageFpG)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(fantasy_team)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure data is ordered correctly for plotting</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>rostered<span class="sc">$</span>fantasy_team <span class="ot">&lt;-</span> <span class="fu">factor</span>(rostered<span class="sc">$</span>fantasy_team, <span class="at">levels =</span> team_order)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Define team logos for ridge plot </span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>logos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">team =</span> <span class="fu">c</span>(<span class="st">"Anacortes"</span>, <span class="st">"Beaverton"</span>, <span class="st">"Bikini Bottom"</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Cream City"</span>, <span class="st">"Helsinki"</span>, <span class="st">"Las Vegas"</span>, <span class="st">"Malibu"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"San Diego"</span>, <span class="st">"Santa Barbara"</span>, <span class="st">"Scottsdale"</span>, </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Slytherin"</span>, <span class="st">"Winterfell"</span>),</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                    <span class="at">logo =</span> <span class="fu">c</span>(<span class="st">"images/orcas_logo.png"</span>, <span class="st">"images/bigfoots_logo.png"</span>, </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/ballers_logo.png"</span>, <span class="st">"images/crusaders_logo.png"</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/hounds_logo.png"</span>, <span class="st">"images/scorpions_logo.png"</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/milkers_logo.png"</span>, <span class="st">"images/pilots_logo.png"</span>, </span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/swell_logo.png"</span>, <span class="st">"images/stotches_logo.png"</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"images/serpents_logo.png"</span>, <span class="st">"images/starks_logo.png"</span>))</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding new column for player images </span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>logos<span class="sc">$</span>player <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>logos<span class="sc">$</span>player_xcoord <span class="ot">&lt;-</span> <span class="cn">NA</span> </span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding player image and x-loc paths</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Anacortes"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/embiid.png"</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Anacortes"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">71</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Winterfell"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/luka.png"</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Winterfell"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">71</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Cream City"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/jokic.png"</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Cream City"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">71</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Santa Barbara"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/wemby.png"</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Santa Barbara"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">57</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Scottsdale"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/hali.png"</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Scottsdale"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">61</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Helsinki"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/sga.png"</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Helsinki"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">68</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Las Vegas"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/tatum.png"</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Las Vegas"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">55</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Slytherin"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/chet.png"</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Slytherin"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">52</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Beaverton"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/fox.png"</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Beaverton"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">55</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"San Diego"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/book.png"</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"San Diego"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">56</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Bikini Bottom"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/giannis.png"</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Bikini Bottom"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">68</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Malibu"</span>, <span class="st">"player"</span>] <span class="ot">&lt;-</span> <span class="st">"images/lebron.png"</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>logos[logos<span class="sc">$</span>team <span class="sc">==</span> <span class="st">"Malibu"</span>, <span class="st">"player_xcoord"</span>] <span class="ot">&lt;-</span> <span class="dv">58</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Create ridge plot</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>ridge_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rostered, <span class="fu">aes</span>(<span class="at">x =</span> fp_g, <span class="at">y =</span> fantasy_team, <span class="at">fill =</span> AverageAge)) <span class="sc">+</span> <span class="fu">geom_density_ridges</span>(</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">height =</span> ..density..), </span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>, </span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> <span class="dv">2</span>, </span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">rel_min_height =</span> <span class="fl">0.05</span>,</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">trim =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> <span class="fl">0.2</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"Average Age"</span>, <span class="at">option =</span> <span class="st">"A"</span>) <span class="sc">+</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fantasy Scoring Distribution by Team"</span>,</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Includes a heatshot of each team's best player"</span>,</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fantasy Points per Game"</span>,</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ridges</span>(<span class="at">grid =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Courier"</span>),</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"antiquewhite"</span>), </span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>), </span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>), </span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>) </span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Add team logos to ridge plot</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>ridge_images <span class="ot">&lt;-</span> ridge_plot <span class="sc">+</span> </span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="at">data =</span> logos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">20</span>, <span class="at">y =</span> team, <span class="at">image =</span> logo), <span class="at">size =</span> <span class="fl">0.07</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_image</span>(<span class="at">data =</span> logos, <span class="fu">aes</span>(<span class="at">x =</span> player_xcoord, <span class="at">y =</span> team, <span class="at">image =</span> player), <span class="at">size =</span> <span class="fl">0.1</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>ridge_images</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" style="width:100.0%"></p>
 </div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"images/ridge_images.png"</span>, ridge_images, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ul>
-<li>Discuss primary message</li>
-</ul>
-<!-- -->
-<ul>
-<li><p>Discuss ridge line plot choice</p></li>
-<li><p>Discuss how age color palette is colorblind-friendly</p></li>
-<li><p>Discuss order of ridges</p></li>
-</ul>
+<p>This plot shows the fantasy points per game for players on each fantasy team. The visualization captures the distribution and density of fantasy points, highlighting the variance in player performance across different teams. It lets viewers easily compare the scoring potential and depth of talent on each fantasy team, allowing the ridge line plot to shine. A head shot of the best player on each fantasy team is added for additional context about each team. The ridges are ordered from lowest fantasy team on the top and highest fantasy scoring team on the bottom of the plot. A colorblind-friendly fill is used for average team age as well using the <code>viridis</code> package.</p>
+<p>The main takeaways of the plot are that Bikini Bottom has the best top-end talent in the fantasy league, Malibu has lots of very good players on its roster, and the most common scoring range for players is roughly 20 to 30 fantasy points. Also, rosters that have more high-scoring players tend to be older.</p>
 </section>
 <section id="plot-3-sunburst-plot" class="level3">
 <h3 class="anchored" data-anchor-id="plot-3-sunburst-plot">Plot 3: Sunburst plot</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing new libraries</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorize each player into age group bin</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>rostered <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">case_when</span>(</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">&lt;</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"Under 25"</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">29</span> <span class="sc">~</span> <span class="st">"25-29"</span>,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">&gt;</span> <span class="dv">29</span> <span class="sc">~</span> <span class="st">"Over 30"</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by fantasy team and age group, then summarize total fantasy points</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>age_group_summary <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team, age_group) <span class="sc">%&gt;%</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">fantasy_points =</span> <span class="fu">sum</span>(f_pts, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">'drop'</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>as.sunburstDF <span class="ot">&lt;-</span> <span class="cf">function</span>(DF, <span class="at">value_column =</span> <span class="cn">NULL</span>, <span class="at">add_root =</span> <span class="cn">FALSE</span>){</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(data.table)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.data.table</span>(DF)){</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    DT <span class="ot">&lt;-</span> <span class="fu">copy</span>(DF)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    DT <span class="ot">&lt;-</span> <span class="fu">data.table</span>(DF, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(add_root){</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    DT[, root <span class="sc">:</span><span class="er">=</span> <span class="st">"Total"</span>]</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  colNamesDT <span class="ot">&lt;-</span> <span class="fu">names</span>(DT)</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  hierarchy_columns <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(colNamesDT, value_column)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  DT[, (hierarchy_columns) <span class="sc">:</span><span class="er">=</span> <span class="fu">lapply</span>(.SD, as.factor), .SDcols <span class="ot">=</span> hierarchy_columns]</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(value_column)){</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(add_root){</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setcolorder</span>(DT, <span class="fu">c</span>(<span class="st">"root"</span>, <span class="fu">names</span>(DF)))</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setnames</span>(DT, value_column, <span class="st">"values"</span>, <span class="at">skip_absent=</span><span class="cn">TRUE</span>)</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(add_root){</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setcolorder</span>(DT, <span class="fu">c</span>(<span class="st">"root"</span>, <span class="fu">setdiff</span>(<span class="fu">names</span>(DF), value_column), <span class="st">"values"</span>))</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setcolorder</span>(DT, <span class="fu">c</span>(<span class="fu">setdiff</span>(<span class="fu">names</span>(DF), value_column), <span class="st">"values"</span>))</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  hierarchyList <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(hierarchy_columns)){</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    current_columns <span class="ot">&lt;-</span> colNamesDT[<span class="dv">1</span><span class="sc">:</span>i]</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.null</span>(value_column)){</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>      currentDT <span class="ot">&lt;-</span> <span class="fu">unique</span>(DT[, ..current_columns][, <span class="at">values :=</span> .N, <span class="at">by =</span> current_columns], <span class="at">by =</span> current_columns)</span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>      currentDT <span class="ot">&lt;-</span> DT[, <span class="fu">lapply</span>(.SD, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), by<span class="ot">=</span>current_columns, .SDcols <span class="ot">=</span> <span class="st">"values"</span>]</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setnames</span>(currentDT, <span class="fu">length</span>(current_columns), <span class="st">"labels"</span>)</span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>    hierarchyList[[i]] <span class="ot">&lt;-</span> currentDT</span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>  hierarchyDT <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(hierarchyList, <span class="at">use.names =</span> <span class="cn">TRUE</span>, <span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>  parent_columns <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(hierarchyDT), <span class="fu">c</span>(<span class="st">"labels"</span>, <span class="st">"values"</span>))</span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  hierarchyDT[, parents <span class="sc">:</span><span class="er">=</span> <span class="fu">apply</span>(.SD, <span class="dv">1</span>, <span class="cf">function</span>(x){<span class="fu">ifelse</span>(<span class="fu">all</span>(<span class="fu">is.na</span>(x)), <span class="cn">NA_character_</span>, <span class="fu">paste</span>(x[<span class="sc">!</span><span class="fu">is.na</span>(x)], <span class="at">collapse =</span> <span class="st">" - "</span>))}), .SDcols <span class="ot">=</span> parent_columns]</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  hierarchyDT[, ids <span class="sc">:</span><span class="er">=</span> <span class="fu">apply</span>(.SD, <span class="dv">1</span>, <span class="cf">function</span>(x){<span class="fu">paste</span>(x[<span class="sc">!</span><span class="fu">is.na</span>(x)], <span class="at">collapse =</span> <span class="st">" - "</span>)}), .SDcols <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"parents"</span>, <span class="st">"labels"</span>)]</span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>  hierarchyDT[, <span class="fu">c</span>(parent_columns) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(hierarchyDT)</span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>sunburst_data <span class="ot">&lt;-</span> <span class="fu">as.sunburstDF</span>(age_group_summary, <span class="at">value_column =</span> <span class="st">"fantasy_points"</span>, <span class="at">add_root =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ly</span>(<span class="at">data =</span> sunburst_data,</span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>        <span class="at">ids =</span> <span class="sc">~</span>ids,</span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> <span class="sc">~</span>labels,</span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>        <span class="at">parents =</span> <span class="sc">~</span>parents,</span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="sc">~</span>values,</span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">'sunburst'</span>,</span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>        <span class="at">branchvalues =</span> <span class="st">'total'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing new libraries</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorize each player into age group bin</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>rostered <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">case_when</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">&lt;</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"Under 25"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">29</span> <span class="sc">~</span> <span class="st">"25-29"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">&gt;</span> <span class="dv">29</span> <span class="sc">~</span> <span class="st">"Over 30"</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by fantasy team and age group, then summarize total fantasy points</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>age_group_summary <span class="ot">&lt;-</span> rostered <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fantasy_team, age_group) <span class="sc">%&gt;%</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">fantasy_points =</span> <span class="fu">sum</span>(f_pts, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">'drop'</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>as.sunburstDF <span class="ot">&lt;-</span> <span class="cf">function</span>(DF, <span class="at">value_column =</span> <span class="cn">NULL</span>, <span class="at">add_root =</span> <span class="cn">FALSE</span>){</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">require</span>(data.table)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.data.table</span>(DF)){</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    DT <span class="ot">&lt;-</span> <span class="fu">copy</span>(DF)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    DT <span class="ot">&lt;-</span> <span class="fu">data.table</span>(DF, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(add_root){</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    DT[, root <span class="sc">:</span><span class="er">=</span> <span class="st">"Total"</span>]</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  colNamesDT <span class="ot">&lt;-</span> <span class="fu">names</span>(DT)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  hierarchy_columns <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(colNamesDT, value_column)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  DT[, (hierarchy_columns) <span class="sc">:</span><span class="er">=</span> <span class="fu">lapply</span>(.SD, as.factor), .SDcols <span class="ot">=</span> hierarchy_columns]</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(value_column)){</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(add_root){</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setcolorder</span>(DT, <span class="fu">c</span>(<span class="st">"root"</span>, <span class="fu">names</span>(DF)))</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setnames</span>(DT, value_column, <span class="st">"values"</span>, <span class="at">skip_absent=</span><span class="cn">TRUE</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(add_root){</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setcolorder</span>(DT, <span class="fu">c</span>(<span class="st">"root"</span>, <span class="fu">setdiff</span>(<span class="fu">names</span>(DF), value_column), <span class="st">"values"</span>))</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">setcolorder</span>(DT, <span class="fu">c</span>(<span class="fu">setdiff</span>(<span class="fu">names</span>(DF), value_column), <span class="st">"values"</span>))</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>  hierarchyList <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(hierarchy_columns)){</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    current_columns <span class="ot">&lt;-</span> colNamesDT[<span class="dv">1</span><span class="sc">:</span>i]</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.null</span>(value_column)){</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>      currentDT <span class="ot">&lt;-</span> <span class="fu">unique</span>(DT[, ..current_columns][, <span class="at">values :=</span> .N, <span class="at">by =</span> current_columns], <span class="at">by =</span> current_columns)</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>      currentDT <span class="ot">&lt;-</span> DT[, <span class="fu">lapply</span>(.SD, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), by<span class="ot">=</span>current_columns, .SDcols <span class="ot">=</span> <span class="st">"values"</span>]</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setnames</span>(currentDT, <span class="fu">length</span>(current_columns), <span class="st">"labels"</span>)</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    hierarchyList[[i]] <span class="ot">&lt;-</span> currentDT</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>  hierarchyDT <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(hierarchyList, <span class="at">use.names =</span> <span class="cn">TRUE</span>, <span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>  parent_columns <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(hierarchyDT), <span class="fu">c</span>(<span class="st">"labels"</span>, <span class="st">"values"</span>))</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  hierarchyDT[, parents <span class="sc">:</span><span class="er">=</span> <span class="fu">apply</span>(.SD, <span class="dv">1</span>, <span class="cf">function</span>(x){<span class="fu">ifelse</span>(<span class="fu">all</span>(<span class="fu">is.na</span>(x)), <span class="cn">NA_character_</span>, <span class="fu">paste</span>(x[<span class="sc">!</span><span class="fu">is.na</span>(x)], <span class="at">collapse =</span> <span class="st">" - "</span>))}), .SDcols <span class="ot">=</span> parent_columns]</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>  hierarchyDT[, ids <span class="sc">:</span><span class="er">=</span> <span class="fu">apply</span>(.SD, <span class="dv">1</span>, <span class="cf">function</span>(x){<span class="fu">paste</span>(x[<span class="sc">!</span><span class="fu">is.na</span>(x)], <span class="at">collapse =</span> <span class="st">" - "</span>)}), .SDcols <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"parents"</span>, <span class="st">"labels"</span>)]</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>  hierarchyDT[, <span class="fu">c</span>(parent_columns) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(hierarchyDT)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>sunburst_data <span class="ot">&lt;-</span> <span class="fu">as.sunburstDF</span>(age_group_summary, <span class="at">value_column =</span> <span class="st">"fantasy_points"</span>, <span class="at">add_root =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ly</span>(<span class="at">data =</span> sunburst_data,</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>        <span class="at">ids =</span> <span class="sc">~</span>ids,</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> <span class="sc">~</span>labels,</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>        <span class="at">parents =</span> <span class="sc">~</span>parents,</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="sc">~</span>values,</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">'sunburst'</span>,</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>        <span class="at">branchvalues =</span> <span class="st">'total'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-86e0f9b1f35f308260fb" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-86e0f9b1f35f308260fb">{"x":{"visdat":{"1564c19a230e2":["function () ","plotlyVisDat"]},"cur_data":"1564c19a230e2","attrs":{"1564c19a230e2":{"ids":{},"labels":{},"parents":{},"values":{},"branchvalues":"total","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sunburst"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"ids":["Total","Total - Bikini Bottom","Total - Malibu","Total - Winterfell","Total - Cream City","Total - San Diego","Total - Helsinki","Total - Beaverton","Total - Anacortes","Total - Santa Barbara","Total - Scottsdale","Total - Slytherin","Total - Las Vegas","Total - Bikini Bottom - 25-29","Total - Bikini Bottom - Over 30","Total - Bikini Bottom - Under 25","Total - Malibu - 25-29","Total - Malibu - Over 30","Total - Malibu - Under 25","Total - Winterfell - 25-29","Total - Winterfell - Over 30","Total - Winterfell - Under 25","Total - Cream City - 25-29","Total - Cream City - Over 30","Total - Cream City - Under 25","Total - San Diego - 25-29","Total - San Diego - Over 30","Total - San Diego - Under 25","Total - Helsinki - 25-29","Total - Helsinki - Over 30","Total - Helsinki - Under 25","Total - Beaverton - 25-29","Total - Beaverton - Over 30","Total - Beaverton - Under 25","Total - Anacortes - 25-29","Total - Anacortes - Over 30","Total - Anacortes - Under 25","Total - Santa Barbara - 25-29","Total - Santa Barbara - Over 30","Total - Santa Barbara - Under 25","Total - Scottsdale - 25-29","Total - Scottsdale - Over 30","Total - Scottsdale - Under 25","Total - Slytherin - 25-29","Total - Slytherin - Under 25","Total - Las Vegas - 25-29","Total - Las Vegas - Under 25"],"labels":["Total","Bikini Bottom","Malibu","Winterfell","Cream City","San Diego","Helsinki","Beaverton","Anacortes","Santa Barbara","Scottsdale","Slytherin","Las Vegas","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Under 25","25-29","Under 25"],"parents":[null,"Total","Total","Total","Total","Total","Total","Total","Total","Total","Total","Total","Total","Total - Bikini Bottom","Total - Bikini Bottom","Total - Bikini Bottom","Total - Malibu","Total - Malibu","Total - Malibu","Total - Winterfell","Total - Winterfell","Total - Winterfell","Total - Cream City","Total - Cream City","Total - Cream City","Total - San Diego","Total - San Diego","Total - San Diego","Total - Helsinki","Total - Helsinki","Total - Helsinki","Total - Beaverton","Total - Beaverton","Total - Beaverton","Total - Anacortes","Total - Anacortes","Total - Anacortes","Total - Santa Barbara","Total - Santa Barbara","Total - Santa Barbara","Total - Scottsdale","Total - Scottsdale","Total - Scottsdale","Total - Slytherin","Total - Slytherin","Total - Las Vegas","Total - Las Vegas"],"values":[371099,42127,41197,33687,36805,31113,29325,29659,27838,27313,24338,24719,22978,9664,27999,4464,15396,23854,1947,15956,9454,8277,21912,5956,8937,21488,4171,5454,16359,4159,8807,18539,959,10161,13056,904,13878,8672,4682,13959,5649,898,17791,2088,22631,4382,18596],"branchvalues":"total","type":"sunburst","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b2ff738c58fe7b000cdd" style="width:100%;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b2ff738c58fe7b000cdd">{"x":{"visdat":{"530239cc2db":["function () ","plotlyVisDat"]},"cur_data":"530239cc2db","attrs":{"530239cc2db":{"ids":{},"labels":{},"parents":{},"values":{},"branchvalues":"total","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sunburst"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"ids":["Total","Total - Bikini Bottom","Total - Malibu","Total - Winterfell","Total - Cream City","Total - San Diego","Total - Helsinki","Total - Beaverton","Total - Anacortes","Total - Santa Barbara","Total - Scottsdale","Total - Slytherin","Total - Las Vegas","Total - Bikini Bottom - 25-29","Total - Bikini Bottom - Over 30","Total - Bikini Bottom - Under 25","Total - Malibu - 25-29","Total - Malibu - Over 30","Total - Malibu - Under 25","Total - Winterfell - 25-29","Total - Winterfell - Over 30","Total - Winterfell - Under 25","Total - Cream City - 25-29","Total - Cream City - Over 30","Total - Cream City - Under 25","Total - San Diego - 25-29","Total - San Diego - Over 30","Total - San Diego - Under 25","Total - Helsinki - 25-29","Total - Helsinki - Over 30","Total - Helsinki - Under 25","Total - Beaverton - 25-29","Total - Beaverton - Over 30","Total - Beaverton - Under 25","Total - Anacortes - 25-29","Total - Anacortes - Over 30","Total - Anacortes - Under 25","Total - Santa Barbara - 25-29","Total - Santa Barbara - Over 30","Total - Santa Barbara - Under 25","Total - Scottsdale - 25-29","Total - Scottsdale - Over 30","Total - Scottsdale - Under 25","Total - Slytherin - 25-29","Total - Slytherin - Under 25","Total - Las Vegas - 25-29","Total - Las Vegas - Under 25"],"labels":["Total","Bikini Bottom","Malibu","Winterfell","Cream City","San Diego","Helsinki","Beaverton","Anacortes","Santa Barbara","Scottsdale","Slytherin","Las Vegas","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Over 30","Under 25","25-29","Under 25","25-29","Under 25"],"parents":[null,"Total","Total","Total","Total","Total","Total","Total","Total","Total","Total","Total","Total","Total - Bikini Bottom","Total - Bikini Bottom","Total - Bikini Bottom","Total - Malibu","Total - Malibu","Total - Malibu","Total - Winterfell","Total - Winterfell","Total - Winterfell","Total - Cream City","Total - Cream City","Total - Cream City","Total - San Diego","Total - San Diego","Total - San Diego","Total - Helsinki","Total - Helsinki","Total - Helsinki","Total - Beaverton","Total - Beaverton","Total - Beaverton","Total - Anacortes","Total - Anacortes","Total - Anacortes","Total - Santa Barbara","Total - Santa Barbara","Total - Santa Barbara","Total - Scottsdale","Total - Scottsdale","Total - Scottsdale","Total - Slytherin","Total - Slytherin","Total - Las Vegas","Total - Las Vegas"],"values":[371099,42127,41197,33687,36805,31113,29325,29659,27838,27313,24338,24719,22978,9664,27999,4464,15396,23854,1947,15956,9454,8277,21912,5956,8937,21488,4171,5454,16359,4159,8807,18539,959,10161,13056,904,13878,8672,4682,13959,5649,898,17791,2088,22631,4382,18596],"branchvalues":"total","type":"sunburst","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<ul>
-<li><p>Function adopted from <a href="https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly" class="uri">https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly</a></p></li>
-<li><p>Discuss primary message</p></li>
-</ul>
-<!-- -->
-<ul>
-<li><p>Discuss sunburst plot choice</p></li>
-<li><p>Discuss text on plot</p></li>
-<li><p>Discuss how color palette is colorblind-friendly</p></li>
-</ul>
+<p>The function for creating the sunburst function was adopted from <a href="https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly" class="uri">https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly</a></p>
+<p>This sunburst plot breaks down the total fantasy scoring in the league, by both team and then age groups within each team. This is the perfect opportunity to utilize a sunburst plot, since it effectively illustrates hierarchical relationships and proportions in a visually compact and intuitive manner. The sunburst plot’s outer ring shows age group contributions to total fantasy points for each team, highlighting the impact of age diversity on each fantasy roster. It distinguishes between teams relying on youth versus experience, efficiently mapping the league’s age and scoring dynamics in a single, clear visual. Text is easily integrated using <code>plotly</code> to reveal the number of fantasy points in each section of the plot.</p>
 </section>
 </section>
 <section id="takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
+<p>The exploration of the A.S.S. League’s dynamics through these visualizations reveals some interesting insights into the dynamic between player age and fantasy performance, shedding light on strategic roster constructions across the league. Teams that have older players tend to be the higher fantasy scoring teams, while lower scoring teams are filled with young players who fantasy managers hope will continue to develop and increase their fantassy output. Notably, the Bikini Bottom Ballers’ dominance this season, powered by some elite assets, underscores the potential short-term merits (winning a championship) of investing in win-now talent. However, the Santa Barbara Swell’s forward-looking approach, amassing an impressive stack of first-round picks and building around a once-in-a-lifetime prospect in Victor Wembanyama, signals a promising focus towards long-term dominance. This strategy contrast underlines the league’s evolving nature, where teams aim for championships in distinct timeframes. As we head into the fantasy playoffs, the unfolding narratives in the league will certainly add another thrilling chapter to the A.S.S. League’s storied history, with every team vying not just for this season’s glory but for a lasting legacy.</p>
 
 
 </section>
