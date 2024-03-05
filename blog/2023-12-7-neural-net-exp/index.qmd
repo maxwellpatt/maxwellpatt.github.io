@@ -8,10 +8,20 @@
   categories: [Python, ML]
   output: 
     html_document:
-      fontsize: 9px
       code_folding: hide
 ---
 
-`{{{< pdf Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2023-12-7-neural-net-exp/exp_of_nn.pdf width=100% >}}}`
+See below for the project PDF.
 
-
+```{=html}
+<style>
+.pdf {
+  max-width: 100%;
+    width: 600px;
+    height: 600px;
+    border: 10px solid rgba(0,0,0,.2);
+    margin: 0;
+}
+</style>
+```
+{{< pdf exp_of_nn.pdf height=1200 width=1200 >}}

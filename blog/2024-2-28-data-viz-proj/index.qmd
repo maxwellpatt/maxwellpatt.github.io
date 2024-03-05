@@ -1,16 +1,17 @@
 ---
-  title: "The Dynamics of Dynasty: A Fantasy Basketball Visual Exploration"
-  description: "Visualizing the dynamics between fantasy scoring and age in the A.S.S. League"
-  author:
-    - name: Maxwell Patterson
-    - affiliation: Master of Environmental Data Science Program
-    - affiliation-url: https://ucsb-meds.github.io/
-  date: 02-28-2024
-  categories: [R, MEDS, Sports]
-  output: 
-    html_document:
-      fontsize: 9px
-      code_folding: hide
+title: "The Dynamics of Dynasty: A Fantasy Basketball Visual Exploration"
+description: "Visualizing the dynamics between fantasy scoring and age in the A.S.S. League"
+author:
+- name: Maxwell Patterson
+- affiliation: Master of Environmental Data Science Program
+- affiliation-url: https://ucsb-meds.github.io/
+date: 03-09-2024
+categories: [R, MEDS, Sports]
+editor: visual
+format: 
+  html:
+    code-fold: true
+    code-tools: true
 ---
 
 ## Introduction
@@ -140,6 +141,7 @@ top_assets <- c(swell_assets, scorpions_assets, ballers_assets, crusaders_assets
 ```{r, message=FALSE, fig.width=7, out.width='100%'}
 # Importing libraries
 library(ggimage)
+library(ggtext) # Set font for annotations
 
 # Rank players within each team by their fp_g and filter for the top 10 assets
 top_players <- rostered %>%
@@ -204,7 +206,7 @@ scatter +
     color = "black",
     hjust = "inward"
   ) +
-  annotate( ## MM arrow
+  annotate( # MM arrow
     geom = "curve",
     x = 31, xend = 30.65,
     y = 36.8, yend = 41,
@@ -219,7 +221,7 @@ scatter +
     color = "black",
     hjust = "inward"
   ) +
-  annotate( ## SB arrow
+  annotate( # SB arrow
     geom = "curve",
     x = 22.6, xend = 23.2,
     y = 35.6, yend = 33,
@@ -234,7 +236,7 @@ scatter +
     color = "black",
     hjust = "inward"
   ) +
-  annotate( ## CC arrow
+  annotate( # CC arrow
     geom = "curve",
     x = 28.2, xend = 27.35,
     y = 35.9, yend = 39.1,
@@ -247,14 +249,16 @@ scatter +
     label = "Two first round picks",
     size = 3,
     color = "black",
-    hjust = "inward"
+    hjust = "inward",
+    family = "Courier"
   ) +
-  annotate( ## SD arrow
+  annotate( # SD arrow
     geom = "curve",
     x = 24.7, xend = 25.22,
     y = 41.1, yend = 38,
     curvature = -0.3,
-    arrow = arrow(length = unit(0.1, "cm"))
+    arrow = arrow(length = unit(0.1, "cm")),
+    family = "Courier"
   )  
   
   
@@ -457,7 +461,7 @@ plot_ly(data = sunburst_data,
         branchvalues = 'total')
 ```
 
-The function for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>
+The code for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>
 
 This sunburst plot breaks down the total fantasy scoring in the league, by both team and then age groups within each team. This is the perfect opportunity to utilize a sunburst plot, since it effectively illustrates hierarchical relationships and proportions in a visually compact and intuitive manner. The sunburst plot's outer ring shows age group contributions to total fantasy points for each team, highlighting the impact of age diversity on each fantasy roster. It distinguishes between teams relying on youth versus experience, efficiently mapping the league's age and scoring dynamics in a single, clear visual. Text is easily integrated using `plotly` to reveal the number of fantasy points in each section of the plot.
 
