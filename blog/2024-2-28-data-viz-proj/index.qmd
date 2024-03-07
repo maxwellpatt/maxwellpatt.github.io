@@ -34,7 +34,7 @@ For more context, my roster transitioned from win-now to building for the future
 
 ## Setting the Scene
 
-**Question: What are the dynamics between age and fantasy scoring across teams in the fantasy league? Which teams are going all in now, and which are looking to build rosters with talented younger players?**
+[**Question: What are the dynamics between age and fantasy scoring across teams in the fantasy league? Which teams are going all in now, and which are looking to build rosters with talented younger players?**]{.underline}
 
 ### Data
 

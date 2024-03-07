@@ -2,6 +2,7 @@
 title: "Blog"
 listing:
   contents: blog
+  type: grid
   sort: "date desc"
   max-description-length: 175
 ---
