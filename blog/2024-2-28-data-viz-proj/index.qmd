@@ -138,7 +138,7 @@ top_assets <- c(swell_assets, scorpions_assets, ballers_assets, crusaders_assets
                 bigfoots_assets, milkers_assets, serpents_assets, orcas_assets)
 ```
 
-```{r, message=FALSE, fig.width=7, out.width='100%'}
+```{r, message=FALSE, warning=FALSE, fig.width=7, out.width='100%'}
 # Importing libraries
 library(ggimage)
 library(ggtext) # Set font for annotations
@@ -175,9 +175,12 @@ scatter <- ggplot(team_averages, aes(x = AverageAge, y = AverageFpG)) +
   theme_bw() +
   theme(
     text = element_text(family = "Courier"),
-    plot.background = element_rect(fill = "antiquewhite"),# Set background color
+    plot.background = element_rect(fill = "antiquewhite"), # Set background color
+    panel.background = element_rect(fill = "antiquewhite"), # Match panel background 
     panel.grid.major = element_line(color = "#f7f7f7"), # Grid lines fainter color
-    panel.grid.minor = element_line(colour = "#f7f7f7") # Grid lines fainter color
+    panel.grid.minor = element_line(colour = "#f7f7f7"), # Grid lines fainter color
+      axis.title.x = element_text(margin = margin(20, 0, 0, 0, "pt")), # Adds space
+    axis.title.y = element_text(margin = margin(0, 20, 0, 0, "pt")) # Adds space
   ) + 
   expand_limits(x = c(min(team_averages$AverageAge) - 1, max(team_averages$AverageAge) + 1),
                 y = c(min(team_averages$AverageFpG) - 1, max(team_averages$AverageFpG) + 1)) # Stretch axes
@@ -187,9 +190,10 @@ scatter +
     x = 29.5,
     y = 47.5,
     label = "One first round pick",
-    size = 3,
+    size = 2.5,
     color = "black",
     hjust = "inward",
+    family = "Courier"
   ) +
   annotate( # BB arrow
     geom = "curve",
@@ -202,9 +206,10 @@ scatter +
     x = 32,
     y = 36.5,
     label = "Two first round picks",
-    size = 3,
+    size = 2.5,
     color = "black",
-    hjust = "inward"
+    hjust = "inward",
+    family = "Courier"
   ) +
   annotate( # MM arrow
     geom = "curve",
@@ -217,9 +222,10 @@ scatter +
     x = 20.5,
     y = 36.65,
     label = "Seven first round picks",
-    size = 3,
+    size = 2.5,
     color = "black",
-    hjust = "inward"
+    hjust = "inward",
+    family = "Courier"
   ) +
   annotate( # SB arrow
     geom = "curve",
@@ -232,9 +238,10 @@ scatter +
     x = 29.2,
     y = 35.4,
     label = "One first round pick",
-    size = 3,
+    size = 2.5,
     color = "black",
-    hjust = "inward"
+    hjust = "inward",
+    family = "Courier"
   ) +
   annotate( # CC arrow
     geom = "curve",
@@ -247,7 +254,7 @@ scatter +
     x = 23.2,
     y = 42,
     label = "Two first round picks",
-    size = 3,
+    size = 2.5,
     color = "black",
     hjust = "inward",
     family = "Courier"
@@ -260,11 +267,11 @@ scatter +
     arrow = arrow(length = unit(0.1, "cm")),
     family = "Courier"
   )  
-  
-  
 ```
 
-This plot investigates the average age and fantasy points per game of the top 10 assets on each fantasy team. While there is no perfect number of assets to choose (5, 10, 15), there are 10 starting spots for each night of fantasy play, so it seemed like an appropriate choice. The plot reveals that teams whose top assets are older tend to have higher average fantasy points scoring. A scatter plot is a great plot to visualize this relationship as it clearly displays each team's top assets as individual points, allowing for the direct observation of the relationship between average age and fantasy points per game.
+This plot investigates the average age and fantasy points per game of the top 10 assets on each fantasy team. While there is no perfect number of assets to choose (5, 10, 15), there are 10 starting spots for each night of fantasy play, so it seemed like an appropriate choice. The plot reveals that teams whose top assets are older tend to have higher average fantasy points scoring. A scatter plot is a great plot to visualize this relationship as it clearly displays each team's top assets as individual points, allowing for the direct observation of the relationship between average age and fantasy points per game. By representing each team's top assets as individual data points, the scatter plot allows for a direct examination of how age and fantasy points per game are related across the league. The x-axis represents the average age of a team's top 10 assets, providing a clear measure of the overall experience and veteran presence on each roster. The y-axis displays the average fantasy points per game for those top assets, quantifying the offensive output and statistical production of each team's core players.
+
+One of the key strengths of using a scatter plot in this context is its ability to reveal patterns, trends, and potential outliers in the data. The plot clearly shows a clustering of teams in the upper-right quadrant, indicating that teams with older top assets tend to have higher fantasy points per game averages. This visual representation makes it easy to identify the teams that have prioritized veteran talent and are currently enjoying the benefits of experienced, productive players Furthermore, the scatter plot allows for a quick assessment of the spread and distribution of teams along both dimensions. The plot shows a considerable range in both average age and fantasy points per game, highlighting the diversity of roster construction strategies employed by different teams. Some teams have opted for a mix of younger and older players, while others have focused primarily on either end of the age spectrum.
 
 Annotations are added to provide more context on the draft capital of specific teams that have an interesting number of first round picks. In the beginning of the season, each team had 3 first round picks: 2025, 2026, and 2027 (or the next 3 years for the case of future seasons). Teams can trade these picks around, which is a big part of what makes fantasy leagues exciting and unique from redraft leagues. The best teams in the league tend to have less draft capital as they traded it away to acquire win-now players. Also of note, the Santa Barbara Swell owning 7 first round picks is likely to set the franchise up well in the long-term. Teams not labeled either have 3 or 4 first round picks over the next 3 years.
 
@@ -358,32 +365,36 @@ ridge_plot <- ggplot(rostered, aes(x = fp_g, y = fantasy_team, fill = AverageAge
     axis.title = element_text(size = 11), 
     axis.text.y = element_text(size = 10), 
     plot.subtitle = element_text(size = 9) 
-    
   ) 
 
 # Add team logos to ridge plot
-ridge_images <- ridge_plot + 
-  geom_image(data = logos, aes(x = -20, y = team, image = logo), size = 0.07, inherit.aes = FALSE) +
-  geom_image(data = logos, aes(x = player_xcoord, y = team, image = player), size = 0.1, inherit.aes = FALSE)
-
-ridge_images
-
-ggsave("images/ridge_images.png", ridge_images, width = 10, height = 6)
-
-
+ridge_plot + 
+  geom_image(data = logos, aes(x = -12, y = team, image = logo), size = 0.07, inherit.aes = FALSE) +
+  geom_image(data = logos, aes(x = player_xcoord, y = team, image = player), size = 0.1, inherit.aes = FALSE) 
 ```
 
 This plot shows the fantasy points per game for players on each fantasy team. The visualization captures the distribution and density of fantasy points, highlighting the variance in player performance across different teams. It lets viewers easily compare the scoring potential and depth of talent on each fantasy team, allowing the ridge line plot to shine. A head shot of the best player on each fantasy team is added for additional context about each team. The ridges are ordered from lowest fantasy team on the top and highest fantasy scoring team on the bottom of the plot. A colorblind-friendly fill is used for average team age as well using the `viridis` package.
 
-The main takeaways of the plot are that Bikini Bottom has the best top-end talent in the fantasy league, Malibu has lots of very good players on its roster, and the most common scoring range for players is roughly 20 to 30 fantasy points. Also, rosters that have more high-scoring players tend to be older.
+Some key takeaways from this ridge line plot are:
+
+1.  The Bikini Bottom team has the highest concentration of top-end talent, with a wide and tall ridge indicating a roster filled with high-scoring players.
+
+2.  The Malibu team also has a strong presence of very good players, as evidenced by their ridge's width and height.
+
+3.  Most players in the league fall within the 20 to 30 fantasy points per game range, as seen by the majority of the density being concentrated in this area across all teams.
+
+4.  Teams with more high-scoring players tend to have older rosters, as indicated by the darker ridge fills for teams like Bikini Bottom and Malibu.
+
+By presenting the data in this way, the ridge line plot allows for a quick and easy comparison of the fantasy scoring distribution and roster composition across all teams in the league. It provides valuable insights into the strengths and weaknesses of each team, as well as the overall trends in player performance and age distribution within the league.
 
 ### Plot 3: Sunburst plot
 
-```{r, message = FALSE, fig.width=7, out.width='100%'}
+```{r, message = FALSE, warning=FALSE, fig.width=7, out.width='100%'}
 # Importing new libraries
 library(data.table)
 library(plotly)
 library(tidyr)
+library(scales)
 
 # Categorize each player into age group bin
 rostered <- rostered %>%
@@ -452,19 +463,43 @@ as.sunburstDF <- function(DF, value_column = NULL, add_root = FALSE){
 
 sunburst_data <- as.sunburstDF(age_group_summary, value_column = "fantasy_points", add_root = TRUE)
 
+# Creating color pallette 
+cbbPalette <- viridis(3, option = "D")
+n_colors <- nrow(sunburst_data)  # Get the number of rows in sunburst_data
+cbbPalette <- hue_pal()(n_colors)
+
 plot_ly(data = sunburst_data,
-        ids = ~ids,
-        labels = ~labels,
-        parents = ~parents,
-        values = ~values,
-        type = 'sunburst',
-        branchvalues = 'total')
+             ids = ~ids, 
+             labels = ~labels, 
+             parents = ~parents,
+             values = ~values,
+             type = 'sunburst',
+             branchvalues = 'total',
+             textinfo = 'label',  # Include both label and values
+             hoverinfo = 'label+percent parent+percent root',  # Show label, value, and percentages on hover
+             insidetextorientation = 'radial'  # Set text orientation
+             ) %>%
+  layout(title = "Fantasy Scoring Distribution by Team and Age Group",
+         margin = list(t = 40, b = 10),  # Adjust the top and bottom margins
+         sunburstcolorway = c("#89AEAA", "#020818", "#F8DDA2", "#9F9F9F", "#102450",
+                              "#99C783", "#D93633", "#33ABC5", "#A1C7E3", "#008A79",
+                              "#F9CE84", "#8F0B19"))  # Starts with BB c-clockwise
 ```
 
-The code for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>
+*Note: the code for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>*
 
-This sunburst plot breaks down the total fantasy scoring in the league, by both team and then age groups within each team. This is the perfect opportunity to utilize a sunburst plot, since it effectively illustrates hierarchical relationships and proportions in a visually compact and intuitive manner. The sunburst plot's outer ring shows age group contributions to total fantasy points for each team, highlighting the impact of age diversity on each fantasy roster. It distinguishes between teams relying on youth versus experience, efficiently mapping the league's age and scoring dynamics in a single, clear visual. Text is easily integrated using `plotly` to reveal the number of fantasy points in each section of the plot.
+This sunburst plot breaks down the total fantasy scoring in the league, by both team and then age groups within each team. This is the perfect opportunity to utilize a sunburst plot, since it effectively illustrates hierarchical relationships and proportions in a visually compact and intuitive manner. The sunburst plot's outer ring shows age group contributions to total fantasy points for each team, highlighting the impact of age diversity on each fantasy roster. It distinguishes between teams relying on youth versus experience, efficiently mapping the league's age and scoring dynamics in a single, clear visual. Text is easily integrated using `plotly` to reveal the number of fantasy points in each section of the plot. The visualization also uses a custom color scheme to distinguish between teams and age groups.
+
+Key insights from the sunburst plot include:
+
+1.  The Bikini Bottom Ballers have the largest overall contribution to the league's total fantasy points, with a significant portion coming from the "Over 30" age group.
+
+2.  Teams like Slytherin and Las Vegas have a larger proportion of their fantasy points contributed by the "Under 25" age group, indicating a focus on younger talent.
+
+3.  The Cream City Crusaders have a significant portion of their fantasy points coming from the "25-29" age group, suggesting a strong core of players in their prime playing years.
+
+The sunburst plot offers a comprehensive overview of the league's fantasy scoring landscape, broken down by team and age group, allowing for quick identification of each team's age composition.
 
 ## Takeaways
 
-The exploration of the A.S.S. League's dynamics through these visualizations reveals some interesting insights into the dynamic between player age and fantasy performance, shedding light on strategic roster constructions across the league. Teams that have older players tend to be the higher fantasy scoring teams, while lower scoring teams are filled with young players who fantasy managers hope will continue to develop and increase their fantassy output. Notably, the Bikini Bottom Ballers' dominance this season, powered by some elite assets, underscores the potential short-term merits (winning a championship) of investing in win-now talent. However, the Santa Barbara Swell's forward-looking approach, amassing an impressive stack of first-round picks and building around a once-in-a-lifetime prospect in Victor Wembanyama, signals a promising focus towards long-term dominance. This strategy contrast underlines the league's evolving nature, where teams aim for championships in distinct timeframes. As we head into the fantasy playoffs, the unfolding narratives in the league will certainly add another thrilling chapter to the A.S.S. League's storied history, with every team vying not just for this season's glory but for a lasting legacy.
+The exploration of the A.S.S. League's dynamics through these visualizations reveals some interesting insights into the dynamic between player age and fantasy performance, shedding light on strategic roster constructions across the league. Teams that have older players tend to be the higher fantasy scoring teams, while lower scoring teams are filled with young players who fantasy managers hope will continue to develop and increase their fantasy output. Notably, the Bikini Bottom Ballers'dominance this season, powered by some elite assets, underscores the potential short-term merits (winning a championship) of investing in win-now talent. However, the Santa Barbara Swell's forward-looking approach, amassing an impressive stack of first-round picks and building around a once-in-a-lifetime prospect in Victor Wembanyama, signals a promising focus towards long-term dominance. This strategy contrast underlines the league's evolving nature, where teams aim for championships in distinct time frames. As we head into the fantasy playoffs, the unfolding narratives in the league will certainly add another thrilling chapter to the A.S.S. League's storied history, with every team vying not just for this season's glory but for a lasting legacy.
