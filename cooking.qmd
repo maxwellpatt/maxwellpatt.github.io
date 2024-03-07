@@ -1,5 +1,37 @@
 ---
 title: "Cooking"
+filters:
+   - lightbox
+lightbox: 
+  match: auto
+  effect: fade
+  desc-position: right
+  loop: false
 ---
 
 Follow my culinary adventures on Instagram for more delicious content: [Chef Xwell on Instagram](https://www.instagram.com/chefxwell)
+
+Click on the first photo for a gallery view!
+
+
+![](images/food1.JPG){group="food"}
+![](images/food2.JPG){group="food"}
+![](images/food3.JPG){group="food"}
+![](images/food4.JPG){group="food"}
+![](images/food5.JPG){group="food"}
+![](images/food6.JPG){group="food"}
+![](images/food7.JPG){group="food"}
+![](images/food8.JPG){group="food"}
+![](images/food9.JPG){group="food"}
+![](images/food10.JPG){group="food"}
+![](images/food11.JPG){group="food"}
+![](images/food12.JPG){group="food"}
+![](images/food13.JPG){group="food"}
+![](images/food14.JPG){group="food"}
+![](images/food15.JPG){group="food"}
+![](images/food16.JPG){group="food"}
+![](images/food17.JPG){group="food"}
+
+
+
+
