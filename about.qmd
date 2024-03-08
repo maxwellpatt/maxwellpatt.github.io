@@ -3,22 +3,22 @@ title: "About Me"
 format: html
 ---
 
-### 🚀 
+### 🚀
 
 Hello! My name is Maxwell Patterson, and I'm a Master's student in Environmental Data Science at the Bren School of Environmental Science & Management, University of California, Santa Barbara (UCSB). I'm passionate about using data-driven approaches to tackle environmental challenges and contribute to a more sustainable future.
 
-### 🌲 
+### 🌲
 
 My journey in environmental data science is fueled by my strong interest in climate communication, data visualization, and machine learning. I believe that effective communication is crucial in driving positive change, and I'm dedicated to honing my skills in presenting complex environmental data in a clear, engaging, and impactful way. Through my coursework and projects at UCSB, I'm exploring various techniques in data visualization and learning how to create compelling narratives that resonate with diverse audiences. Moreover, I'm fascinated by the potential of machine learning in solving environmental problems. From predictive modeling to pattern recognition, I'm eager to apply these cutting-edge tools to uncover valuable insights and develop innovative solutions. By combining my expertise in data science with my passion for environmental sustainability, I aim to make a meaningful impact and contribute to a greener future.
 
-### 👨‍🍳 
+### 👨‍🍳
 
 Beyond my academic pursuits, I have a deep love for cooking. In fact, I took my passion to the next level by attending culinary school at the prestigious Le Cordon Bleu, where I earned a French Cuisine Certificate SCQF Level 6. Through this experience, I honed my culinary skills, learned classic French techniques, and developed a greater appreciation for the art of cooking. I find joy in experimenting with different flavors, creating delightful dishes, and sharing my culinary creations with others.
 
-### 🔢🤽‍♂️ 
+### 🔢🤽‍♂️
 
 I hold a Bachelor of Arts in Applied Mathematics-Economics from Brown University, where I also had the privilege of being a member of the varsity water polo team. As a four-time Academic All-American and the 2022 Team Captain, I learned valuable lessons in leadership, teamwork, and perseverance, which I now apply to my academic and professional endeavors.
 
-### 🗺️ 
+### 🗺️
 
 Through this blog, I aim to share my experiences, insights, and projects related to environmental data science, climate communication, and beyond. I'm excited to connect with like-minded individuals, exchange ideas, and contribute to the growing community of data-driven environmentalists. Join me on this journey as we explore the power of data in shaping a more sustainable world!

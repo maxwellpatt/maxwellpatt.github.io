@@ -396,19 +396,7 @@ library(plotly)
 library(tidyr)
 library(scales)
 
-# Categorize each player into age group bin
-rostered <- rostered %>%
-  mutate(age_group = case_when(
-    age < 25 ~ "Under 25",
-    age >= 25 & age <= 29 ~ "25-29",
-    age > 29 ~ "Over 30"
-  ))
-
-# Group by fantasy team and age group, then summarize total fantasy points
-age_group_summary <- rostered %>%
-  group_by(fantasy_team, age_group) %>%
-  summarize(fantasy_points = sum(f_pts, na.rm = TRUE), .groups = 'drop')
-
+# Defining sunburst function
 as.sunburstDF <- function(DF, value_column = NULL, add_root = FALSE){
   require(data.table)
   
@@ -461,6 +449,54 @@ as.sunburstDF <- function(DF, value_column = NULL, add_root = FALSE){
   return(hierarchyDT)
 }
 
+```
+
+*Note: the code for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>*
+
+```{r, warning=FALSE, message=FALSE}
+# Summarize total fantasy points by fantasy team
+team_summary <- rostered %>%
+  group_by(fantasy_team) %>%
+  summarize(fantasy_points = sum(f_pts, na.rm = TRUE), .groups = 'drop')
+
+# Convert the summary to the format required for a sunburst plot
+sunburst_data_teams_only <- as.sunburstDF(team_summary, value_column = "fantasy_points", add_root = TRUE)
+
+# Create the sunburst plot for fantasy teams
+plot_ly(data = sunburst_data_teams_only,
+        ids = ~ids, 
+        labels = ~labels, 
+        parents = ~parents,
+        values = ~values,
+        type = 'sunburst',
+        branchvalues = 'total',
+        textinfo = 'label+values',
+        hoverinfo = 'label+percent parent+percent root',
+        insidetextorientation = 'radial'
+) %>%
+  layout(title = "Fantasy Scoring Distribution by Team",
+         margin = list(t = 40, b = 10),
+         sunburstcolorway = c("#89AEAA", "#020818", "#F8DDA2", "#9F9F9F", "#102450",
+                              "#99C783", "#D93633", "#33ABC5", "#A1C7E3", "#008A79",
+                              "#F9CE84", "#8F0B19"))
+```
+
+This plot breaks down the total fantasy scoring across the entire season by team. Let's go one step further and break each team down by age group: under 25, 25-29, and over 30. This will provide more context on the construction of each fantasy team
+
+```{r, warning=FALSE, message=FALSE}
+# Categorize each player into age group bin
+rostered <- rostered %>%
+  mutate(age_group = case_when(
+    age < 25 ~ "Under 25",
+    age >= 25 & age <= 29 ~ "25-29",
+    age > 29 ~ "Over 30"
+  ))
+
+# Group by fantasy team and age group, then summarize total fantasy points
+age_group_summary <- rostered %>%
+  group_by(fantasy_team, age_group) %>%
+  summarize(fantasy_points = sum(f_pts, na.rm = TRUE), .groups = 'drop')
+
 sunburst_data <- as.sunburstDF(age_group_summary, value_column = "fantasy_points", add_root = TRUE)
 
 # Creating color pallette 
@@ -486,9 +522,7 @@ plot_ly(data = sunburst_data,
                               "#F9CE84", "#8F0B19"))  # Starts with BB c-clockwise
 ```
 
-*Note: the code for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>*
-
-This sunburst plot breaks down the total fantasy scoring in the league, by both team and then age groups within each team. This is the perfect opportunity to utilize a sunburst plot, since it effectively illustrates hierarchical relationships and proportions in a visually compact and intuitive manner. The sunburst plot's outer ring shows age group contributions to total fantasy points for each team, highlighting the impact of age diversity on each fantasy roster. It distinguishes between teams relying on youth versus experience, efficiently mapping the league's age and scoring dynamics in a single, clear visual. Text is easily integrated using `plotly` to reveal the number of fantasy points in each section of the plot. The visualization also uses a custom color scheme to distinguish between teams and age groups.
+This sunburst plot breaks down the total fantasy scoring in the league, by both team and then age groups within each team. This is the perfect opportunity to utilize a sunburst plot, since it effectively illustrates hierarchical relationships and proportions in a visually compact and intuitive manner. The sunburst plot's outer ring shows age group contributions to total fantasy points for each team, highlighting the impact of age diversity on each fantasy roster. It distinguishes between teams relying on youth versus experience, efficiently mapping the league's age and scoring dynamics in a single, clear visual. Text is easily integrated using `plotly` to reveal the percentage of total fantasy points in each section of the plot. The visualization also uses a custom color scheme to distinguish between teams and age groups.
 
 Key insights from the sunburst plot include:
 
@@ -502,4 +536,4 @@ The sunburst plot offers a comprehensive overview of the league's fantasy scorin
 
 ## Takeaways
 
-The exploration of the A.S.S. League's dynamics through these visualizations reveals some interesting insights into the dynamic between player age and fantasy performance, shedding light on strategic roster constructions across the league. Teams that have older players tend to be the higher fantasy scoring teams, while lower scoring teams are filled with young players who fantasy managers hope will continue to develop and increase their fantasy output. Notably, the Bikini Bottom Ballers'dominance this season, powered by some elite assets, underscores the potential short-term merits (winning a championship) of investing in win-now talent. However, the Santa Barbara Swell's forward-looking approach, amassing an impressive stack of first-round picks and building around a once-in-a-lifetime prospect in Victor Wembanyama, signals a promising focus towards long-term dominance. This strategy contrast underlines the league's evolving nature, where teams aim for championships in distinct time frames. As we head into the fantasy playoffs, the unfolding narratives in the league will certainly add another thrilling chapter to the A.S.S. League's storied history, with every team vying not just for this season's glory but for a lasting legacy.
+The exploration of the A.S.S. League's dynamics through these visualizations reveals some interesting insights into the dynamic between player age and fantasy performance, shedding light on strategic roster constructions across the league. Teams that have older players tend to be the higher fantasy scoring teams, while lower scoring teams are filled with young players who fantasy managers hope will continue to develop and increase their fantasy output. Notably, the Bikini Bottom Ballers' dominance this season, powered by some elite assets, underscores the potential short-term merits (winning a championship) of investing in win-now talent. However, the Santa Barbara Swell's forward-looking approach, amassing an impressive stack of first-round picks and building around a once-in-a-lifetime prospect in Victor Wembanyama, signals a promising focus towards long-term dominance. This strategy contrast underlines the league's evolving nature, where teams aim for championships in distinct time frames. As we head into the fantasy playoffs, the unfolding narratives in the league will certainly add another thrilling chapter to the A.S.S. League's storied history, with every team vying not just for this season's glory but for a lasting legacy.

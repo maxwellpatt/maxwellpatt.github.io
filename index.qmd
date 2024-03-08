@@ -3,7 +3,7 @@ title: "Maxwell Patterson"
 about:
   id: hero-heading
   template: jolla
-  image: headshot.jpg
+  image: images/headshot.jpg
   links:
     - icon: github
       text: Github
