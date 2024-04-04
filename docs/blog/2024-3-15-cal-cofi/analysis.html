@@ -183,9 +183,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A. CalCOFI dataset 1. Importance in oceanographic research 2. Long-term data collection (70+ years) 3. Physical, chemical, and biological properties</p>
 <section id="whats-dic" class="level2">
 <h2 class="anchored" data-anchor-id="whats-dic">What’s DIC?</h2>
-<p>Dissolved inorganic carbon (DIC) is an crucial component of the ocean’s carbon cycle and has significant implications for the health of marine life and climate change as well. Image this: instead of fluid, the ocean is a massive sponge that soaks up carbon dioxide from the atmosphere. Over time, the carbon dioxide dissolves into the water and transforms into different types of dissolved inorganic carbon like carbonic acid and bicarbonate (I won’t cover the chemistry of this transition, but you can learn more about that at <span class="citation" data-cites="ScienceDirect">[@ScienceDirect]</span>). These types of DIC are kept steady by the pH levels of the ocean (roughly 8.1). Now imagine the sponge, already full, trying to squeeze in more carbon dioxide. This is where things are at at this moment in time: humans are stuffing more carbon dioxide into the atmosphere by burning fossil fuels and cutting down forests, whcih is causing the oceans to absord more carbon dioxide than they are equipped to handle. Increasing the amounts of carbon dioxide in the ocean leads to a malicious process called ocean acidification. The higher carbon dioxide absorption causes a shiftin the delicate balance of DIC in the ocean, causing a decrease in the ocean’s pH level. This is bad news bears for almost anything and everything living in the ocean.</p>
-<p>Ocean acidification can have serious consequences on marine organisms that rely on calcification to build their skeletons and shells. Organisms include coral, plankton, crabs, lobsters, and more. And think about this: coral reefs are home to an abundance of life. Often referred to as the rainforests of the sea, coral reefs cover less than one percent of the ocean floor, but support roughly 25 percent of all known marine species. Pretty incredible, and for all of these animals to be put in danger as well makes the impact of ocean acidification nearly incomprehensible. Here’s some science for you: as the ocean gets more acidic, there is a lower supply of carbonate ions which in turns makes it challening for these organisms that rely on calcification to actually build their structures. This reminds me of a situation where the half of the wood on Earth gets infested with something and is unusable, causing the construction industry to go down, then all goods-producing industries, then subsequently every other industry in the global economy to just crash and burn. Coral reefs technically have it even worse than the shellfish since they face the impact of reduced calcification rates AND higher rates of dissolution of their calcium carbonate structures (or backbone). Ocean acidification has extreme consequences, and it is our obligation to limit it as best we can.</p>
-<p>To make maters worse, rising ocean temperatures and deviations in typical oceanographic patterns can impact the spread and cycle of DIC across the ocean. Warmer waters aren’t able to absorb as much carbon dioxide, so as the ocean rises it is likely going to be the case that less carbon is actually drawn from the atmosphere and absorbed by the ocean. Double whammie!</p>
+<p>Dissolved inorganic carbon (DIC) is an crucial component of the ocean’s carbon cycle and has significant implications for the health of marine life, in addition to massive, more generalized climate change implications. Image this: instead of being fluid, the ocean is a massive sponge that soaks up carbon dioxide from the atmosphere. Over time, the carbon dioxide dissolves into the water and transforms into different kinds of dissolved inorganic carbon, like carbonic acid and bicarbonate (I won’t cover the chemistry of this transition, but you can learn more about that at <span class="citation" data-cites="ScienceDirect">[@ScienceDirect]</span>). These types of DIC are kept steady by the pH levels of the ocean (roughly 8.1). Now imagine the sponge, already full, trying to squeeze in more carbon dioxide. This is where things are at at this moment in time: humans are stuffing more carbon dioxide into the atmosphere by burning fossil fuels and cutting down forests, whcih is causing the oceans to absord more carbon dioxide than they are ready to handle. Despite this, oceans will continue to soak in carbon dioxide. As a result, the amount of carbon dioxide taken in by the ocean leads to a process called ocean acidification. The greater carbon dioxide absorption causes a shift in the delicate balance of DIC in the ocean, leading to a decrease in the ocean’s pH level. Marine life and all that rely on it are and will be the first to pay the price of this devastating effect, and ripples of the acidification process are sure to be felt in every corner of the globe.</p>
+<p>Ocean acidification can have serious consequences on marine organisms that rely on calcification to build their skeletons and shells, such as coral, plankton, crabs, lobsters, and more. Coral reefs are home to an abundance of life. Often referred to as the rainforests of the sea, coral reefs cover less than one percent of the ocean floor, but support roughly 25 percent of all known marine species (CITE). This is pretty incredible, and for all of these animals to be put in danger as well makes the impact of ocean acidification nearly incomprehensible. As the ocean gets more acidic (or the pH lowers), there is a lower supply of carbonate ions which in turns makes it challening for these organisms that rely on calcification to actually build their structures. This reminds me of a situation where the half of the wood on Earth gets infested with something and is unusable, causing the construction industry to go down, then all goods-producing industries, then subsequently every other industry in the global economy to just crash and burn. Coral reefs have it even worse than the shellfish since they face the impact of reduced calcification rates AND higher rates of dissolution of their calcium carbonate structures (or backbone). To make maters worse, rising ocean temperatures and deviations in typical oceanographic patterns can impact the spread and cycle of DIC across the ocean. Warmer waters aren’t able to absorb as much carbon dioxide, so as the ocean rises it is likely going to be the case that less carbon is actually drawn from the atmosphere and absorbed by the ocean. Double whammie!Ocean acidification has extreme consequences, and it is our obligation to limit it as best we can.</p>
 <p>Here is what can be done: reduce our carbon emissions and restore coastal ecosystems, and we could be in luck!</p>
 </section>
 <section id="importance-of-predicting-dic" class="level2">
@@ -193,19 +192,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="using-ml" class="level3">
 <h3 class="anchored" data-anchor-id="using-ml">Using ML</h3>
 <p>If we want to tackle the challenges posed by ocean acidification and climate change, we need to be able to predict DIC levels accurately. Here where machine learning comes in to play.</p>
-<p>By harnessing the power of data and advanced algorithms, we can develop models that help us assess the extent of ocean acidification across different locations and time scales. This is critical for understanding the potential impacts on marine ecosystems and identifying the areas that are most vulnerable. Predicting DIC levels also enables us to establish specific, tailored, and powerful mitigation strategies. By anticipating future changes in DIC and their consequences, we can make informed, (hopefully) accurate decisions about how to allocate resources, prioritize conservation efforts, and adapt our management approaches. That sounds wonderful!</p>
-<p>In this analysis, my goal was to build a predictive model for DIC using a machine learning approach. I found that XGBoost, a powerful algorithm known for its ability to handle complex relationships and deliver accurate predictions, was the best model based on the data set we were given. I tried a few Random Forest methods, but did not get quite the same results as from XGBoost. By training the model on a dataset of various oceanographic parameters, such as temperature, salinity, and nutrient concentrations, the goal was to capture and understand the underlying patterns and relationships that influence DIC levels. I also dove deep into the data, exploring the distributions, correlations, and potential multicollinearity among the variables. This let me gain (and now you, the reader) a more holistic understanding of the factors at play.</p>
+<p>By harnessing the power of data and algorithms, we can develop models that help us assess the extent of ocean acidification across different locations and time scales. This is critical for understanding the potential impacts on marine ecosystems and identifying the areas that are most vulnerable. Predicting DIC levels also enables us to establish specific, tailored, and powerful mitigation strategies. By anticipating future changes in DIC and their consequences, we can make informed, (hopefully) accurate decisions about how to allocate resources, prioritize conservation efforts, and adapt management approaches. Sounds wonderful, and even feasible?</p>
+<p>In this analysis, my goal was to build a predictive model for DIC using machine learning approaches. I found that XGBoost, a powerful algorithm known for its ability to handle complex relationships and deliver accurate predictions, was the best performer on the data set we were given. I tried a few Random Forest methods, but did not get quite the same results as from XGBoost. By training the model on a dataset of various oceanographic parameters, such as temperature, salinity, and nutrient concentrations, the goal was to capture and understand the underlying patterns and relationships that influence DIC levels. I also dove deep into the data, exploring the distributions, correlations, and potential multicollinearity among the variables. This let me gain (and now you, the reader) a more holistic understanding of the factors at play.</p>
+<p>Add something about how this is for a Kaggle competition, where we enter our predictions on the test data and receive a score on how we did – the lower the better.</p>
 </section>
 <section id="equity-consequences" class="level3">
 <h3 class="anchored" data-anchor-id="equity-consequences">Equity Consequences</h3>
 <p>The impacts of elevated DIC levels on marine ecosystems extend far beyond the realm of environmental conservation. They have profound socio-economic implications that ring through coastal communities and beyond. Many of these communities rely heavily on the health and productivity of marine environments for their livelihoods, and the degradation of these ecosystems can have severe consequences.</p>
-<p>Consider the coral reefs again, which are particularly vulnerable to ocean acidification. These underwater hotspots are not only beautiful but also serve as the foundation for thriving ecosystems that support an astonishing diversity of life. Coral reefs attract tourists from around the world, generating significant revenue for local economies through activities such as snorkeling, diving, and beach tourism. However, as DIC levels rise and the ocean becomes more acidic, the delicate balance that sustains these reefs is disrupted. The deterioration of coral reefs can lead to a landslide of ecological effects, culminating in the loss of biodiversity and the decline of the tourism industry that relies on their allure.</p>
+<p>Consider the coral reefs again, which are particularly vulnerable to ocean acidification. These underwater sanctuaries are not only beautiful but also serve as the foundation for thriving ecosystems that support an incredible diversity of life. Coral reefs attract tourists from around the world, generating significant revenue for local economies through activities such as snorkeling, diving, and beach tourism. However, as DIC levels rise and the ocean becomes more acidic, the delicate balance that sustains these reefs is disrupted. The deterioration of coral reefs can lead to a landslide of ecological effects, culminating in the loss of biodiversity and the decline of the tourism industry that relies on their allure.</p>
 <p>Moreover, the socio-economic consequences of elevated DIC levels extend to the realm of fisheries. Lots of coastal communities rely on fishing as a primary source of both sustenance and income. As ocean acidification alters the chemistry of precious waters, it can have detrimental effects on the growth, survival, and reproduction of many marine species. The destruction of fish populations and altered species distributions can have severe implications for the livelihoods of fishermen and the communities they support. The loss of income and food security can ripple through these societies, exacerbating poverty and social instability. For many coastal communities, the ocean is not merely a resource to be exploited but an integral part of their cultural heritage and identity. The degradation of marine environments can erode the very fabric of these societies, undermining traditional practices, knowledge systems, and social structures that have evolved in harmony with the sea. The loss of cultural heritage and the severing of deep-rooted connections to the ocean can have profound psychological and emotional consequences for these communities.</p>
 </section>
 </section>
 <section id="tools-and-techniques" class="level2">
 <h2 class="anchored" data-anchor-id="tools-and-techniques">Tools and Techniques</h2>
-<p>I worked in Python and used its ecosystems of data science libraries, such as pandas, matplotlib, and scikit-learn. Utilizing techniques like cross-validation and hyperparameter tuning, I storve to build a sturyd and generalizable pipeline that serves as a small example of how data science can help curb the effects of the climate crisis.</p>
+<p>I worked in Python and used its ecosystems of data science libraries, such as pandas, matplotlib, and scikit-learn. Utilizing techniques like cross-validation and hyperparameter tuning, I strove to build a sturdy and generalizable pipeline that serves as an example of how data science can help curb the effects of the climate crisis.</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
@@ -426,7 +426,7 @@ Principal Component 17: 0.000</code></pre>
 <p><img src="analysis_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<p>A gem of a chart. Unpack what’s going on here in detail, and give some examples (backed by science)</p>
+<p>A gem of a chart. Unpack what’s going on here in detail, and give some examples (backed by science) - What do the trends in the data tell us about how it was sampled? Can you find something online that talks about the sample, where it came from etc</p>
 <p>Now, I’ll go ahead and split the (training) data into training and testing sets, choosing an 80/20 split.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into features and target variable</span></span>
@@ -445,7 +445,11 @@ Principal Component 17: 0.000</code></pre>
 <section id="model-selection-and-training" class="level2">
 <h2 class="anchored" data-anchor-id="model-selection-and-training">Model Selection and Training</h2>
 <p>I started by choosing Random Forest as my model of choice to predict DIC levels, but I found that XGBoost performs stronger on the training and testing data so I opted for that one instead.</p>
-<p>I implemenet - Discuss your approach to model selection and hyperparameter tuning using techniques like RandomizedSearchCV and GridSearchCV - Share the results of your model training, including evaluation metrics like root mean squared error</p>
+<p>I tried using both grid search and randomized search, and found that they perform similarly in terms of RMSE. However, grid search takes a lot longer to train and so I opted for randomized search in my final approach. Randomized search (briefly discuss how the process works here). The search for the Random Forest found the best parameters to be _______.</p>
+<ul>
+<li>Discuss approach to model selection and hyperparameter tuning using RandomizedSearchCV and GridSearchCV</li>
+<li>Share the results of model training, including evaluation metrics like root mean squared error</li>
+</ul>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -519,21 +523,21 @@ R-squared: 0.9977299460851863
 Training RMSE: 5.9632</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="52">
+<div class="cell" data-execution_count="66">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor, AdaBoostRegressor</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV, RandomizedSearchCV</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the parameter grid for random forest</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>rf_param_grid <span class="op">=</span> {</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>],</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: [<span class="va">None</span>, <span class="dv">5</span>, <span class="dv">10</span>],</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>],</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>],</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_samples_split'</span>: [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>],</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_samples_leaf'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>]</span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the parameter grid for AdaBoost</span></span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>ada_param_grid <span class="op">=</span> {</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>],</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>],</span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'learning_rate'</span>: [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>]</span>
 <span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
@@ -541,7 +545,7 @@ Training RMSE: 5.9632</code></pre>
 <span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>rf_model <span class="op">=</span> RandomForestRegressor(random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform grid search for random forest</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>rf_grid_search <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>rf_model, param_grid<span class="op">=</span>rf_param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>rf_grid_search <span class="op">=</span> RandomizedSearchCV(estimator<span class="op">=</span>rf_model, param_distributions<span class="op">=</span>rf_param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>rf_grid_search.fit(X_train, y_train)</span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the best random forest model</span></span>
@@ -551,7 +555,7 @@ Training RMSE: 5.9632</code></pre>
 <span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>ada_model <span class="op">=</span> AdaBoostRegressor(base_estimator<span class="op">=</span>best_rf_model, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform grid search for AdaBoost</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>ada_grid_search <span class="op">=</span> GridSearchCV(estimator<span class="op">=</span>ada_model, param_grid<span class="op">=</span>ada_param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>ada_grid_search <span class="op">=</span> RandomizedSearchCV(estimator<span class="op">=</span>ada_model, param_distributions<span class="op">=</span>ada_param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>ada_grid_search.fit(X_train, y_train)</span>
 <span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the best boosted random forest model</span></span>
@@ -578,13 +582,14 @@ Training RMSE: 5.9632</code></pre>
 <span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>submission_csv_path <span class="op">=</span> <span class="st">'data/final_submission_boosted_rf_tuned.csv'</span></span>
 <span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>submission_df.to_csv(submission_csv_path, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/joblib/externals/loky/process_executor.py:688: UserWarning: A worker stopped while some jobs were given to the executor. This can be caused by a too short worker timeout or by a memory leak.
+<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/sklearn/model_selection/_search.py:285: UserWarning: The total space of parameters 9 is smaller than n_iter=10. Running 9 iterations. For exhaustive searches, use GridSearchCV.
   warnings.warn(</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Root Mean Squared Error: 5.4253004560182685</code></pre>
+<div class="cell-output cell-output-error">
+<pre><code>KeyboardInterrupt: </code></pre>
 </div>
 </div>
+<p>Next is the code for the XGBoost model. First, I created a dictionary of parameter values for each of the hyperparameters to identify the best set of hyperparams. Then, the RandomizedSearchCV performs the random search, implementing cross-validation,</p>
 <div class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># XGBoost</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -639,7 +644,7 @@ Best Parameters: {'subsample': 0.6, 'n_estimators': 500, 'max_depth': 3, 'learni
 R-squared (R^2) Score: 0.9978656383611391</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="47">
+<div class="cell" data-execution_count="60">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the dataset into a data structure that XGBoost supports</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>dtrain <span class="op">=</span> xgb.DMatrix(X_train, label<span class="op">=</span>y_train)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>dtest <span class="op">=</span> xgb.DMatrix(X_test, label<span class="op">=</span>y_test)</span>
@@ -703,11 +708,11 @@ R-squared (R^2) Score: 0.9978656383611391</code></pre>
 <span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a>submission_csv_path <span class="op">=</span> <span class="st">'data/final_submission_rs.csv'</span> </span>
 <span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a>submission_df.to_csv(submission_csv_path, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [22:22:40] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
+<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [15:56:47] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)
-/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [22:22:41] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
+/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [15:56:49] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)</code></pre>
@@ -730,7 +735,7 @@ Parameters: { "n_estimators" } are not used.
 Root Mean Squared Error: 6.202021641713651</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="50">
+<div class="cell" data-execution_count="62">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the dataset into a data structure that XGBoost supports</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>dtrain <span class="op">=</span> xgb.DMatrix(X_train, label<span class="op">=</span>y_train)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>dtest <span class="op">=</span> xgb.DMatrix(X_test, label<span class="op">=</span>y_test)</span>
@@ -738,8 +743,8 @@ Root Mean Squared Error: 6.202021641713651</code></pre>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the parameter sets for different XGBoost models</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>params_list <span class="op">=</span> [</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'learning_rate'</span>: <span class="fl">0.05</span>, <span class="st">'n_estimators'</span>: <span class="dv">500</span>, <span class="st">'max_depth'</span>: <span class="dv">3</span>, <span class="st">'subsample'</span>: <span class="fl">0.6</span>, <span class="st">'colsample_bytree'</span>: <span class="fl">0.6</span>},</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'learning_rate'</span>: <span class="fl">0.1</span>, <span class="st">'n_estimators'</span>: <span class="dv">300</span>, <span class="st">'max_depth'</span>: <span class="dv">5</span>, <span class="st">'subsample'</span>: <span class="fl">0.8</span>, <span class="st">'colsample_bytree'</span>: <span class="fl">0.8</span>},</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'learning_rate'</span>: <span class="fl">0.02</span>, <span class="st">'n_estimators'</span>: <span class="dv">1000</span>, <span class="st">'max_depth'</span>: <span class="dv">4</span>, <span class="st">'subsample'</span>: <span class="fl">0.7</span>, <span class="st">'colsample_bytree'</span>: <span class="fl">0.7</span>}</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'learning_rate'</span>: <span class="fl">0.05</span>, <span class="st">'n_estimators'</span>: <span class="dv">300</span>, <span class="st">'max_depth'</span>: <span class="dv">5</span>, <span class="st">'subsample'</span>: <span class="fl">0.8</span>, <span class="st">'colsample_bytree'</span>: <span class="fl">0.8</span>},</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'learning_rate'</span>: <span class="fl">0.05</span>, <span class="st">'n_estimators'</span>: <span class="dv">400</span>, <span class="st">'max_depth'</span>: <span class="dv">4</span>, <span class="st">'subsample'</span>: <span class="fl">0.7</span>, <span class="st">'colsample_bytree'</span>: <span class="fl">0.7</span>}</span>
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list to store the trained models</span></span>
@@ -799,27 +804,27 @@ Root Mean Squared Error: 6.202021641713651</code></pre>
 <span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a>submission_csv_path <span class="op">=</span> <span class="st">'data/final_submission_ensemble.csv'</span></span>
-<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a>submission_df.to_csv(submission_csv_path, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a><span class="co"># submission_df.to_csv(submission_csv_path, index=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [22:27:36] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
+<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [15:57:41] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)
-/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [22:27:38] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
+/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [15:57:43] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)
-/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [22:27:40] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
+/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [15:57:45] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)
-/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [22:27:42] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
+/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/xgboost/core.py:160: UserWarning: [15:57:47] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:742: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Root Mean Squared Error: 5.436212225017084</code></pre>
+<pre><code>Root Mean Squared Error: 5.446871654273209</code></pre>
 </div>
 </div>
 </section>
@@ -827,9 +832,9 @@ Parameters: { "n_estimators" } are not used.
 <h2 class="anchored" data-anchor-id="model-evaluation-and-interpretation">Model Evaluation and Interpretation</h2>
 <ul>
 <li>Interpret the model results, including analyzing feature importances to understand which variables are most predictive of DIC levels</li>
-<li>Discuss any limitations or caveats to your modeling approach</li>
+<li>Discuss any limitations or caveats to approach</li>
 </ul>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="63">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Learning Curve</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> learning_curve</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -852,7 +857,7 @@ Parameters: { "n_estimators" } are not used.
 <p><img src="analysis_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="64">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature Importance</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>xgb_model <span class="op">=</span> xgb.XGBRegressor(objective<span class="op">=</span><span class="st">'reg:squarederror'</span>, <span class="op">**</span>best_params)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>xgb_model.fit(X_train, y_train)</span>
@@ -911,7 +916,7 @@ Validation scores (Negative MSE):
  [ -46.78893235  -25.05317752  -26.90810602  -32.3449201   -30.56800386]]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="65">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>learning_curve_data <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Training Set Size'</span>: train_sizes,</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Training Score (Negative MSE)'</span>: train_scores.mean(axis<span class="op">=</span><span class="dv">1</span>),</span>
@@ -921,28 +926,28 @@ Validation scores (Negative MSE):
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(learning_curve_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Training Set Size  Training Score (Negative MSE)  \
-0                116                      -0.000056   
-1                232                      -0.003842   
-2                348                      -0.023481   
-3                465                      -0.079814   
-4                581                      -0.141578   
-5                697                      -0.242614   
-6                814                      -0.383617   
-7                930                      -0.489953   
-8               1046                      -0.632996   
-9               1163                      -0.834079   
+0                116                      -0.174085   
+1                232                      -0.554602   
+2                348                      -1.417830   
+3                465                      -3.026339   
+4                581                      -3.872808   
+5                697                      -4.570602   
+6                814                      -5.751246   
+7                930                      -6.121061   
+8               1046                      -6.432054   
+9               1163                      -7.436974   
 
    Validation Score (Negative MSE)  
-0                      -169.222858  
-1                      -110.000736  
-2                       -89.675356  
-3                       -73.234226  
-4                       -44.536311  
-5                       -40.663442  
-6                       -36.272769  
-7                       -34.032116  
-8                       -34.126328  
-9                       -32.332628  </code></pre>
+0                      -131.662397  
+1                      -103.063132  
+2                       -63.960419  
+3                       -56.923273  
+4                       -42.891631  
+5                       -41.744880  
+6                       -39.959630  
+7                       -37.707325  
+8                       -36.924082  
+9                       -35.607529  </code></pre>
 </div>
 </div>
 </section>
