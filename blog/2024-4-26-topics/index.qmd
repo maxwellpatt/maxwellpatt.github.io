@@ -105,7 +105,7 @@ results <- FindTopicsNumber(dfm,
 FindTopicsNumber_plot(results)
 ```
 
-Based on the results, k = 7 appears to be the optimal number of topics. While one could argue that 5 is also a valid choice if you want to simplify the analysis a bit, 7 improves the CaoJuan2009 metric while also improving the Deveaud2014 metric. They really couldn't come up with better names for these metrics?!?
+Based on the results when I first ran this model, k = 7 appeared to be the optimal number of topics. Note that the graph is looking different on this outputted blog post, but the topics below are identical. So let's just pretend like this graph is a placeholder!
 
 ## Running the Topic Model
 
