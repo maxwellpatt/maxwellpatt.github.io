@@ -26,7 +26,6 @@ library(reshape2)
 library(LexisNexisTools)
 ```
 
-
 ```{r, message=FALSE, warning=FALSE}
 setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2024-4-26-topics/data/bio-1")
 
@@ -51,7 +50,6 @@ data <- tibble(Date=meta_df$Date, Headline = meta_df$Headline, id = articles_df$
 
 Now, let's clean up the data by removing duplicates, creating a corpus, and examining the tokens. A corpus is just a collection of all the words across all of the articles we are feeding in, with tokens being each of the words in the corpus. We're working with 161 different news articles on biodiversity loss!
 
-
 ```{r}
 # Cleaning up data
 articles <- data %>% 
@@ -68,10 +66,9 @@ add_stops <- stopwords(kind = quanteda_options("language_stopwords"))
 tokens(articles_corpus)
 ```
 
-What we see above is all of the tokens split up across the entire corpus. 
+What we see above is all of the tokens split up across the entire corpus.
 
 Next, we'll perform some preprocessing steps on the tokens, such as removing punctuation, numbers, URLs, and stop words, converting to lowercase, and trimming the document-feature matrix.
-
 
 ```{r}
 # Remove punctuation, numbers and url
@@ -90,11 +87,9 @@ sel_idx <- slam::row_sums(dfm2) > 0
 dfm <- dfm2[sel_idx, ]
 ```
 
-
 ## Finding the Optimal Number of Topics
 
 To determine the optimal number of topics for our analysis, we'll use the `FindTopicsNumber` function from the `ldatuning` package.
-
 
 ```{r, warning=FALSE}
 set.seed(123)
@@ -110,13 +105,11 @@ results <- FindTopicsNumber(dfm,
 FindTopicsNumber_plot(results)
 ```
 
-
-Based on the results, k = 7 appears to be the optimal number of topics. While one could argue that 5 is also a valid choice if you want to simplify the analysis a bit, 7 improves the CaoJuan2009 metric while also improving the Deveaud2014 metric. They really couldn't come up with better names for these metrics?!? 
+Based on the results, k = 7 appears to be the optimal number of topics. While one could argue that 5 is also a valid choice if you want to simplify the analysis a bit, 7 improves the CaoJuan2009 metric while also improving the Deveaud2014 metric. They really couldn't come up with better names for these metrics?!?
 
 ## Running the Topic Model
 
 Now that we have determined the optimal number of topics, let's run the Latent Dirichlet Allocation (LDA) topic model and show the most prevalent topics.
-
 
 ```{r}
 set.seed(123)
@@ -166,7 +159,7 @@ top_terms %>%
   coord_flip()
 ```
 
-This plot breaks down the most frequent words in each of the topic groups. The first topic group seems to be composed of articles related to academia with research, university, and science being some of the most frequent terms in the group. The fourth topic group has higher frequency of finance related terms like finance, risk, economic, and banks. These articles are likely related to the financial implications of biodiversity loss, which is one of the most underrated aspects of climate change in the general public in my opinion. The fifth topic group has key terms related to the energy sector and pollutants, and the sixth group has key words like food and water which signal a potential focus on agriculture for articles in this group. 
+This plot breaks down the most frequent words in each of the topic groups. The first topic group seems to be composed of articles related to academia with research, university, and science being some of the most frequent terms in the group. The fourth topic group has higher frequency of finance related terms like finance, risk, economic, and banks. These articles are likely related to the financial implications of biodiversity loss, which is one of the most underrated aspects of climate change in the general public in my opinion. The fifth topic group has key terms related to the energy sector and pollutants, and the sixth group has key words like food and water which signal a potential focus on agriculture for articles in this group.
 
 ## Examining Topic Proportions
 
@@ -206,15 +199,14 @@ The topic analysis done in this blog post demonstrates the power of using text m
 
 For researchers, policymakers, and practitioners working on biodiversity conservation, having the ability to quickly identify and visualize the key topics can save valuable time and resources in their efforts. Some potential applications are:
 
-1. Literature Review and Knowledge Synthesis: Topic modeling can help synthesize the vast amount of literature and reports on biodiversity loss by automatically surfacing the main themes, trends, and focus areas. This can accelerate literature reviews and help researchers quickly understand the outlook of knowledge on the topic.
+1.  Literature Review and Knowledge Synthesis: Topic modeling can help synthesize the vast amount of literature and reports on biodiversity loss by automatically surfacing the main themes, trends, and focus areas. This can accelerate literature reviews and help researchers quickly understand the outlook of knowledge on the topic.
 
-2. Monitoring Public Discourse: By analyzing news articles, social media posts, and other public textual data, topic models can reveal how different aspects of biodiversity loss are being discussed in public discourse. This information can help guide communication strategies and public outreach efforts by conservation organizations.
+2.  Monitoring Public Discourse: By analyzing news articles, social media posts, and other public textual data, topic models can reveal how different aspects of biodiversity loss are being discussed in public discourse. This information can help guide communication strategies and public outreach efforts by conservation organizations.
 
-3. Policy Analysis: Policymakers can use topic modeling to analyze policy documents, stakeholder submissions, and public comments related to biodiversity policies and regulations. Understanding the dominant topics and concerns can inform evidence-based policymaking and support effective implementation of conservation measures.
+3.  Policy Analysis: Policymakers can use topic modeling to analyze policy documents, stakeholder submissions, and public comments related to biodiversity policies and regulations. Understanding the dominant topics and concerns can inform evidence-based policymaking and support effective implementation of conservation measures.
 
-4. Identifying Research Gaps: The topics extracted from existing literature can highlight potential gaps or understudied areas in biodiversity conservation. This information can aid future research agendas and funding priorities.
+4.  Identifying Research Gaps: The topics extracted from existing literature can highlight potential gaps or understudied areas in biodiversity conservation. This information can aid future research agendas and funding priorities.
 
-5. Cross-Disciplinary Collaboration: Topic modeling can reveal connections and overlaps between different disciplines studying biodiversity loss, such as ecology, environmental economics, and policy studies. This can promote interdisciplinary collaborations and knowledge exchange, which is critical in the fight against climate change.
+5.  Cross-Disciplinary Collaboration: Topic modeling can reveal connections and overlaps between different disciplines studying biodiversity loss, such as ecology, environmental economics, and policy studies. This can promote interdisciplinary collaborations and knowledge exchange, which is critical in the fight against climate change.
 
 While topic analysis is an exploratory strategy and is best coupled with domain expertise and further analysis, it provides a powerful lens for obtaining data-driven insights from large text datasets. As the volume of text data continues to grow, leveraging techniques like topic modeling will become increasingly valuable for understanding complex environmental issues and informing decision-making processes related to biodiversity conservation efforts.
-
