@@ -214,7 +214,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If we want to tackle the challenges posed by ocean acidification and climate change, we need to be able to predict DIC levels accurately. This is where machine learning comes in to play.</p>
 <p>By harnessing the power of data and algorithms, we can develop models that help us assess the extent of ocean acidification across different locations and time scales. This is critical for understanding the potential impacts on marine ecosystems and identifying the areas that are most vulnerable. Predicting DIC levels also enables us to establish specific, tailored, and powerful mitigation strategies. By anticipating future changes in DIC and their consequences, we can make informed, (hopefully) accurate decisions about how to allocate resources, prioritize conservation efforts, and adapt management approaches. Sounds wonderful, and even feasible?</p>
 <p>In this analysis, my goal is to build a predictive model for DIC using machine learning approaches. I found that XGBoost, a powerful algorithm known for its ability to handle complex relationships and deliver accurate predictions, was the best performer on the data set we were given. I tried a few Random Forest methods, but did not get quite the same results as from XGBoost. By training the model on a dataset of various oceanographic parameters, such as temperature, salinity, and nutrient concentrations, the goal was to capture and understand the underlying patterns and relationships that influence DIC levels. I also dove deep into the data, exploring the distributions, correlations, and potential multicollinearity among the variables. This let me gain (and now you, the reader) a more holistic understanding of the factors at play.</p>
-<p>Add something about how this is for a Kaggle competition, where we enter our predictions on the test data and receive a score on how we did – the lower the better.</p>
 </section>
 <section id="equity-consequences" class="level3">
 <h3 class="anchored" data-anchor-id="equity-consequences">Equity Consequences</h3>
@@ -226,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="tools-and-techniques" class="level2">
 <h2 class="anchored" data-anchor-id="tools-and-techniques">Tools and Techniques</h2>
 <p>I worked in Python and used its ecosystems of data science libraries, such as pandas, matplotlib, and scikit-learn. Utilizing techniques like cross-validation and hyperparameter tuning, I strove to build a sturdy and generalizable pipeline that serves as an example of how data science can help curb the effects of the climate crisis.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -279,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Looking at the columns, this dataset encompasses a wide array of oceanographic variables that can potentially influence dissolved inorganic carbon (DIC) levels in the ocean. Key features include latitude and longitude (Lat_Dec, Lon_Dec), which provide spatial context and can capture regional variations in DIC. Nutrient concentrations such as nitrite (NO2uM), nitrate (NO3uM), ammonia (NH3uM), phosphate (PO4uM), and silicate (SiO3uM) are essential for marine primary production and can affect the biological pump that influences DIC levels. Physical parameters like temperature (R_TEMP, Temperature_degC), depth (R_Depth), salinity (R_Sal, Salinity1), and dynamic height (R_DYNHT) play crucial roles in determining the solubility and distribution of DIC in the water column. Dissolved oxygen (R_Oxy_micromol.Kg) and total alkalinity (TA1) are closely linked to the carbonate system and can provide insights into the carbonate chemistry that regulates DIC concentrations.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution of DIC in data</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.hist(data[<span class="st">'DIC'</span>], bins<span class="op">=</span><span class="dv">20</span>)</span>
@@ -293,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The distribution of DIC is somewhat bimodal, with beaks around 2000 and 2250.</p>
 <p>Next, let’s look at a correlation heat map to better understand the features in the data and how they relate to one another.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation heatmap</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sns.heatmap(data.corr(), annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>, square<span class="op">=</span><span class="va">True</span>)</span>
@@ -304,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>A quick glance at the heat map reveals that there are some strong relationships working in the data across the different features. While some are obviosuly 1 (like temperature in farenheit and celcius), closely examining the heatmap gives insights into how the features are related to each other, and points to the idea that it would be benefitial to look into the issue over multicollinearity this data. Multicollinearity arises when two or more features are highly correlated with each other, and it can lead to unreliable coefficient esimates and make the impact of individual features difficult. In this case, temperature in degrees farenheit and celcius are going to be identical and having one or the other will not change the predictions under random forest operators that we will be implementing. The issue of multicollinearity in this context can be skipped over since we are not as much concerened about interpreting each individual variable’s coefficients, but rather the predictive power of a random forest model (or some other similar kind of ML algorithm).</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(data, diag_kind<span class="op">=</span><span class="st">'kde'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Pairwise Scatter Plots'</span>)</span>
@@ -317,8 +316,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>A gem of a chart. This shows the distribution of each variable against each other one, and then the distribution of each variable along the axis. This chart is very helpful for identifying redundant features and understanding the distribution of each column to check if normalizing the data would be a productive strategy.</p>
-<p>Now, I’ll go ahead and split the (training) data into training and testing sets, choosing an 80/20 split.</p>
-<div class="cell" data-execution_count="7">
+<p>Now, I’ll go ahead and split the data into training and testing sets, choosing an 80/20 split.</p>
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove highly correlated features from the training data</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>columns_to_remove <span class="op">=</span> [<span class="st">'Temperature_degC'</span>, <span class="st">'Salinity1'</span>, <span class="st">'R_Nuts'</span>, <span class="st">'R_Sal'</span>, <span class="st">'R_DYNHT'</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -344,7 +343,7 @@ y_test : (291,)</code></pre>
 <h2 class="anchored" data-anchor-id="model-selection-and-training">Model Selection and Training</h2>
 <p>I started by choosing Random Forest as my model of choice to predict DIC levels, but I found that XGBoost performs stronger on the training and testing data so I opted for that one instead.</p>
 <p>I tried using both grid search and randomized search, and found that they perform similarly in terms of RMSE. However, grid search takes a lot longer to train and so I opted for randomized search in my final approach.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor, AdaBoostRegressor</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV, RandomizedSearchCV</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -360,7 +359,7 @@ y_test : (291,)</code></pre>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the parameter grid for AdaBoost</span></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>ada_param_grid <span class="op">=</span> {</span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>],</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'learning_rate'</span>: [<span class="fl">0.01</span>, ,<span class="fl">.03</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>]</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'learning_rate'</span>: [<span class="fl">0.01</span>, <span class="fl">0.03</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>]</span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the base random forest model</span></span>
@@ -404,75 +403,79 @@ y_test : (291,)</code></pre>
 <span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>submission_csv_path <span class="op">=</span> <span class="st">'data/final_submission_boosted_rf_tuned_regularized.csv'</span></span>
 <span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>submission_df.to_csv(submission_csv_path, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/sklearn/model_selection/_search.py:307: UserWarning: The total space of parameters 9 is smaller than n_iter=10. Running 9 iterations. For exhaustive searches, use GridSearchCV.
-  warnings.warn(
-/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/joblib/externals/loky/process_executor.py:752: UserWarning: A worker stopped while some jobs were given to the executor. This can be caused by a too short worker timeout or by a memory leak.
-  warnings.warn(
-/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/sklearn/ensemble/_base.py:156: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+<pre><code>/Users/maxwellpatterson/opt/anaconda3/lib/python3.8/site-packages/joblib/externals/loky/process_executor.py:752: UserWarning: A worker stopped while some jobs were given to the executor. This can be caused by a too short worker timeout or by a memory leak.
   warnings.warn(</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Root Mean Squared Error: 5.937092344416042</code></pre>
+<pre><code>Root Mean Squared Error: 5.960879188324126</code></pre>
 </div>
 </div>
 <p>In this code chunk below, I leverage the XGBoost algorithm to build an ensemble of regression models for predicting dissolved inorganic carbon (DIC) levels. By employing random search and cross-validation, I fine-tune each XGBoost model with optimal hyperparameters. The resulting ensemble combines the strengths of multiple models, enabling accurate predictions that can aid in understanding ocean acidification</p>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># XGBoost</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> VotingRegressor</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># XGBoost</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">from sklearn.model_selection import RandomizedSearchCV</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">from sklearn.ensemble import VotingRegressor</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>param_distributions <span class="op">=</span> {</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'learning_rate'</span>: [<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>],</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>],</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>],</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'subsample'</span>: [<span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">1.0</span>],</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'colsample_bytree'</span>: [<span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">1.0</span>],</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'alpha'</span>: [<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>],  <span class="co"># L1 regularization</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'lambda'</span>: [<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>],  <span class="co"># L2 regularization</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'objective'</span>: [<span class="st">'reg:squarederror'</span>],</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'eval_metric'</span>: [<span class="st">'rmse'</span>]</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">param_distributions = {</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">    'learning_rate': [0.01, 0.05, 0.1, 0.2, 0.3],</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">    'n_estimators': [50, 100, 200, 300, 400, 500],</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">    'max_depth': [2, 3, 4, 5, 6, 7, 8],</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">    'subsample': [0.6, 0.7, 0.8, 0.9, 1.0],</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">    'colsample_bytree': [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">    'alpha': [0, 0.1, 0.5, 1, 2],  # L1 regularization</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">    'lambda': [0, 0.1, 0.5, 1, 2],  # L2 regularization</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">    'objective': ['reg:squarederror'],</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">    'eval_metric': ['rmse']</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list to store the individual XGBoost models</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> []</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">models = []</span></span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of models in the ensemble</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>n_models <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">n_models = 5</span></span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform random search with cross-validation for each model</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_models):</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the XGBoost model</span></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    xgb_model <span class="op">=</span> xgb.XGBRegressor(random_state<span class="op">=</span><span class="dv">42</span><span class="op">+</span>i, objective<span class="op">=</span><span class="st">'reg:squarederror'</span>, eval_metric<span class="op">=</span><span class="st">'rmse'</span>)</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform random search</span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    random_search <span class="op">=</span> RandomizedSearchCV(estimator<span class="op">=</span>xgb_model, param_distributions<span class="op">=</span>param_distributions,</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>                                       n_iter<span class="op">=</span><span class="dv">50</span>, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>,</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>                                       verbose<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">42</span><span class="op">+</span>i)</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>    random_search.fit(X_train, y_train)</span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the best model and add it to the list of models</span></span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    best_model <span class="op">=</span> random_search.best_estimator_</span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>    models.append(best_model)</span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Best Parameters for Model </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">:"</span>, random_search.best_params_)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co">for i in range(n_models):</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co">    # Create the XGBoost model</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co">    xgb_model = xgb.XGBRegressor(random_state=42+i, objective='reg:squarederror', eval_metric='rmse')</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co">    # Perform random search</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co">    random_search = RandomizedSearchCV(estimator=xgb_model, param_distributions=param_distributions,</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co">                                       n_iter=50, cv=5, scoring='neg_mean_squared_error', verbose=1, random_state=42+i)</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co">    random_search.fit(X_train, y_train)</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co">    # Get the best model and add it to the list of models</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co">    best_model = random_search.best_estimator_</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co">    models.append(best_model)</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="co">    print(f"Best Parameters for Model {i+1}:", random_search.best_params_)</span></span>
 <span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the voting regressor</span></span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>ensemble <span class="op">=</span> VotingRegressor(estimators<span class="op">=</span>[(<span class="st">'model'</span><span class="op">+</span><span class="bu">str</span>(i), model) <span class="cf">for</span> i, model <span class="kw">in</span> <span class="bu">enumerate</span>(models)])</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="co">ensemble = VotingRegressor(estimators=[('model'+str(i), model) for i, model in enumerate(models)])</span></span>
 <span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the ensemble on the training data</span></span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>ensemble.fit(X_train, y_train)</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co">ensemble.fit(X_train, y_train)</span></span>
 <span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the best model and its parameters</span></span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>best_model <span class="op">=</span> random_search.best_estimator_</span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>best_params <span class="op">=</span> random_search.best_params_</span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best Parameters:"</span>, best_params)</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="co">best_model = random_search.best_estimator_</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="co">best_params = random_search.best_params_</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="co">print("Best Parameters:", best_params)</span></span>
 <span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions using the best model on the test set</span></span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> best_model.predict(X_test)</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions using the best model on the training set</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="co">y_train_pred = best_model.predict(X_train)</span></span>
 <span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the RMSE</span></span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, y_pred))</span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"RMSE on the test set:"</span>, rmse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the training RMSE</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="co">train_rmse = np.sqrt(mean_squared_error(y_train, y_train_pred))</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="co">print("RMSE on the training set:", train_rmse)</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions using the best model on the test set</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="co">y_test_pred = best_model.predict(X_test)</span></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the test RMSE</span></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="co">test_rmse = np.sqrt(mean_squared_error(y_test, y_test_pred))</span></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a><span class="co">print("RMSE on the test set:", test_rmse)</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="co">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Fitting 5 folds for each of 50 candidates, totalling 250 fits
 Best Parameters for Model 1: {'subsample': 0.8, 'objective': 'reg:squarederror', 'n_estimators': 300, 'max_depth': 7, 'learning_rate': 0.05, 'lambda': 0.5, 'eval_metric': 'rmse', 'colsample_bytree': 0.8, 'alpha': 0.5}
@@ -485,15 +488,17 @@ Best Parameters for Model 4: {'subsample': 1.0, 'objective': 'reg:squarederror',
 Fitting 5 folds for each of 50 candidates, totalling 250 fits
 Best Parameters for Model 5: {'subsample': 0.6, 'objective': 'reg:squarederror', 'n_estimators': 300, 'max_depth': 5, 'learning_rate': 0.05, 'lambda': 2, 'eval_metric': 'rmse', 'colsample_bytree': 0.7, 'alpha': 2}
 Best Parameters: {'subsample': 0.6, 'objective': 'reg:squarederror', 'n_estimators': 300, 'max_depth': 5, 'learning_rate': 0.05, 'lambda': 2, 'eval_metric': 'rmse', 'colsample_bytree': 0.7, 'alpha': 2}
+RMSE on the training set: 2.1782897894791775
 RMSE on the test set: 5.692170324604025</code></pre>
 </div>
 </div>
+<p>The XGBoost model shows a small improvement in RMSE from 5.937 to 5.692. I believe that implementing an ensemble method of averaging across different methods like XGBoost and Bagging would lead to the best submission for the Kaggle competition that this assignment was for!</p>
 </section>
 <section id="model-evaluation-and-interpretation" class="level2">
 <h2 class="anchored" data-anchor-id="model-evaluation-and-interpretation">Model Evaluation and Interpretation</h2>
-<p>The obtained RMSE (Root Mean Squared Error) of 5.69 on the test set indicates that, on average, the predictions made by the best XGBoost model deviate from the actual values by approximately 5.69 units. This indicates solid predictive power of our model.</p>
-<p>The XGBoost model with random search and cross-validation provides a solid foundation for predicting the target variable, but it is important to acknowledge the limitations and potential areas for improvement. One key aspect is the limited hyperparameter search space. While the random search explores a predefined set of hyperparameter values, it may not exhaustively cover all possible combinations that could lead to better performance. Additionally, the stochastic nature of random search means that it randomly samples hyperparameter configurations, which may not guarantee finding the optimal set of parameters. Repeating the search with different random states or increasing the number of iterations could help mitigate this limitation. Another concern is the risk of overfitting, especially given the very low training RMSE (close to 0). This suggests that the model may be too complex and is fitting the noise in the training data, potentially leading to poor generalization on unseen data. To address this, techniques like regularization or early stopping could be employed. Furthermore, the model’s performance could be improved by obtaining more diverse samples from different areas, as this would provide a more representative dataset for training and evaluation. By expanding the data collection efforts and incorporating samples from various regions, the model’s ability to capture the underlying patterns and generalize well to new data could be enhanced.</p>
-<div class="cell" data-execution_count="64">
+<p>The obtained root mean squared error of 5.69 on the test set indicates that, on average, the predictions made by the best XGBoost model deviate from the actual values by approximately 5.69 units. This indicates solid predictive power of our model.</p>
+<p>The XGBoost model with random search and cross-validation provides a solid foundation for predicting the target variable, but it is important to acknowledge the limitations and potential areas for improvement. One key aspect is the limited hyperparameter search space. While the random search explores a predefined set of hyperparameter values, it may not exhaustively cover all possible combinations that could lead to better performance. Additionally, the stochastic nature of random search means that it randomly samples hyperparameter configurations, which may not guarantee finding the optimal set of parameters. Repeating the search with different random states or increasing the number of iterations could help mitigate this limitation. Another concern is the risk of overfitting, especially given the lower training RMSE. This suggests that the model may be too complex and is fitting the noise in the training data, potentially leading to poor generalization on unseen data. To address this, techniques like regularization or early stopping could be employed. Furthermore, the model’s performance could be improved by obtaining more diverse samples from different areas, as this would provide a more representative dataset for training and evaluation. By expanding the data collection efforts and incorporating samples from various regions, the model’s ability to capture the underlying patterns and generalize well to new data could be enhanced.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature Importance</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>xgb_model <span class="op">=</span> xgb.XGBRegressor(objective<span class="op">=</span><span class="st">'reg:squarederror'</span>, <span class="op">**</span>best_params)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>xgb_model.fit(X_train, y_train)</span>
@@ -512,7 +517,7 @@ RMSE on the test set: 5.692170324604025</code></pre>
 <p><img src="analysis_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>This plot shows that trioxidosilicate (SiO3) and phosphate are far and away the most important features in determining DIC values.</p>
+<p>This plot shows that trioxidosilicate (SiO3) and phosphate (PO4) are far and away the most important features in determining DIC values.</p>
 </section>
 <section id="implications-and-future-work" class="level2">
 <h2 class="anchored" data-anchor-id="implications-and-future-work">Implications and Future Work</h2>
