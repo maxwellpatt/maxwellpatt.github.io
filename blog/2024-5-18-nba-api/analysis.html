@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxwell Patterson">
+<meta name="dcterms.date" content="2024-05-18">
+<meta name="description" content="An NBA API Investigation">
+
+<title>Fantasy Basketball 9 Category Simulations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cooking.html" rel="" target="">
+ <span class="menu-text">Cooking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../books.html" rel="" target="">
+ <span class="menu-text">Books</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Fantasy Basketball 9 Category Simulations</h1>
+                  <div>
+        <div class="description">
+          An NBA API Investigation
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Basketball</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Maxwell Patterson </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 18, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-preprocessing" id="toc-data-preprocessing" class="nav-link" data-scroll-target="#data-preprocessing">Data Preprocessing</a></li>
+  <li><a href="#monte-carlo-simulation" id="toc-monte-carlo-simulation" class="nav-link" data-scroll-target="#monte-carlo-simulation">Monte Carlo Simulation</a></li>
+  <li><a href="#plotting-team-outcomes" id="toc-plotting-team-outcomes" class="nav-link" data-scroll-target="#plotting-team-outcomes">Plotting Team Outcomes</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+<p><img src="conley.png" class="img-fluid" style="width:90.0%"></p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In this blog post, I will be exploring the NBA API and combining it with data pulled from my fantasy league. Our league is a dynasty format, where the same players are kept each season and only rookies are drafted. See <em>The Dynamics of Dynasty</em> blog post for a deep dive on the league!</p>
+<p>First, let’s start by loading in the fantasy league data to get the fantasy team each player is on. Then this data will be merged with data from the NBA API to pull players stats from last season.</p>
+</section>
+<section id="data-preprocessing" class="level1">
+<h1>Data Preprocessing</h1>
+<div class="cell" data-execution_count="194">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nba_api.stats.endpoints <span class="im">import</span> leaguedashteamstats</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nba_api.stats.static <span class="im">import</span> players, teams</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nba_api.stats.endpoints <span class="im">import</span> leaguedashplayerstats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="195">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in fantasy data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fantrax_data <span class="op">=</span> pd.read_csv(<span class="st">"fantrax_05_18_2024.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only 'Player' and 'Status' columns</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fantrax_data <span class="op">=</span> fantrax_data[[<span class="st">'Player'</span>, <span class="st">'Status'</span>, <span class="st">'FPts'</span>, <span class="st">'FP/G'</span>]]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing free agent players</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>fantrax_data <span class="op">=</span> fantrax_data[fantrax_data[<span class="st">'Status'</span>] <span class="op">!=</span> <span class="st">'FA'</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Updating Status column name</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fantrax_data <span class="op">=</span> fantrax_data.rename(columns <span class="op">=</span> {<span class="st">'Status'</span>: <span class="st">'Fantasy Team'</span>})</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dictionary to redefine team names </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>status_mapping <span class="op">=</span> {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'CCC'</span>: <span class="st">'Cream City'</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'STARKS'</span>: <span class="st">'Winterfell'</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BBB'</span>: <span class="st">'Bikini Bottom'</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'HBC'</span>: <span class="st">'Helsinki'</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Jmarr237'</span>: <span class="st">'Malibu'</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'maxpat01'</span>: <span class="st">'Santa Barbara'</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GBRAYERS'</span>: <span class="st">'Scottsdale'</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BIGFOOTS'</span>: <span class="st">'Beaverton'</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'$?$'</span>: <span class="st">'Las Vegas'</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'SDP'</span>: <span class="st">'San Diego'</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'SERP'</span>: <span class="st">'Slytherin'</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Orcas'</span>: <span class="st">'Anacortes'</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply team name mapping</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>fantrax_data[<span class="st">'Fantasy Team'</span>] <span class="op">=</span> fantrax_data[<span class="st">'Fantasy Team'</span>].<span class="bu">map</span>(status_mapping)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that the Fantrax data is cleaned, we can join it with each players stats pulled from the NBA API.</p>
+<div class="cell" data-execution_count="196">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract player names</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>player_names <span class="op">=</span> fantrax_data[<span class="st">'Player'</span>].tolist()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get player information from NBA API</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>nba_players <span class="op">=</span> players.get_players()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>player_id_map <span class="op">=</span> {player[<span class="st">'full_name'</span>]: player[<span class="st">'id'</span>] <span class="cf">for</span> player <span class="kw">in</span> nba_players <span class="cf">if</span> player[<span class="st">'full_name'</span>] <span class="kw">in</span> player_names}</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>fantrax_data[<span class="st">'Player_ID'</span>] <span class="op">=</span> fantrax_data[<span class="st">'Player'</span>].<span class="bu">map</span>(player_id_map)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>player_stats <span class="op">=</span> leaguedashplayerstats.LeagueDashPlayerStats(season<span class="op">=</span><span class="st">'2023-24'</span>).get_data_frames()[<span class="dv">0</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.merge(fantrax_data, player_stats, left_on<span class="op">=</span><span class="st">'Player_ID'</span>, right_on<span class="op">=</span><span class="st">'PLAYER_ID'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s check out the data to make sure it looks good.</p>
+<div class="cell" data-execution_count="197">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="197">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Player</th>
+<th data-quarto-table-cell-role="th">Fantasy Team</th>
+<th data-quarto-table-cell-role="th">FPts</th>
+<th data-quarto-table-cell-role="th">FP/G</th>
+<th data-quarto-table-cell-role="th">Player_ID</th>
+<th data-quarto-table-cell-role="th">PLAYER_ID</th>
+<th data-quarto-table-cell-role="th">PLAYER_NAME</th>
+<th data-quarto-table-cell-role="th">NICKNAME</th>
+<th data-quarto-table-cell-role="th">TEAM_ID</th>
+<th data-quarto-table-cell-role="th">TEAM_ABBREVIATION</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">BLK_RANK</th>
+<th data-quarto-table-cell-role="th">BLKA_RANK</th>
+<th data-quarto-table-cell-role="th">PF_RANK</th>
+<th data-quarto-table-cell-role="th">PFD_RANK</th>
+<th data-quarto-table-cell-role="th">PTS_RANK</th>
+<th data-quarto-table-cell-role="th">PLUS_MINUS_RANK</th>
+<th data-quarto-table-cell-role="th">NBA_FANTASY_PTS_RANK</th>
+<th data-quarto-table-cell-role="th">DD2_RANK</th>
+<th data-quarto-table-cell-role="th">TD3_RANK</th>
+<th data-quarto-table-cell-role="th">WNBA_FANTASY_PTS_RANK</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Nikola Jokic</td>
+<td>Cream City</td>
+<td>5154</td>
+<td>65.24</td>
+<td>203999.0</td>
+<td>203999.0</td>
+<td>Nikola Jokic</td>
+<td>Nikola</td>
+<td>1.610613e+09</td>
+<td>DEN</td>
+<td>...</td>
+<td>32.0</td>
+<td>541.0</td>
+<td>542.0</td>
+<td>6.0</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Luka Doncic</td>
+<td>Winterfell</td>
+<td>4644</td>
+<td>66.34</td>
+<td>1629029.0</td>
+<td>1629029.0</td>
+<td>Luka Doncic</td>
+<td>Luka</td>
+<td>1.610613e+09</td>
+<td>DAL</td>
+<td>...</td>
+<td>108.0</td>
+<td>497.0</td>
+<td>475.0</td>
+<td>4.0</td>
+<td>1.0</td>
+<td>32.0</td>
+<td>2.0</td>
+<td>6.0</td>
+<td>3.0</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Giannis Antetokounmpo</td>
+<td>Bikini Bottom</td>
+<td>4394</td>
+<td>60.19</td>
+<td>203507.0</td>
+<td>203507.0</td>
+<td>Giannis Antetokounmpo</td>
+<td>Giannis</td>
+<td>1.610613e+09</td>
+<td>MIL</td>
+<td>...</td>
+<td>22.0</td>
+<td>565.0</td>
+<td>555.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>29.0</td>
+<td>3.0</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Domantas Sabonis</td>
+<td>Bikini Bottom</td>
+<td>4345</td>
+<td>52.99</td>
+<td>1627734.0</td>
+<td>1627734.0</td>
+<td>Domantas Sabonis</td>
+<td>Domantas</td>
+<td>1.610613e+09</td>
+<td>SAC</td>
+<td>...</td>
+<td>64.0</td>
+<td>561.0</td>
+<td>571.0</td>
+<td>12.0</td>
+<td>26.0</td>
+<td>130.0</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Anthony Davis</td>
+<td>Bikini Bottom</td>
+<td>4338</td>
+<td>57.08</td>
+<td>203076.0</td>
+<td>203076.0</td>
+<td>Anthony Davis</td>
+<td>Anthony</td>
+<td>1.610613e+09</td>
+<td>LAL</td>
+<td>...</td>
+<td>4.0</td>
+<td>559.0</td>
+<td>524.0</td>
+<td>7.0</td>
+<td>12.0</td>
+<td>85.0</td>
+<td>4.0</td>
+<td>3.0</td>
+<td>10.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">314</td>
+<td>Steven Adams</td>
+<td>Scottsdale</td>
+<td>0</td>
+<td>0.00</td>
+<td>203500.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">315</td>
+<td>Lonzo Ball</td>
+<td>Las Vegas</td>
+<td>0</td>
+<td>0.00</td>
+<td>1628366.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">316</td>
+<td>Kai Jones</td>
+<td>Scottsdale</td>
+<td>0</td>
+<td>0.00</td>
+<td>1630539.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">317</td>
+<td>Christian Koloko</td>
+<td>Cream City</td>
+<td>0</td>
+<td>0.00</td>
+<td>1631132.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">318</td>
+<td>Kevin Porter</td>
+<td>Winterfell</td>
+<td>0</td>
+<td>0.00</td>
+<td>77876.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>319 rows × 71 columns</p>
+</div>
+</div>
+</div>
+<p>The data has been merged successfully! Now, let’s perform some data cleaning to filter out players that were not active last season.</p>
+<div class="cell" data-execution_count="198">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>While our league is a points league, where fantasy points are the scoring metric, some leagues are set up as a 9 category format where teams try to win each week based on the 9 main statistical categories.</p>
+<p>The categories are: - Points - Rebounds - Assists - Steals - Blocks - Field goal percentage - Free throw percentage - Three pointers made - Turnovers</p>
+<p>Let’s see where each fantasy teams strengths would be in this format!</p>
+<div class="cell" data-execution_count="199">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns to be used for Z-score calculations</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'PTS'</span>, <span class="st">'REB'</span>, <span class="st">'AST'</span>, <span class="st">'STL'</span>, <span class="st">'BLK'</span>, <span class="st">'FG_PCT'</span>, <span class="st">'FT_PCT'</span>, <span class="st">'FG3M'</span>, <span class="st">'TOV'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Z-scores for each player in each category</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> categories:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    df[category <span class="op">+</span> <span class="st">'_Z'</span>] <span class="op">=</span> (df[category] <span class="op">-</span> df[category].mean()) <span class="op">/</span> df[category].std()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate the Z-scores by team</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>team_z_scores <span class="op">=</span> df.groupby(<span class="st">'Fantasy Team'</span>)[[category <span class="op">+</span> <span class="st">'_Z'</span> <span class="cf">for</span> category <span class="kw">in</span> categories]].mean()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>display(HTML(team_z_scores.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
+&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PTS_Z</th>
+<th data-quarto-table-cell-role="th">REB_Z</th>
+<th data-quarto-table-cell-role="th">AST_Z</th>
+<th data-quarto-table-cell-role="th">STL_Z</th>
+<th data-quarto-table-cell-role="th">BLK_Z</th>
+<th data-quarto-table-cell-role="th">FG_PCT_Z</th>
+<th data-quarto-table-cell-role="th">FT_PCT_Z</th>
+<th data-quarto-table-cell-role="th">FG3M_Z</th>
+<th data-quarto-table-cell-role="th">TOV_Z</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Fantasy Team</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>-0.24</td>
+<td>-0.28</td>
+<td>-0.23</td>
+<td>-0.27</td>
+<td>-0.18</td>
+<td>0.07</td>
+<td>-0.36</td>
+<td>-0.28</td>
+<td>-0.16</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>0.22</td>
+<td>-0.21</td>
+<td>0.08</td>
+<td>0.20</td>
+<td>-0.30</td>
+<td>-0.33</td>
+<td>0.26</td>
+<td>0.58</td>
+<td>0.19</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bikini Bottom</td>
+<td>0.47</td>
+<td>0.60</td>
+<td>0.52</td>
+<td>0.36</td>
+<td>0.38</td>
+<td>0.28</td>
+<td>0.23</td>
+<td>0.05</td>
+<td>0.47</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cream City</td>
+<td>0.18</td>
+<td>0.44</td>
+<td>0.06</td>
+<td>0.33</td>
+<td>0.42</td>
+<td>0.29</td>
+<td>0.27</td>
+<td>0.24</td>
+<td>0.04</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Helsinki</td>
+<td>-0.03</td>
+<td>-0.13</td>
+<td>-0.02</td>
+<td>-0.03</td>
+<td>-0.06</td>
+<td>0.09</td>
+<td>-0.24</td>
+<td>-0.13</td>
+<td>-0.14</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>-0.27</td>
+<td>-0.30</td>
+<td>-0.40</td>
+<td>-0.19</td>
+<td>-0.25</td>
+<td>-0.21</td>
+<td>-0.20</td>
+<td>-0.08</td>
+<td>-0.23</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Malibu</td>
+<td>0.38</td>
+<td>0.43</td>
+<td>0.42</td>
+<td>0.34</td>
+<td>0.36</td>
+<td>0.07</td>
+<td>0.25</td>
+<td>0.30</td>
+<td>0.32</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">San Diego</td>
+<td>0.05</td>
+<td>-0.10</td>
+<td>-0.01</td>
+<td>0.16</td>
+<td>-0.04</td>
+<td>0.06</td>
+<td>0.20</td>
+<td>0.11</td>
+<td>0.06</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Santa Barbara</td>
+<td>-0.21</td>
+<td>-0.24</td>
+<td>-0.23</td>
+<td>-0.12</td>
+<td>0.01</td>
+<td>-0.02</td>
+<td>-0.24</td>
+<td>0.07</td>
+<td>-0.10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Scottsdale</td>
+<td>-0.42</td>
+<td>-0.21</td>
+<td>-0.25</td>
+<td>-0.37</td>
+<td>-0.12</td>
+<td>-0.13</td>
+<td>-0.57</td>
+<td>-0.42</td>
+<td>-0.42</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>-0.43</td>
+<td>-0.24</td>
+<td>-0.36</td>
+<td>-0.51</td>
+<td>-0.12</td>
+<td>-0.13</td>
+<td>0.06</td>
+<td>-0.49</td>
+<td>-0.30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Winterfell</td>
+<td>0.16</td>
+<td>0.09</td>
+<td>0.28</td>
+<td>0.01</td>
+<td>-0.20</td>
+<td>-0.09</td>
+<td>0.22</td>
+<td>0.00</td>
+<td>0.17</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This table shows us which teams are strongest in each categories. As we saw in the previous post, BBB (Bikini Bottom Ballers) are by far the strongest team. JMarr237 (Malibu Mamas) also has a deep roster with lots of good players.</p>
+</section>
+<section id="monte-carlo-simulation" class="level1">
+<h1>Monte Carlo Simulation</h1>
+<p>When it comes to predicting the outcome of a fantasy basketball season, there are many factors to consider. Each team’s performance can vary from week to week based on the number of games their players have, potential injuries, and the inherent randomness of sports. This is where Monte Carlo simulations come in handy.</p>
+<p>Monte Carlo simulations are a powerful tool that allows us to model complex systems and account for randomness. In the context of our fantasy basketball league, we can use these simulations to generate many possible outcomes for the season, taking into account the variability in each team’s performance.</p>
+<p>Think of it like a game of tug-of-war. Each team’s Z score represents their baseline strength in a particular category. The higher the Z score, the stronger the team is in that category. However, just like in a real game of tug-of-war, there are external factors that can influence the outcome, such as the condition of the rope, the terrain, or even a momentary lapse in concentration from one of the participants. In our simulation, we’ll be using three levels of randomness: low, medium, and high. These levels represent how much each team’s performance can deviate from their expected Z scores each week. A low level of randomness means that the results will be closer to what we expect based on the Z scores, while a high level of randomness introduces more unpredictability.</p>
+<p>By running the simulation 250 times, we can generate a wide range of plausible scenarios. Each simulation will give us a different set of results, and by analyzing these results, we can gain insights into the likelihood of various outcomes.</p>
+<p>For example, let’s say Team A has a higher Z score than Team B in the “points” category. In a single simulation, Team B might win that category due to the randomness factor. However, across 250 simulations, we would expect Team A to win the “points” category more often than Team B.</p>
+<p>Monte Carlo simulations help us account for the complexities and uncertainties in a fantasy basketball season. By embracing randomness and running many simulations, we can better understand the range of possible outcomes and make more informed decisions when managing our fantasy teams.</p>
+<div class="cell" data-execution_count="200">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>team_z_scores <span class="op">=</span> team_z_scores.reset_index()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>teams <span class="op">=</span> team_z_scores[<span class="st">'Fantasy Team'</span>].unique()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'PTS'</span>, <span class="st">'REB'</span>, <span class="st">'AST'</span>, <span class="st">'STL'</span>, <span class="st">'BLK'</span>, <span class="st">'FG_PCT'</span>, <span class="st">'FT_PCT'</span>, <span class="st">'FG3M'</span>, <span class="st">'TOV'</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>randomness_levels <span class="op">=</span> {<span class="st">'low'</span>: <span class="fl">0.3</span>, <span class="st">'medium'</span>: <span class="fl">0.6</span>, <span class="st">'high'</span>: <span class="fl">0.90</span>}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>num_weeks <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>num_simulations <span class="op">=</span> <span class="dv">250</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="201">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize results df to track wins, losses, and ties</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>results_template <span class="op">=</span> pd.DataFrame(<span class="dv">0</span>, index<span class="op">=</span>teams, columns<span class="op">=</span>[<span class="st">'Wins'</span>, <span class="st">'Losses'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="202">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monte Carlo season simulation</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_season(randomness):</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    weekly_results <span class="op">=</span> results_template.copy()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a schedule where each team plays every other team twice</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    matchups <span class="op">=</span> <span class="bu">list</span>(combinations(teams, <span class="dv">2</span>)) <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    random.shuffle(matchups)  <span class="co"># Randomize the order of matchups</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Distribute matchups across 22 weeks</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    weeks <span class="op">=</span> [matchups[i:i <span class="op">+</span> <span class="bu">len</span>(teams)<span class="op">//</span><span class="dv">2</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(matchups), <span class="bu">len</span>(teams)<span class="op">//</span><span class="dv">2</span>)]</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> week <span class="kw">in</span> weeks:</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> team1, team2 <span class="kw">in</span> week:</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            team1_score <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>            team2_score <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> category <span class="kw">in</span> categories:</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                team1_z <span class="op">=</span> team_z_scores.loc[team_z_scores[<span class="st">'Fantasy Team'</span>] <span class="op">==</span> team1, category <span class="op">+</span> <span class="st">'_Z'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                team2_z <span class="op">=</span> team_z_scores.loc[team_z_scores[<span class="st">'Fantasy Team'</span>] <span class="op">==</span> team2, category <span class="op">+</span> <span class="st">'_Z'</span>].values[<span class="dv">0</span>]</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                team1_z <span class="op">+=</span> np.random.normal(<span class="dv">0</span>, randomness <span class="op">*</span> <span class="bu">abs</span>(team1_z))</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                team2_z <span class="op">+=</span> np.random.normal(<span class="dv">0</span>, randomness <span class="op">*</span> <span class="bu">abs</span>(team2_z))</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> category <span class="op">==</span> <span class="st">'TOV'</span>:</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> team1_z <span class="op">&lt;</span> team2_z:  <span class="co"># Fewer turnovers is better</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                        team1_score <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">else</span>:</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>                        team2_score <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> team1_z <span class="op">&gt;</span> team2_z:  <span class="co"># More is better for other categories</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                        team1_score <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">else</span>:</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>                        team2_score <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> team1_score <span class="op">&gt;</span> team2_score:</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team1, <span class="st">'Wins'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team2, <span class="st">'Losses'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> team1_score <span class="op">&lt;</span> team2_score:</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team1, <span class="st">'Losses'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team2, <span class="st">'Wins'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> weekly_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="203">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate season 250 times for each level of randomness</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_multiple_seasons(randomness, num_simulations):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    all_simulation_results <span class="op">=</span> []</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_simulations):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        season_results <span class="op">=</span> simulate_season(randomness)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        all_simulation_results.append(season_results[<span class="st">'Wins'</span>].copy())</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine all simulation results into a DataFrame</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    all_simulation_results_df <span class="op">=</span> pd.concat(all_simulation_results, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    all_simulation_results_df.columns <span class="op">=</span> <span class="bu">range</span>(num_simulations)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate average results</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    average_results <span class="op">=</span> all_simulation_results_df.mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> average_results, all_simulation_results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that the Monte Carlo simulation functions have been set up, we can run the simulation 250 times.</p>
+<div class="cell" data-execution_count="204">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the simulations</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>final_results <span class="op">=</span> {}</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>simulation_results <span class="op">=</span> {}</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> level, randomness <span class="kw">in</span> randomness_levels.items():</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    avg_results, all_results_df <span class="op">=</span> simulate_multiple_seasons(randomness, num_simulations)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    final_results[level] <span class="op">=</span> avg_results</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    simulation_results[level] <span class="op">=</span> all_results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="205">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the final averaged results for each randomness level into a single DataFrame</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>results_table <span class="op">=</span> pd.concat(final_results, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>results_table.columns <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> Randomness'</span> <span class="cf">for</span> level <span class="kw">in</span> results_table.columns.get_level_values(<span class="dv">0</span>)]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the table by 'Low Randomness' wins in descending order</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>results_table_sorted <span class="op">=</span> results_table.sort_values(by<span class="op">=</span><span class="st">'Low Randomness'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>display(HTML(results_table_sorted.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Low Randomness</th>
+<th data-quarto-table-cell-role="th">Medium Randomness</th>
+<th data-quarto-table-cell-role="th">High Randomness</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bikini Bottom</td>
+<td>20.32</td>
+<td>19.90</td>
+<td>19.34</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cream City</td>
+<td>19.90</td>
+<td>19.98</td>
+<td>19.68</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Malibu</td>
+<td>19.70</td>
+<td>19.65</td>
+<td>19.49</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">San Diego</td>
+<td>14.86</td>
+<td>14.86</td>
+<td>14.43</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>13.79</td>
+<td>13.57</td>
+<td>13.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Winterfell</td>
+<td>13.40</td>
+<td>13.34</td>
+<td>13.16</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Helsinki</td>
+<td>9.98</td>
+<td>9.85</td>
+<td>9.59</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Santa Barbara</td>
+<td>7.75</td>
+<td>7.63</td>
+<td>7.76</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>4.23</td>
+<td>4.03</td>
+<td>4.59</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Scottsdale</td>
+<td>2.90</td>
+<td>2.83</td>
+<td>3.42</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>2.63</td>
+<td>3.14</td>
+<td>3.48</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>2.53</td>
+<td>3.22</td>
+<td>3.87</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="206">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate win percentages (number of wins divided by 22)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>games_played <span class="op">=</span> num_weeks  <span class="co"># Each team plays 22 games</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>win_percentages <span class="op">=</span> results_table_sorted <span class="op">/</span> games_played <span class="op">*</span> <span class="dv">250</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>win_percentages.columns <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> Win %'</span> <span class="cf">for</span> col <span class="kw">in</span> win_percentages.columns]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the win percentage table</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>display(HTML(win_percentages.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Low Randomness Win %</th>
+<th data-quarto-table-cell-role="th">Medium Randomness Win %</th>
+<th data-quarto-table-cell-role="th">High Randomness Win %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bikini Bottom</td>
+<td>230.91</td>
+<td>226.18</td>
+<td>219.82</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cream City</td>
+<td>226.09</td>
+<td>227.00</td>
+<td>223.59</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Malibu</td>
+<td>223.91</td>
+<td>223.27</td>
+<td>221.45</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">San Diego</td>
+<td>168.91</td>
+<td>168.91</td>
+<td>163.95</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>156.73</td>
+<td>154.18</td>
+<td>150.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Winterfell</td>
+<td>152.23</td>
+<td>151.59</td>
+<td>149.55</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Helsinki</td>
+<td>113.45</td>
+<td>111.95</td>
+<td>108.95</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Santa Barbara</td>
+<td>88.05</td>
+<td>86.68</td>
+<td>88.14</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>48.09</td>
+<td>45.82</td>
+<td>52.14</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Scottsdale</td>
+<td>33.00</td>
+<td>32.14</td>
+<td>38.86</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>29.86</td>
+<td>35.64</td>
+<td>39.55</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>28.77</td>
+<td>36.64</td>
+<td>44.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Under a 9-cat format, the Bikini Bottom Ballers are still the best team in the league. SDP, the San Diego Pilots, would seem to fare much better in a 9-cat format than the current points format.</p>
+</section>
+<section id="plotting-team-outcomes" class="level1">
+<h1>Plotting Team Outcomes</h1>
+<p>Now let’s visualize the results by showing the win distribution for each team under each randomness scenario.</p>
+<div class="cell" data-execution_count="207">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team <span class="kw">in</span> teams:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(randomness_levels), figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f'Number of Wins Distribution for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> (250 Simulations)'</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (level, results_df) <span class="kw">in</span> <span class="bu">enumerate</span>(simulation_results.items()):</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        axes[col].hist(results_df.loc[team], bins<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        axes[col].set_title(<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> Randomness'</span>, fontsize<span class="op">=</span><span class="dv">18</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        axes[col].set_xlabel(<span class="st">'Number of Wins'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        axes[col].tick_params(axis<span class="op">=</span><span class="st">'both'</span>, which<span class="op">=</span><span class="st">'major'</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            axes[col].set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-4.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-5.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-6.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-7.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-8.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-9.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-10.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-11.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-15-output-12.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>In our analysis, we utilized Monte Carlo simulations to project the outcomes of a fantasy basketball season under different levels of randomness. By running 250 simulations for each level of randomness — low, medium, and high — we were able to model the inherent variability in team performances. This approach not only allowed us to see which teams are likely to excel consistently but also highlighted how randomness can impact the overall season. The histograms generated for each team showed the distribution of their wins across simulations, providing a visual representation of their performance stability.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
