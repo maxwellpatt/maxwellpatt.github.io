@@ -1,0 +1,328 @@
+---
+  title: "Exploring Word Embeddings with Kern County Oil News Articles"
+  author:
+    - name: Maxwell Patterson
+  date: 05-17-2024
+  categories: [R, ML]
+  format: 
+    html:
+      code-fold: true
+      code-tools: true
+---
+
+![](computer.png){width="70%"}
+
+# Introduction
+
+Word embeddings are a powerful technique in natural language processing (NLP) that represent words as numerical vectors in a high-dimensional space. These vector representations capture semantic and syntactic relationships between words, allowing machines to understand and process human language more effectively. The main idea behind word embeddings is that words with similar meanings or contexts tend to have similar vector representations, enabling computers to perform tasks such as sentiment analysis, text classification, and language generation with greater precision and nuance.
+
+Word embeddings have played a crucial role in the development of large language models (LLMs) like GPT-4, Claude, and many others. These models rely on the ability to understand and represent the relationships between words, phrases, and sentences. Through utilizing pre-trained word embeddings or learning their own embeddings during training, LLMs can capture the rich semantic and contextual information present in text data.
+
+The importance of word embeddings in LLMs is just massive. They provide a strong foundation for these models to understand and generate human-like language, enabling them to perform a wide range of tasks, from answering all sorts of questions and summarizing text to poetry and writing code. As LLMs continue to advance and find applications in various domains, the role of word embeddings in capturing linguistic nuances and enabling effective language understanding and generation will become even more important. Maybe word embeddings can even help us determine when LLMs become agents, when AGI truly exists, or maybe even prove each of these impossible.
+
+# Training Custom Word Embeddings
+
+In this first section, we explore the process of training custom word embeddings using a corpus of news articles related to the oil industry in Kern County, California. I am interested in this topic as it directly applied to the capstone project I'm working on. Kern County produces over 70% of the oil in California, a staggering amount that has lead to severe health consequences for people living in the county. Using the **`tidytext`**, **`quanteda`**, and a few other R packages, we preprocess the text data, create n-gram representations, and compute co-occurrence statistics to build a co-occurrence matrix. This matrix captures the relationships between words based on their contexts within the corpus.
+
+```{r, echo=FALSE, message=FALSE}
+library(tidytext)
+library(tidyverse)
+library(widyr) 
+library(irlba)
+library(broom) 
+library(textdata)
+library(ggplot2)
+library(dplyr)
+library(quanteda)
+library(tm)
+library(reshape2)
+library(LexisNexisTools)
+```
+
+
+```{r, message=FALSE}
+setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big")
+
+# Reading in docx files
+post_files <- list.files(pattern = ".docx",
+                         path = getwd(),
+                         full.names = TRUE,
+                         recursive = TRUE,
+                         ignore.case = TRUE)
+
+# Use LNT to handle docs
+dat <- lnt_read(post_files)
+
+articles <- dat@articles$Article
+
+# Create df with articles
+articles_df <- data.frame(ID = seq_along(articles), Text = articles, stringsAsFactors = FALSE)
+
+# Create unigram probs
+unigram_probs <- articles_df %>%
+  unnest_tokens(word, Text) %>%
+  anti_join(stop_words, by = 'word') %>%
+  count(word, sort = T) %>%
+  mutate(p = n / sum(n))
+
+# Build consituent info abuot each 5-gram 
+skipgrams <- articles_df %>% 
+  unnest_tokens(ngram, Text, token = "ngrams", n=5) %>% 
+  mutate(ngramID = row_number()) %>% 
+  tidyr::unite(skipgramID, ID, ngramID) %>% 
+  unnest_tokens(word, ngram) %>% 
+  anti_join(stop_words, by = 'word')
+
+# Sum the total number of occurrences of each pair of words
+skipgram_probs <- skipgrams %>%  
+  pairwise_count(item = word, feature = skipgramID, upper = F) %>% 
+  mutate(p = n / sum (n))
+
+# Normalize probabilities
+normalized_probs <- skipgram_probs %>% 
+  rename(word1 = item1, word2 = item2) %>% 
+  left_join(unigram_probs %>% 
+              select(word1 = word, p1 = p), by = 'word1') %>% 
+  left_join(unigram_probs %>% 
+              select(word2 = word, p2 = p), by = 'word2') %>% 
+  mutate(p_together = p/p1/p2)
+```
+
+
+Next let's perform dimensionality reduction using Singular Value Decomposition (SVD) to get vector representations for each word in the corpus. These word vectors encode semantic and syntactic information, which lets us explore semantically similar words and perform arithmetic operations on the vectors to uncover interesting relationships.
+
+```{r}
+# Reduce dimensionality
+pmi_matrix <- normalized_probs %>% 
+  mutate(pmi = log10(p_together)) %>% 
+  cast_sparse(word1, word2, pmi)
+```
+
+
+# Exploring Semantically Similar Words
+
+One of the powerful applications of word embeddings is the ability to identify semantically similar words based on their vector representations. By computing the cosine similarity between word vectors, we can find words that are closely related in meaning or context.
+
+```{r}
+# Replace NAs with 0
+pmi_matrix@x[is.na(pmi_matrix@x)] <- 0
+
+# Perform SVD on pmi_matrix
+pmi_svd <- irlba(pmi_matrix, 100, verbose = F)
+
+word_vectors <- pmi_svd$u
+
+rownames(word_vectors) <- rownames(pmi_matrix)
+
+# Build function to pull synonyms
+search_synonyms <- function(word_vectors, selected_vector, original_word) {
+  dat = word_vectors %*% selected_vector
+  similarities <- as.data.frame(dat) %>%
+    tibble(token = rownames(dat), similarity = dat[,1]) %>%
+    filter(token != original_word) %>%
+    arrange(desc(similarity)) %>%
+    select(token, similarity)
+  
+  return(similarities)
+}
+```
+
+
+In this analysis, I've chosen to explore the top 10 most similar words for the terms "energy," "disadvantaged," and "law" using the custom word embeddings trained on the Kern County oil news corpus and the pre-trained GloVe embeddings (more on that later). The results reveal interesting insights into the semantic relationships captured by the embeddings.
+
+```{r}
+# Defining words to explore
+energy_synonyms <- search_synonyms(word_vectors, word_vectors["energy",], "energy") %>% head(10)
+disad_synonyms <- search_synonyms(word_vectors, word_vectors["disadvantaged",], "disadvantaged") %>% head(10)
+law_synonyms <- search_synonyms(word_vectors, word_vectors["law",], "law") %>% head(10)
+
+# Plotting results
+bind_rows(
+  energy_synonyms %>% mutate(target_word = "energy"),
+  disad_synonyms %>% mutate(target_word = "disadvantaged"),
+  law_synonyms %>% mutate(target_word = "law")
+) %>%
+  group_by(target_word) %>%
+  top_n(10, similarity) %>%
+  ungroup() %>%
+  mutate(token = reorder_within(token, similarity, target_word)) %>%
+  ggplot(aes(token, similarity, fill = target_word)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ target_word, scales = "free") +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(x = NULL, y = "Similarity")
+
+```
+
+
+For example, the custom embeddings associate "energy" with terms like "renewable," "clean," and "affordable," reflecting the context of the energy industry in Kern county. But the bigger takeaway here is what is Jennifer doing?
+
+
+# Word Math
+
+Word embeddings also enable us to perform arithmetic operations on word vectors, revealing interesting relationships and analogies. By adding or subtracting vectors, we can explore the semantic spaces and uncover meaningful combinations or contrasts.
+
+```{r}
+# Assemble word math equations
+energy_disad <- word_vectors["water",] + word_vectors["resources",]
+search_synonyms(word_vectors, energy_disad, "") %>% head(25)
+
+energy_law <- word_vectors["court",] + word_vectors["permitting",]
+search_synonyms(word_vectors, energy_law, "") %>% head(25)
+
+disad_law <- word_vectors["disadvantaged",] - word_vectors["health",]
+search_synonyms(word_vectors, disad_law, "") %>% head(25)
+```
+
+
+Let's consider water + resources here. It makes sense that irrigation, groundwater, and drainage are the most similar to the sum of these two word vectors.
+
+
+# Pretrained GloVe Embeddings
+
+While training custom word embeddings can be valuable for domain-specific tasks, pre-trained embeddings like GloVe (Global Vectors for Word Representation) offer a powerful alternative. These embeddings are trained on massive amounts of text data, capturing a broad range of semantic and syntactic relationships across various domains.
+
+```{r, message=FALSE}
+setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big")
+glove6b <- read_csv("glove6b.csv")
+```
+
+```{r}
+# Transform embeddings to tidy 
+tidy_glove <- glove6b %>%
+  pivot_longer(contains("d"),
+               names_to = "dimension") %>%
+  rename(item1 = token)
+
+# Build nn func to get similar words
+nearest_neighbors <- function(df, token) {
+  df %>%
+    widely(
+      ~ {
+        y <- .[rep(token, nrow(.)), ]
+        res <- rowSums(. * y) / 
+          (sqrt(rowSums(. ^ 2)) * sqrt(sum(.[token, ] ^ 2)))
+        matrix(res, ncol = 1, dimnames = list(x = names(res)))
+      },
+      sort = TRUE,
+      maximum_size = NULL
+    )(item1, dimension, value) %>%
+    select(-item2)
+}
+
+tidy_glove %>% nearest_neighbors("energy")
+tidy_glove %>% nearest_neighbors("disadvantaged")
+tidy_glove %>% nearest_neighbors("law")
+```
+
+```{r}
+# make into a matrix
+tidy_matrix <- tidy_glove %>% 
+  cast_sparse(item1, dimension, value)
+
+# replace any na values with 0
+tidy_matrix@x[is.na(tidy_matrix@x)] <- 0
+
+# perform decomposition
+tidy_svd <-svd(tidy_matrix)
+
+# set the row names
+word_vectors <- tidy_svd$u
+rownames(word_vectors) <- rownames(tidy_matrix)
+
+# write out equation
+equation <- word_vectors["berlin",] - word_vectors["germany",] + word_vectors["france",]
+
+# find the most related words
+search_synonyms(word_vectors = word_vectors,
+                       selected_vector = equation, # select specific word vector
+                       original_word = "")
+```
+
+```{r}
+# make into a matrix
+tidy_matrix <- tidy_glove %>% 
+  cast_sparse(item1, dimension, value)
+
+# replace any na values with 0
+tidy_matrix@x[is.na(tidy_matrix@x)] <- 0
+
+# perform decomposition
+tidy_svd <-svd(tidy_matrix)
+
+# set the row names
+word_vectors <- tidy_svd$u
+rownames(word_vectors) <- rownames(tidy_matrix)
+
+# write out equation
+equation <- word_vectors["berlin",] - word_vectors["germany",] + word_vectors["france",]
+
+# find the most related words
+search_synonyms(word_vectors = word_vectors,
+                       selected_vector = equation, # select specific word vector
+                       original_word = "")
+```
+
+
+A fun little example is given here with Berlin - Germany + France. Are you surprised by the results of this word math?
+
+In the analysis here, we explore the GloVe embeddings and compare them to our custom embeddings. We perform similar analyses, such as finding semantically similar words and conducting word math operations, using the GloVe embeddings. The results highlight similarities and differences between the custom and pre-trained embeddings. While the GloVe embeddings capture more general relationships, they may lack some of the nuances and domain-specific associations present in the custom embeddings trained on the Kern County oil news corpus.
+
+
+# Comparing Custom and Pretrained Embeddings
+
+By comparing the results obtained from our custom word embeddings and the pre-trained GloVe embeddings, we can gain insights into the strengths and limitations of each approach. Custom embeddings, trained on domain-specific data, tend to capture more nuanced and contextual relationships relevant to the specific domain. In our case, the custom embeddings trained on the Kern County oil news corpus reflect the language and concepts related to the oil industry, environmental concerns, and local issues.
+
+The choice between custom and pre-trained embeddings ultimately depends on the specific task and requirements. For domain-specific applications where capturing nuanced relationships is crucial, custom embeddings may be more appropriate. However, for more general NLP tasks or when computational resources are limited, pre-trained embeddings can offer a powerful and efficient solution.
+
+```{r}
+# Find synonyms using GloVe embeddings
+energy_synonyms_glove <- search_synonyms(word_vectors, word_vectors["energy",], "energy") %>% head(10)
+disad_synonyms_glove <- search_synonyms(word_vectors, word_vectors["disadvantaged",], "disadvantaged") %>% head(10)
+law_synonyms_glove <- search_synonyms(word_vectors, word_vectors["law",], "law") %>% head(10)
+
+# Plot the results
+bind_rows(
+  energy_synonyms_glove %>% mutate(target_word = "energy"),
+  disad_synonyms_glove %>% mutate(target_word = "disadvantaged"),
+  law_synonyms_glove %>% mutate(target_word = "law")
+) %>%
+  group_by(target_word) %>%
+  top_n(10, similarity) %>%
+  ungroup() %>%
+  mutate(token = reorder_within(token, similarity, target_word)) %>%
+  ggplot(aes(token, similarity, fill = target_word)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ target_word, scales = "free") +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(x = NULL, y = "Similarity")
+```
+
+```{r}
+# Word math equations with GloVe embeddings
+energy_disad_glove <- word_vectors["water",] + word_vectors["resources",]
+search_synonyms(word_vectors, energy_disad_glove, "") %>% head(10)
+
+energy_law_glove <- word_vectors["court",] + word_vectors["permitting",]
+search_synonyms(word_vectors, energy_law_glove, "") %>% head(10)
+
+disad_law_glove <- word_vectors["disadvantaged",] - word_vectors["health",]
+search_synonyms(word_vectors, disad_law_glove, "") %>% head(10)
+```
+
+See how these results are similar to what we calculated previously, but the GloVe results are more general and might not be as useful when looking at Kern county in particular.
+
+
+# Conclusion
+
+Word embeddings have revolutionized the field of natural language processing, enabling machines to understand and process human language with unprecedented accuracy and nuance. By representing words as numerical vectors, word embeddings capture the relationships and contexts in language, creating the lane for advanced language models and a wide range of NLP applications.
+
+As this analysis has shown, both custom and pre-trained word embeddings can offer valuable insights and capabilities. Custom embeddings, trained on domain-specific data, are able to capture nuanced and contextual relationships relevant to a particular domain, while pre-trained embeddings like GloVe provide a more broad and general representation of language, serving as a powerful foundation for various NLP tasks.
+
+Looking forward, the future of word embeddings related work is closely tied to the continued advancement of large language models and their applications. As these models become more sophisticated and capable of handling increasingly complex language tasks, the role of word embeddings in capturing linguistic nuances and enabling effective language understanding and generation will become even more important. There are also challenges and constraints to consider. Training high-quality word embeddings requires tons of text data and computational resources, which can be a limiting factor for some applications or domains with limited data availability. Furthermore, word embeddings can struggle to capture certain linguistic phenomena, such as polysemy (words with multiple meanings) and context-dependent word senses.
+
+To address these challenges, researchers and practitioners are exploring new techniques and architectures for word representations, such as contextualized word embeddings (e.g. BERT) and transformer-based language models (e.g., GPT-4, DALL-E). These approaches look to capture more nuanced and context-dependent representations of words, further enhancing the ability of machines to understand and generate human-like language.
+
+As the field of natural language processing continues to grow and evolve, word embeddings will remain a fundamental building block by enabling machines to "understand" and communicate with humans in increasingly nuanced ways. The future of word embeddings really lies in their continued refinement, integration with advanced language models, and adaptation to new domains and applications, which can lead the charge for more capable language technologies.
