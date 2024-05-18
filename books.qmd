@@ -1,0 +1,71 @@
+---
+title: "Books"
+format: html
+---
+
+This page just has some of the books I have read recently. I decided to put this page up after conquering the Throne of Glass series by Sarah J. Maas, which is as captivating as it is long and I recommend to everyone who's looking to get into fiction!
+
+<style>
+/* Table Styling */
+table.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+table.custom-table th, table.custom-table td {
+  padding: 12px 15px;
+}
+
+table.custom-table thead tr {
+  background-color: #00aaff; /* Sky blue header */
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+table.custom-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+table.custom-table tbody tr:nth-of-type(even) {
+  background-color: #e0f7ff; /* Light sky blue for even rows */
+}
+
+table.custom-table tbody tr:nth-of-type(odd) {
+  background-color: #ffffff; /* White for odd rows */
+}
+
+table.custom-table tbody tr:hover {
+  background-color: #b3e5ff; /* Darker sky blue on hover */
+}
+
+table.custom-table tbody tr:last-of-type {
+  border-bottom: 2px solid #00aaff;
+}
+</style>
+
+<div class="custom-table-container">
+| Book                         | Author                 | Rating | Thoughts                                                    |
+|------------------------------|------------------------|--------|-------------------------------------------------------------|
+| There Are Places in the World Where Rules Are Less Important Than Kindness            | Carlo Rovelli    | 4/5    | A fun writing style, where Rovelli seems to appreciate the fly-trap nature of his observations.             |
+| Remarkably Bright Creatures        | Shelby Van Pelt             | 5/5  | My definition of a comfort read. A gripping story that makes you want to hug your loved ones and appreciate the important things in life.                   |
+| Kingdom of Ash                         | Sarah J Maas        | 5/5    | A perfect ending to an epic series.           |
+| The Call of the Wild       | Jack London          | 4/5    | A perfect story for a cold winter day. A good reminder that there is some untamed nature in all of us.               |
+| The Love Hypothesis         | Ali Hazelwood            | 4/5    | A fun love story that makes you remember that love can happen anywhere, any time.        |
+| The Mountain in the Sea                   | Ray Nayler         | 5/5  | A masterpiece. Nayler makes the story feel totally real despite its ridiculousness. A perfect intertwining of AI, philosophy, and consciousness.            |
+| Why Fish Don't Exist               | Lulu Miller           | 4.5/5    | This book may or may not change your life (in a good way).  |
+| Going Infinite: The Rise and Fall of a New Tycoon                    | Michael Lewis       | 2/5  | Wasn't impressed. Lewis seems to have some sort of agenda while writing this book, and I got rubbed the wrong way.               |
+| The Age of AI and OUr Human Future              | Henry Kissinger          | 3.5/5    | Useful and informative, but not groundbreaking.               |
+| The Joy of X            | Steven Strogatz           | 3/5    | This book is great if you want to read about math without doing any.                             |
+| Queen of Shadows                  | Sarah J Maas                  | 5/5  | Maybe the best book in the series.         |
+| The Assassin's Blade                    | Sarah J Maas        | 4.5/5    | The short story format keeps you on the edge of your seat. Sam.    |
+| Daisy Jones & The Six                | Taylor Jenkins Reid            | 4.5/5  | This reads like the characters are right there with you. A fun and flashy story that you will want to finish in one sitting |
+| Heir of Fire         | Sarah J Maas      | 5/5  | What a journey this one is. Contains some of the most memorable moments in the whole series.
+| What I Talk About When I Talk About Running       | Haruki Muarakami      | 3.5/5  | I started running more after reading this, not sure why though.                |
+| Crown of Midnight | Sarah J Maas      | 4.5/5    | Great character development. Things are just getting started!                     |
+| Throne of Glass           | Sarah J Maas        | 4.5/5  | You've got to start somewhere, and this story has some essential moments and serves as the foundation for the series.  |
+|AI For Good            | Juan Ferres and William Weeks        | 4.5/5  | An essential, accessible read for those that want to learn about the bright side of AI.                 |
+</div>

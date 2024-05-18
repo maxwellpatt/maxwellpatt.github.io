@@ -1,1 +1,39 @@
-/* css styles */
+/* Table Styling */
+table.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+table.custom-table th, table.custom-table td {
+  padding: 12px 15px;
+}
+
+table.custom-table thead tr {
+  background-color: #00aaff; /* Sky blue header */
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+table.custom-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+table.custom-table tbody tr:nth-of-type(even) {
+  background-color: #e0f7ff; /* Light sky blue for even rows */
+}
+
+table.custom-table tbody tr:nth-of-type(odd) {
+  background-color: #ffffff; /* White for odd rows */
+}
+
+table.custom-table tbody tr:hover {
+  background-color: #b3e5ff; /* Darker sky blue on hover */
+}
+
+table.custom-table tbody tr:last-of-type {
+  border-bottom: 2px solid #00aaff;
+}

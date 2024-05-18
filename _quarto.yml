@@ -12,6 +12,7 @@ website:
       - about.qmd
       - blog.qmd
       - cooking.qmd
+      - books.qmd
 
 format:
   html:
