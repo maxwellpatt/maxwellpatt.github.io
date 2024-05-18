@@ -7,7 +7,7 @@
     - custom.scss
 ---
 
-![Generated with DALL-E](world.png){width=75%}
+![Generated with DALL-E](world.png){width="75%"}
 
 # Introduction
 
