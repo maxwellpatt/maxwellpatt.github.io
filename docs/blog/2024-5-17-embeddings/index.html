@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2024-5-17-embeddings"</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in docx files</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>post_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">".docx"</span>,</span>
@@ -411,7 +411,8 @@ most likely one was chosen (English 99.28%)</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>glove6b <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"glove6b.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>glove6b <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"glove6b.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
@@ -1024,7 +1025,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
-<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2024-5-17-embeddings"</span>)</span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big"</span>)</span>
 <span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in docx files</span></span>
 <span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a>post_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">".docx"</span>,</span>
@@ -1167,147 +1168,148 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb31-192"><a href="#cb31-192" aria-hidden="true" tabindex="-1"></a>While training custom word embeddings can be valuable for domain-specific tasks, pre-trained embeddings like GloVe (Global Vectors for Word Representation) offer a powerful alternative. These embeddings are trained on massive amounts of text data, capturing a broad range of semantic and syntactic relationships across various domains.</span>
 <span id="cb31-193"><a href="#cb31-193" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-194"><a href="#cb31-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
-<span id="cb31-195"><a href="#cb31-195" aria-hidden="true" tabindex="-1"></a>glove6b <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"glove6b.csv"</span>)</span>
-<span id="cb31-196"><a href="#cb31-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-197"><a href="#cb31-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-200"><a href="#cb31-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-201"><a href="#cb31-201" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform embeddings to tidy </span></span>
-<span id="cb31-202"><a href="#cb31-202" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="ot">&lt;-</span> glove6b <span class="sc">%&gt;%</span></span>
-<span id="cb31-203"><a href="#cb31-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"d"</span>),</span>
-<span id="cb31-204"><a href="#cb31-204" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"dimension"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb31-205"><a href="#cb31-205" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">item1 =</span> token)</span>
-<span id="cb31-206"><a href="#cb31-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-207"><a href="#cb31-207" aria-hidden="true" tabindex="-1"></a><span class="co"># Build nn func to get similar words</span></span>
-<span id="cb31-208"><a href="#cb31-208" aria-hidden="true" tabindex="-1"></a>nearest_neighbors <span class="ot">&lt;-</span> <span class="cf">function</span>(df, token) {</span>
-<span id="cb31-209"><a href="#cb31-209" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
-<span id="cb31-210"><a href="#cb31-210" aria-hidden="true" tabindex="-1"></a>    <span class="fu">widely</span>(</span>
-<span id="cb31-211"><a href="#cb31-211" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> {</span>
-<span id="cb31-212"><a href="#cb31-212" aria-hidden="true" tabindex="-1"></a>        y <span class="ot">&lt;-</span> .[<span class="fu">rep</span>(token, <span class="fu">nrow</span>(.)), ]</span>
-<span id="cb31-213"><a href="#cb31-213" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(. <span class="sc">*</span> y) <span class="sc">/</span> </span>
-<span id="cb31-214"><a href="#cb31-214" aria-hidden="true" tabindex="-1"></a>          (<span class="fu">sqrt</span>(<span class="fu">rowSums</span>(. <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(.[token, ] <span class="sc">^</span> <span class="dv">2</span>)))</span>
-<span id="cb31-215"><a href="#cb31-215" aria-hidden="true" tabindex="-1"></a>        <span class="fu">matrix</span>(res, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">names</span>(res)))</span>
-<span id="cb31-216"><a href="#cb31-216" aria-hidden="true" tabindex="-1"></a>      },</span>
-<span id="cb31-217"><a href="#cb31-217" aria-hidden="true" tabindex="-1"></a>      <span class="at">sort =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb31-218"><a href="#cb31-218" aria-hidden="true" tabindex="-1"></a>      <span class="at">maximum_size =</span> <span class="cn">NULL</span></span>
-<span id="cb31-219"><a href="#cb31-219" aria-hidden="true" tabindex="-1"></a>    )(item1, dimension, value) <span class="sc">%&gt;%</span></span>
-<span id="cb31-220"><a href="#cb31-220" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>item2)</span>
-<span id="cb31-221"><a href="#cb31-221" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb31-222"><a href="#cb31-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-223"><a href="#cb31-223" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="sc">%&gt;%</span> <span class="fu">nearest_neighbors</span>(<span class="st">"energy"</span>)</span>
-<span id="cb31-224"><a href="#cb31-224" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="sc">%&gt;%</span> <span class="fu">nearest_neighbors</span>(<span class="st">"disadvantaged"</span>)</span>
-<span id="cb31-225"><a href="#cb31-225" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="sc">%&gt;%</span> <span class="fu">nearest_neighbors</span>(<span class="st">"law"</span>)</span>
-<span id="cb31-226"><a href="#cb31-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-227"><a href="#cb31-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-230"><a href="#cb31-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-231"><a href="#cb31-231" aria-hidden="true" tabindex="-1"></a><span class="co"># make into a matrix</span></span>
-<span id="cb31-232"><a href="#cb31-232" aria-hidden="true" tabindex="-1"></a>tidy_matrix <span class="ot">&lt;-</span> tidy_glove <span class="sc">%&gt;%</span> </span>
-<span id="cb31-233"><a href="#cb31-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_sparse</span>(item1, dimension, value)</span>
-<span id="cb31-234"><a href="#cb31-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-235"><a href="#cb31-235" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any na values with 0</span></span>
-<span id="cb31-236"><a href="#cb31-236" aria-hidden="true" tabindex="-1"></a>tidy_matrix<span class="sc">@</span>x[<span class="fu">is.na</span>(tidy_matrix<span class="sc">@</span>x)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb31-237"><a href="#cb31-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-238"><a href="#cb31-238" aria-hidden="true" tabindex="-1"></a><span class="co"># perform decomposition</span></span>
-<span id="cb31-239"><a href="#cb31-239" aria-hidden="true" tabindex="-1"></a>tidy_svd <span class="ot">&lt;-</span><span class="fu">svd</span>(tidy_matrix)</span>
-<span id="cb31-240"><a href="#cb31-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-241"><a href="#cb31-241" aria-hidden="true" tabindex="-1"></a><span class="co"># set the row names</span></span>
-<span id="cb31-242"><a href="#cb31-242" aria-hidden="true" tabindex="-1"></a>word_vectors <span class="ot">&lt;-</span> tidy_svd<span class="sc">$</span>u</span>
-<span id="cb31-243"><a href="#cb31-243" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(word_vectors) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tidy_matrix)</span>
-<span id="cb31-244"><a href="#cb31-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-245"><a href="#cb31-245" aria-hidden="true" tabindex="-1"></a><span class="co"># write out equation</span></span>
-<span id="cb31-246"><a href="#cb31-246" aria-hidden="true" tabindex="-1"></a>equation <span class="ot">&lt;-</span> word_vectors[<span class="st">"berlin"</span>,] <span class="sc">-</span> word_vectors[<span class="st">"germany"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"france"</span>,]</span>
-<span id="cb31-247"><a href="#cb31-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-248"><a href="#cb31-248" aria-hidden="true" tabindex="-1"></a><span class="co"># find the most related words</span></span>
-<span id="cb31-249"><a href="#cb31-249" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(<span class="at">word_vectors =</span> word_vectors,</span>
-<span id="cb31-250"><a href="#cb31-250" aria-hidden="true" tabindex="-1"></a>                       <span class="at">selected_vector =</span> equation, <span class="co"># select specific word vector</span></span>
-<span id="cb31-251"><a href="#cb31-251" aria-hidden="true" tabindex="-1"></a>                       <span class="at">original_word =</span> <span class="st">""</span>)</span>
-<span id="cb31-252"><a href="#cb31-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-253"><a href="#cb31-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-256"><a href="#cb31-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-257"><a href="#cb31-257" aria-hidden="true" tabindex="-1"></a><span class="co"># make into a matrix</span></span>
-<span id="cb31-258"><a href="#cb31-258" aria-hidden="true" tabindex="-1"></a>tidy_matrix <span class="ot">&lt;-</span> tidy_glove <span class="sc">%&gt;%</span> </span>
-<span id="cb31-259"><a href="#cb31-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_sparse</span>(item1, dimension, value)</span>
-<span id="cb31-260"><a href="#cb31-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-261"><a href="#cb31-261" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any na values with 0</span></span>
-<span id="cb31-262"><a href="#cb31-262" aria-hidden="true" tabindex="-1"></a>tidy_matrix<span class="sc">@</span>x[<span class="fu">is.na</span>(tidy_matrix<span class="sc">@</span>x)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb31-263"><a href="#cb31-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-264"><a href="#cb31-264" aria-hidden="true" tabindex="-1"></a><span class="co"># perform decomposition</span></span>
-<span id="cb31-265"><a href="#cb31-265" aria-hidden="true" tabindex="-1"></a>tidy_svd <span class="ot">&lt;-</span><span class="fu">svd</span>(tidy_matrix)</span>
-<span id="cb31-266"><a href="#cb31-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-267"><a href="#cb31-267" aria-hidden="true" tabindex="-1"></a><span class="co"># set the row names</span></span>
-<span id="cb31-268"><a href="#cb31-268" aria-hidden="true" tabindex="-1"></a>word_vectors <span class="ot">&lt;-</span> tidy_svd<span class="sc">$</span>u</span>
-<span id="cb31-269"><a href="#cb31-269" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(word_vectors) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tidy_matrix)</span>
-<span id="cb31-270"><a href="#cb31-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-271"><a href="#cb31-271" aria-hidden="true" tabindex="-1"></a><span class="co"># write out equation</span></span>
-<span id="cb31-272"><a href="#cb31-272" aria-hidden="true" tabindex="-1"></a>equation <span class="ot">&lt;-</span> word_vectors[<span class="st">"berlin"</span>,] <span class="sc">-</span> word_vectors[<span class="st">"germany"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"france"</span>,]</span>
-<span id="cb31-273"><a href="#cb31-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-274"><a href="#cb31-274" aria-hidden="true" tabindex="-1"></a><span class="co"># find the most related words</span></span>
-<span id="cb31-275"><a href="#cb31-275" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(<span class="at">word_vectors =</span> word_vectors,</span>
-<span id="cb31-276"><a href="#cb31-276" aria-hidden="true" tabindex="-1"></a>                       <span class="at">selected_vector =</span> equation, <span class="co"># select specific word vector</span></span>
-<span id="cb31-277"><a href="#cb31-277" aria-hidden="true" tabindex="-1"></a>                       <span class="at">original_word =</span> <span class="st">""</span>)</span>
-<span id="cb31-278"><a href="#cb31-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-279"><a href="#cb31-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-195"><a href="#cb31-195" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big"</span>)</span>
+<span id="cb31-196"><a href="#cb31-196" aria-hidden="true" tabindex="-1"></a>glove6b <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"glove6b.csv"</span>)</span>
+<span id="cb31-197"><a href="#cb31-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-198"><a href="#cb31-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-201"><a href="#cb31-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-202"><a href="#cb31-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform embeddings to tidy </span></span>
+<span id="cb31-203"><a href="#cb31-203" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="ot">&lt;-</span> glove6b <span class="sc">%&gt;%</span></span>
+<span id="cb31-204"><a href="#cb31-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"d"</span>),</span>
+<span id="cb31-205"><a href="#cb31-205" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"dimension"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-206"><a href="#cb31-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">item1 =</span> token)</span>
+<span id="cb31-207"><a href="#cb31-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-208"><a href="#cb31-208" aria-hidden="true" tabindex="-1"></a><span class="co"># Build nn func to get similar words</span></span>
+<span id="cb31-209"><a href="#cb31-209" aria-hidden="true" tabindex="-1"></a>nearest_neighbors <span class="ot">&lt;-</span> <span class="cf">function</span>(df, token) {</span>
+<span id="cb31-210"><a href="#cb31-210" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span></span>
+<span id="cb31-211"><a href="#cb31-211" aria-hidden="true" tabindex="-1"></a>    <span class="fu">widely</span>(</span>
+<span id="cb31-212"><a href="#cb31-212" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> {</span>
+<span id="cb31-213"><a href="#cb31-213" aria-hidden="true" tabindex="-1"></a>        y <span class="ot">&lt;-</span> .[<span class="fu">rep</span>(token, <span class="fu">nrow</span>(.)), ]</span>
+<span id="cb31-214"><a href="#cb31-214" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(. <span class="sc">*</span> y) <span class="sc">/</span> </span>
+<span id="cb31-215"><a href="#cb31-215" aria-hidden="true" tabindex="-1"></a>          (<span class="fu">sqrt</span>(<span class="fu">rowSums</span>(. <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(.[token, ] <span class="sc">^</span> <span class="dv">2</span>)))</span>
+<span id="cb31-216"><a href="#cb31-216" aria-hidden="true" tabindex="-1"></a>        <span class="fu">matrix</span>(res, <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">names</span>(res)))</span>
+<span id="cb31-217"><a href="#cb31-217" aria-hidden="true" tabindex="-1"></a>      },</span>
+<span id="cb31-218"><a href="#cb31-218" aria-hidden="true" tabindex="-1"></a>      <span class="at">sort =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-219"><a href="#cb31-219" aria-hidden="true" tabindex="-1"></a>      <span class="at">maximum_size =</span> <span class="cn">NULL</span></span>
+<span id="cb31-220"><a href="#cb31-220" aria-hidden="true" tabindex="-1"></a>    )(item1, dimension, value) <span class="sc">%&gt;%</span></span>
+<span id="cb31-221"><a href="#cb31-221" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>item2)</span>
+<span id="cb31-222"><a href="#cb31-222" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb31-223"><a href="#cb31-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-224"><a href="#cb31-224" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="sc">%&gt;%</span> <span class="fu">nearest_neighbors</span>(<span class="st">"energy"</span>)</span>
+<span id="cb31-225"><a href="#cb31-225" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="sc">%&gt;%</span> <span class="fu">nearest_neighbors</span>(<span class="st">"disadvantaged"</span>)</span>
+<span id="cb31-226"><a href="#cb31-226" aria-hidden="true" tabindex="-1"></a>tidy_glove <span class="sc">%&gt;%</span> <span class="fu">nearest_neighbors</span>(<span class="st">"law"</span>)</span>
+<span id="cb31-227"><a href="#cb31-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-228"><a href="#cb31-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-231"><a href="#cb31-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-232"><a href="#cb31-232" aria-hidden="true" tabindex="-1"></a><span class="co"># make into a matrix</span></span>
+<span id="cb31-233"><a href="#cb31-233" aria-hidden="true" tabindex="-1"></a>tidy_matrix <span class="ot">&lt;-</span> tidy_glove <span class="sc">%&gt;%</span> </span>
+<span id="cb31-234"><a href="#cb31-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_sparse</span>(item1, dimension, value)</span>
+<span id="cb31-235"><a href="#cb31-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-236"><a href="#cb31-236" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any na values with 0</span></span>
+<span id="cb31-237"><a href="#cb31-237" aria-hidden="true" tabindex="-1"></a>tidy_matrix<span class="sc">@</span>x[<span class="fu">is.na</span>(tidy_matrix<span class="sc">@</span>x)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb31-238"><a href="#cb31-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-239"><a href="#cb31-239" aria-hidden="true" tabindex="-1"></a><span class="co"># perform decomposition</span></span>
+<span id="cb31-240"><a href="#cb31-240" aria-hidden="true" tabindex="-1"></a>tidy_svd <span class="ot">&lt;-</span><span class="fu">svd</span>(tidy_matrix)</span>
+<span id="cb31-241"><a href="#cb31-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-242"><a href="#cb31-242" aria-hidden="true" tabindex="-1"></a><span class="co"># set the row names</span></span>
+<span id="cb31-243"><a href="#cb31-243" aria-hidden="true" tabindex="-1"></a>word_vectors <span class="ot">&lt;-</span> tidy_svd<span class="sc">$</span>u</span>
+<span id="cb31-244"><a href="#cb31-244" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(word_vectors) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tidy_matrix)</span>
+<span id="cb31-245"><a href="#cb31-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-246"><a href="#cb31-246" aria-hidden="true" tabindex="-1"></a><span class="co"># write out equation</span></span>
+<span id="cb31-247"><a href="#cb31-247" aria-hidden="true" tabindex="-1"></a>equation <span class="ot">&lt;-</span> word_vectors[<span class="st">"berlin"</span>,] <span class="sc">-</span> word_vectors[<span class="st">"germany"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"france"</span>,]</span>
+<span id="cb31-248"><a href="#cb31-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-249"><a href="#cb31-249" aria-hidden="true" tabindex="-1"></a><span class="co"># find the most related words</span></span>
+<span id="cb31-250"><a href="#cb31-250" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(<span class="at">word_vectors =</span> word_vectors,</span>
+<span id="cb31-251"><a href="#cb31-251" aria-hidden="true" tabindex="-1"></a>                       <span class="at">selected_vector =</span> equation, <span class="co"># select specific word vector</span></span>
+<span id="cb31-252"><a href="#cb31-252" aria-hidden="true" tabindex="-1"></a>                       <span class="at">original_word =</span> <span class="st">""</span>)</span>
+<span id="cb31-253"><a href="#cb31-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-254"><a href="#cb31-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-257"><a href="#cb31-257" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-258"><a href="#cb31-258" aria-hidden="true" tabindex="-1"></a><span class="co"># make into a matrix</span></span>
+<span id="cb31-259"><a href="#cb31-259" aria-hidden="true" tabindex="-1"></a>tidy_matrix <span class="ot">&lt;-</span> tidy_glove <span class="sc">%&gt;%</span> </span>
+<span id="cb31-260"><a href="#cb31-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_sparse</span>(item1, dimension, value)</span>
+<span id="cb31-261"><a href="#cb31-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-262"><a href="#cb31-262" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any na values with 0</span></span>
+<span id="cb31-263"><a href="#cb31-263" aria-hidden="true" tabindex="-1"></a>tidy_matrix<span class="sc">@</span>x[<span class="fu">is.na</span>(tidy_matrix<span class="sc">@</span>x)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb31-264"><a href="#cb31-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-265"><a href="#cb31-265" aria-hidden="true" tabindex="-1"></a><span class="co"># perform decomposition</span></span>
+<span id="cb31-266"><a href="#cb31-266" aria-hidden="true" tabindex="-1"></a>tidy_svd <span class="ot">&lt;-</span><span class="fu">svd</span>(tidy_matrix)</span>
+<span id="cb31-267"><a href="#cb31-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-268"><a href="#cb31-268" aria-hidden="true" tabindex="-1"></a><span class="co"># set the row names</span></span>
+<span id="cb31-269"><a href="#cb31-269" aria-hidden="true" tabindex="-1"></a>word_vectors <span class="ot">&lt;-</span> tidy_svd<span class="sc">$</span>u</span>
+<span id="cb31-270"><a href="#cb31-270" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(word_vectors) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tidy_matrix)</span>
+<span id="cb31-271"><a href="#cb31-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-272"><a href="#cb31-272" aria-hidden="true" tabindex="-1"></a><span class="co"># write out equation</span></span>
+<span id="cb31-273"><a href="#cb31-273" aria-hidden="true" tabindex="-1"></a>equation <span class="ot">&lt;-</span> word_vectors[<span class="st">"berlin"</span>,] <span class="sc">-</span> word_vectors[<span class="st">"germany"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"france"</span>,]</span>
+<span id="cb31-274"><a href="#cb31-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-275"><a href="#cb31-275" aria-hidden="true" tabindex="-1"></a><span class="co"># find the most related words</span></span>
+<span id="cb31-276"><a href="#cb31-276" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(<span class="at">word_vectors =</span> word_vectors,</span>
+<span id="cb31-277"><a href="#cb31-277" aria-hidden="true" tabindex="-1"></a>                       <span class="at">selected_vector =</span> equation, <span class="co"># select specific word vector</span></span>
+<span id="cb31-278"><a href="#cb31-278" aria-hidden="true" tabindex="-1"></a>                       <span class="at">original_word =</span> <span class="st">""</span>)</span>
+<span id="cb31-279"><a href="#cb31-279" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb31-280"><a href="#cb31-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-281"><a href="#cb31-281" aria-hidden="true" tabindex="-1"></a>A fun little example is given here with Berlin - Germany + France. Are you surprised by the results of this word math?</span>
-<span id="cb31-282"><a href="#cb31-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-283"><a href="#cb31-283" aria-hidden="true" tabindex="-1"></a>In the analysis here, we explore the GloVe embeddings and compare them to our custom embeddings. We perform similar analyses, such as finding semantically similar words and conducting word math operations, using the GloVe embeddings. The results highlight similarities and differences between the custom and pre-trained embeddings. While the GloVe embeddings capture more general relationships, they may lack some of the nuances and domain-specific associations present in the custom embeddings trained on the Kern County oil news corpus.</span>
-<span id="cb31-284"><a href="#cb31-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-281"><a href="#cb31-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-282"><a href="#cb31-282" aria-hidden="true" tabindex="-1"></a>A fun little example is given here with Berlin - Germany + France. Are you surprised by the results of this word math?</span>
+<span id="cb31-283"><a href="#cb31-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-284"><a href="#cb31-284" aria-hidden="true" tabindex="-1"></a>In the analysis here, we explore the GloVe embeddings and compare them to our custom embeddings. We perform similar analyses, such as finding semantically similar words and conducting word math operations, using the GloVe embeddings. The results highlight similarities and differences between the custom and pre-trained embeddings. While the GloVe embeddings capture more general relationships, they may lack some of the nuances and domain-specific associations present in the custom embeddings trained on the Kern County oil news corpus.</span>
 <span id="cb31-285"><a href="#cb31-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-286"><a href="#cb31-286" aria-hidden="true" tabindex="-1"></a><span class="fu"># Comparing Custom and Pretrained Embeddings</span></span>
-<span id="cb31-287"><a href="#cb31-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-288"><a href="#cb31-288" aria-hidden="true" tabindex="-1"></a>By comparing the results obtained from our custom word embeddings and the pre-trained GloVe embeddings, we can gain insights into the strengths and limitations of each approach. Custom embeddings, trained on domain-specific data, tend to capture more nuanced and contextual relationships relevant to the specific domain. In our case, the custom embeddings trained on the Kern County oil news corpus reflect the language and concepts related to the oil industry, environmental concerns, and local issues.</span>
-<span id="cb31-289"><a href="#cb31-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-290"><a href="#cb31-290" aria-hidden="true" tabindex="-1"></a>The choice between custom and pre-trained embeddings ultimately depends on the specific task and requirements. For domain-specific applications where capturing nuanced relationships is crucial, custom embeddings may be more appropriate. However, for more general NLP tasks or when computational resources are limited, pre-trained embeddings can offer a powerful and efficient solution.</span>
-<span id="cb31-291"><a href="#cb31-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-294"><a href="#cb31-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-295"><a href="#cb31-295" aria-hidden="true" tabindex="-1"></a><span class="co"># Find synonyms using GloVe embeddings</span></span>
-<span id="cb31-296"><a href="#cb31-296" aria-hidden="true" tabindex="-1"></a>energy_synonyms_glove <span class="ot">&lt;-</span> <span class="fu">search_synonyms</span>(word_vectors, word_vectors[<span class="st">"energy"</span>,], <span class="st">"energy"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb31-297"><a href="#cb31-297" aria-hidden="true" tabindex="-1"></a>disad_synonyms_glove <span class="ot">&lt;-</span> <span class="fu">search_synonyms</span>(word_vectors, word_vectors[<span class="st">"disadvantaged"</span>,], <span class="st">"disadvantaged"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb31-298"><a href="#cb31-298" aria-hidden="true" tabindex="-1"></a>law_synonyms_glove <span class="ot">&lt;-</span> <span class="fu">search_synonyms</span>(word_vectors, word_vectors[<span class="st">"law"</span>,], <span class="st">"law"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb31-299"><a href="#cb31-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-300"><a href="#cb31-300" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the results</span></span>
-<span id="cb31-301"><a href="#cb31-301" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb31-302"><a href="#cb31-302" aria-hidden="true" tabindex="-1"></a>  energy_synonyms_glove <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">target_word =</span> <span class="st">"energy"</span>),</span>
-<span id="cb31-303"><a href="#cb31-303" aria-hidden="true" tabindex="-1"></a>  disad_synonyms_glove <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">target_word =</span> <span class="st">"disadvantaged"</span>),</span>
-<span id="cb31-304"><a href="#cb31-304" aria-hidden="true" tabindex="-1"></a>  law_synonyms_glove <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">target_word =</span> <span class="st">"law"</span>)</span>
-<span id="cb31-305"><a href="#cb31-305" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb31-306"><a href="#cb31-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(target_word) <span class="sc">%&gt;%</span></span>
-<span id="cb31-307"><a href="#cb31-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, similarity) <span class="sc">%&gt;%</span></span>
-<span id="cb31-308"><a href="#cb31-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb31-309"><a href="#cb31-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">token =</span> <span class="fu">reorder_within</span>(token, similarity, target_word)) <span class="sc">%&gt;%</span></span>
-<span id="cb31-310"><a href="#cb31-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(token, similarity, <span class="at">fill =</span> target_word)) <span class="sc">+</span></span>
-<span id="cb31-311"><a href="#cb31-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb31-312"><a href="#cb31-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> target_word, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb31-313"><a href="#cb31-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb31-314"><a href="#cb31-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reordered</span>() <span class="sc">+</span></span>
-<span id="cb31-315"><a href="#cb31-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Similarity"</span>)</span>
-<span id="cb31-316"><a href="#cb31-316" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-317"><a href="#cb31-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-320"><a href="#cb31-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-321"><a href="#cb31-321" aria-hidden="true" tabindex="-1"></a><span class="co"># Word math equations with GloVe embeddings</span></span>
-<span id="cb31-322"><a href="#cb31-322" aria-hidden="true" tabindex="-1"></a>energy_disad_glove <span class="ot">&lt;-</span> word_vectors[<span class="st">"water"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"resources"</span>,]</span>
-<span id="cb31-323"><a href="#cb31-323" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(word_vectors, energy_disad_glove, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb31-324"><a href="#cb31-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-325"><a href="#cb31-325" aria-hidden="true" tabindex="-1"></a>energy_law_glove <span class="ot">&lt;-</span> word_vectors[<span class="st">"court"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"permitting"</span>,]</span>
-<span id="cb31-326"><a href="#cb31-326" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(word_vectors, energy_law_glove, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb31-327"><a href="#cb31-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-328"><a href="#cb31-328" aria-hidden="true" tabindex="-1"></a>disad_law_glove <span class="ot">&lt;-</span> word_vectors[<span class="st">"disadvantaged"</span>,] <span class="sc">-</span> word_vectors[<span class="st">"health"</span>,]</span>
-<span id="cb31-329"><a href="#cb31-329" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(word_vectors, disad_law_glove, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb31-330"><a href="#cb31-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-331"><a href="#cb31-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-332"><a href="#cb31-332" aria-hidden="true" tabindex="-1"></a>See how these results are similar to what we calculated previously, but the GloVe results are more general and might not be as useful when looking at Kern county in particular.</span>
-<span id="cb31-333"><a href="#cb31-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-286"><a href="#cb31-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-287"><a href="#cb31-287" aria-hidden="true" tabindex="-1"></a><span class="fu"># Comparing Custom and Pretrained Embeddings</span></span>
+<span id="cb31-288"><a href="#cb31-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-289"><a href="#cb31-289" aria-hidden="true" tabindex="-1"></a>By comparing the results obtained from our custom word embeddings and the pre-trained GloVe embeddings, we can gain insights into the strengths and limitations of each approach. Custom embeddings, trained on domain-specific data, tend to capture more nuanced and contextual relationships relevant to the specific domain. In our case, the custom embeddings trained on the Kern County oil news corpus reflect the language and concepts related to the oil industry, environmental concerns, and local issues.</span>
+<span id="cb31-290"><a href="#cb31-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-291"><a href="#cb31-291" aria-hidden="true" tabindex="-1"></a>The choice between custom and pre-trained embeddings ultimately depends on the specific task and requirements. For domain-specific applications where capturing nuanced relationships is crucial, custom embeddings may be more appropriate. However, for more general NLP tasks or when computational resources are limited, pre-trained embeddings can offer a powerful and efficient solution.</span>
+<span id="cb31-292"><a href="#cb31-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-295"><a href="#cb31-295" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-296"><a href="#cb31-296" aria-hidden="true" tabindex="-1"></a><span class="co"># Find synonyms using GloVe embeddings</span></span>
+<span id="cb31-297"><a href="#cb31-297" aria-hidden="true" tabindex="-1"></a>energy_synonyms_glove <span class="ot">&lt;-</span> <span class="fu">search_synonyms</span>(word_vectors, word_vectors[<span class="st">"energy"</span>,], <span class="st">"energy"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb31-298"><a href="#cb31-298" aria-hidden="true" tabindex="-1"></a>disad_synonyms_glove <span class="ot">&lt;-</span> <span class="fu">search_synonyms</span>(word_vectors, word_vectors[<span class="st">"disadvantaged"</span>,], <span class="st">"disadvantaged"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb31-299"><a href="#cb31-299" aria-hidden="true" tabindex="-1"></a>law_synonyms_glove <span class="ot">&lt;-</span> <span class="fu">search_synonyms</span>(word_vectors, word_vectors[<span class="st">"law"</span>,], <span class="st">"law"</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb31-300"><a href="#cb31-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-301"><a href="#cb31-301" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the results</span></span>
+<span id="cb31-302"><a href="#cb31-302" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb31-303"><a href="#cb31-303" aria-hidden="true" tabindex="-1"></a>  energy_synonyms_glove <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">target_word =</span> <span class="st">"energy"</span>),</span>
+<span id="cb31-304"><a href="#cb31-304" aria-hidden="true" tabindex="-1"></a>  disad_synonyms_glove <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">target_word =</span> <span class="st">"disadvantaged"</span>),</span>
+<span id="cb31-305"><a href="#cb31-305" aria-hidden="true" tabindex="-1"></a>  law_synonyms_glove <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">target_word =</span> <span class="st">"law"</span>)</span>
+<span id="cb31-306"><a href="#cb31-306" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-307"><a href="#cb31-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(target_word) <span class="sc">%&gt;%</span></span>
+<span id="cb31-308"><a href="#cb31-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, similarity) <span class="sc">%&gt;%</span></span>
+<span id="cb31-309"><a href="#cb31-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-310"><a href="#cb31-310" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">token =</span> <span class="fu">reorder_within</span>(token, similarity, target_word)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-311"><a href="#cb31-311" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(token, similarity, <span class="at">fill =</span> target_word)) <span class="sc">+</span></span>
+<span id="cb31-312"><a href="#cb31-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb31-313"><a href="#cb31-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> target_word, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb31-314"><a href="#cb31-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb31-315"><a href="#cb31-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reordered</span>() <span class="sc">+</span></span>
+<span id="cb31-316"><a href="#cb31-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Similarity"</span>)</span>
+<span id="cb31-317"><a href="#cb31-317" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-318"><a href="#cb31-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-321"><a href="#cb31-321" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-322"><a href="#cb31-322" aria-hidden="true" tabindex="-1"></a><span class="co"># Word math equations with GloVe embeddings</span></span>
+<span id="cb31-323"><a href="#cb31-323" aria-hidden="true" tabindex="-1"></a>energy_disad_glove <span class="ot">&lt;-</span> word_vectors[<span class="st">"water"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"resources"</span>,]</span>
+<span id="cb31-324"><a href="#cb31-324" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(word_vectors, energy_disad_glove, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb31-325"><a href="#cb31-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-326"><a href="#cb31-326" aria-hidden="true" tabindex="-1"></a>energy_law_glove <span class="ot">&lt;-</span> word_vectors[<span class="st">"court"</span>,] <span class="sc">+</span> word_vectors[<span class="st">"permitting"</span>,]</span>
+<span id="cb31-327"><a href="#cb31-327" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(word_vectors, energy_law_glove, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb31-328"><a href="#cb31-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-329"><a href="#cb31-329" aria-hidden="true" tabindex="-1"></a>disad_law_glove <span class="ot">&lt;-</span> word_vectors[<span class="st">"disadvantaged"</span>,] <span class="sc">-</span> word_vectors[<span class="st">"health"</span>,]</span>
+<span id="cb31-330"><a href="#cb31-330" aria-hidden="true" tabindex="-1"></a><span class="fu">search_synonyms</span>(word_vectors, disad_law_glove, <span class="st">""</span>) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb31-331"><a href="#cb31-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-332"><a href="#cb31-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-333"><a href="#cb31-333" aria-hidden="true" tabindex="-1"></a>See how these results are similar to what we calculated previously, but the GloVe results are more general and might not be as useful when looking at Kern county in particular.</span>
 <span id="cb31-334"><a href="#cb31-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-335"><a href="#cb31-335" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
-<span id="cb31-336"><a href="#cb31-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-337"><a href="#cb31-337" aria-hidden="true" tabindex="-1"></a>Word embeddings have revolutionized the field of natural language processing, enabling machines to understand and process human language with unprecedented accuracy and nuance. By representing words as numerical vectors, word embeddings capture the relationships and contexts in language, creating the lane for advanced language models and a wide range of NLP applications.</span>
-<span id="cb31-338"><a href="#cb31-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-339"><a href="#cb31-339" aria-hidden="true" tabindex="-1"></a>As this analysis has shown, both custom and pre-trained word embeddings can offer valuable insights and capabilities. Custom embeddings, trained on domain-specific data, are able to capture nuanced and contextual relationships relevant to a particular domain, while pre-trained embeddings like GloVe provide a more broad and general representation of language, serving as a powerful foundation for various NLP tasks.</span>
-<span id="cb31-340"><a href="#cb31-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-341"><a href="#cb31-341" aria-hidden="true" tabindex="-1"></a>Looking forward, the future of word embeddings related work is closely tied to the continued advancement of large language models and their applications. As these models become more sophisticated and capable of handling increasingly complex language tasks, the role of word embeddings in capturing linguistic nuances and enabling effective language understanding and generation will become even more important. There are also challenges and constraints to consider. Training high-quality word embeddings requires tons of text data and computational resources, which can be a limiting factor for some applications or domains with limited data availability. Furthermore, word embeddings can struggle to capture certain linguistic phenomena, such as polysemy (words with multiple meanings) and context-dependent word senses.</span>
-<span id="cb31-342"><a href="#cb31-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-343"><a href="#cb31-343" aria-hidden="true" tabindex="-1"></a>To address these challenges, researchers and practitioners are exploring new techniques and architectures for word representations, such as contextualized word embeddings (e.g. BERT) and transformer-based language models (e.g., GPT-4, DALL-E). These approaches look to capture more nuanced and context-dependent representations of words, further enhancing the ability of machines to understand and generate human-like language.</span>
-<span id="cb31-344"><a href="#cb31-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-345"><a href="#cb31-345" aria-hidden="true" tabindex="-1"></a>As the field of natural language processing continues to grow and evolve, word embeddings will remain a fundamental building block by enabling machines to "understand" and communicate with humans in increasingly nuanced ways. The future of word embeddings really lies in their continued refinement, integration with advanced language models, and adaptation to new domains and applications, which can lead the charge for more capable language technologies.</span>
+<span id="cb31-335"><a href="#cb31-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-336"><a href="#cb31-336" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
+<span id="cb31-337"><a href="#cb31-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-338"><a href="#cb31-338" aria-hidden="true" tabindex="-1"></a>Word embeddings have revolutionized the field of natural language processing, enabling machines to understand and process human language with unprecedented accuracy and nuance. By representing words as numerical vectors, word embeddings capture the relationships and contexts in language, creating the lane for advanced language models and a wide range of NLP applications.</span>
+<span id="cb31-339"><a href="#cb31-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-340"><a href="#cb31-340" aria-hidden="true" tabindex="-1"></a>As this analysis has shown, both custom and pre-trained word embeddings can offer valuable insights and capabilities. Custom embeddings, trained on domain-specific data, are able to capture nuanced and contextual relationships relevant to a particular domain, while pre-trained embeddings like GloVe provide a more broad and general representation of language, serving as a powerful foundation for various NLP tasks.</span>
+<span id="cb31-341"><a href="#cb31-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-342"><a href="#cb31-342" aria-hidden="true" tabindex="-1"></a>Looking forward, the future of word embeddings related work is closely tied to the continued advancement of large language models and their applications. As these models become more sophisticated and capable of handling increasingly complex language tasks, the role of word embeddings in capturing linguistic nuances and enabling effective language understanding and generation will become even more important. There are also challenges and constraints to consider. Training high-quality word embeddings requires tons of text data and computational resources, which can be a limiting factor for some applications or domains with limited data availability. Furthermore, word embeddings can struggle to capture certain linguistic phenomena, such as polysemy (words with multiple meanings) and context-dependent word senses.</span>
+<span id="cb31-343"><a href="#cb31-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-344"><a href="#cb31-344" aria-hidden="true" tabindex="-1"></a>To address these challenges, researchers and practitioners are exploring new techniques and architectures for word representations, such as contextualized word embeddings (e.g. BERT) and transformer-based language models (e.g., GPT-4, DALL-E). These approaches look to capture more nuanced and context-dependent representations of words, further enhancing the ability of machines to understand and generate human-like language.</span>
+<span id="cb31-345"><a href="#cb31-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-346"><a href="#cb31-346" aria-hidden="true" tabindex="-1"></a>As the field of natural language processing continues to grow and evolve, word embeddings will remain a fundamental building block by enabling machines to "understand" and communicate with humans in increasingly nuanced ways. The future of word embeddings really lies in their continued refinement, integration with advanced language models, and adaptation to new domains and applications, which can lead the charge for more capable language technologies.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
