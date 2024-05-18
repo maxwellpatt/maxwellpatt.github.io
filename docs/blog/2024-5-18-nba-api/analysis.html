@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-preprocessing" class="level1">
 <h1>Data Preprocessing</h1>
-<div class="cell" data-execution_count="194">
+<div class="cell" data-execution_count="208">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nba_api.stats.static <span class="im">import</span> players, teams</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nba_api.stats.endpoints <span class="im">import</span> leaguedashplayerstats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="195">
+<div class="cell" data-execution_count="209">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in fantasy data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fantrax_data <span class="op">=</span> pd.read_csv(<span class="st">"fantrax_05_18_2024.csv"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>fantrax_data[<span class="st">'Fantasy Team'</span>] <span class="op">=</span> fantrax_data[<span class="st">'Fantasy Team'</span>].<span class="bu">map</span>(status_mapping)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that the Fantrax data is cleaned, we can join it with each players stats pulled from the NBA API.</p>
-<div class="cell" data-execution_count="196">
+<div class="cell" data-execution_count="210">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract player names</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>player_names <span class="op">=</span> fantrax_data[<span class="st">'Player'</span>].tolist()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -273,9 +273,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.merge(fantrax_data, player_stats, left_on<span class="op">=</span><span class="st">'Player_ID'</span>, right_on<span class="op">=</span><span class="st">'PLAYER_ID'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check out the data to make sure it looks good.</p>
-<div class="cell" data-execution_count="197">
+<div class="cell" data-execution_count="211">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="197">
+<div class="cell-output cell-output-display" data-execution_count="211">
 <div>
 
 
@@ -579,24 +579,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The data has been merged successfully! Now, let’s perform some data cleaning to filter out players that were not active last season.</p>
-<div class="cell" data-execution_count="198">
+<div class="cell" data-execution_count="212">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>While our league is a points league, where fantasy points are the scoring metric, some leagues are set up as a 9 category format where teams try to win each week based on the 9 main statistical categories.</p>
 <p>The categories are: - Points - Rebounds - Assists - Steals - Blocks - Field goal percentage - Free throw percentage - Three pointers made - Turnovers</p>
 <p>Let’s see where each fantasy teams strengths would be in this format!</p>
-<div class="cell" data-execution_count="199">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns to be used for Z-score calculations</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'PTS'</span>, <span class="st">'REB'</span>, <span class="st">'AST'</span>, <span class="st">'STL'</span>, <span class="st">'BLK'</span>, <span class="st">'FG_PCT'</span>, <span class="st">'FT_PCT'</span>, <span class="st">'FG3M'</span>, <span class="st">'TOV'</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Z-scores for each player in each category</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> categories:</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    df[category <span class="op">+</span> <span class="st">'_Z'</span>] <span class="op">=</span> (df[category] <span class="op">-</span> df[category].mean()) <span class="op">/</span> df[category].std()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate the Z-scores by team</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>team_z_scores <span class="op">=</span> df.groupby(<span class="st">'Fantasy Team'</span>)[[category <span class="op">+</span> <span class="st">'_Z'</span> <span class="cf">for</span> category <span class="kw">in</span> categories]].mean()</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>display(HTML(team_z_scores.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="213">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pd.options.mode.chained_assignment <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns to be used for Z-score calculations</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'PTS'</span>, <span class="st">'REB'</span>, <span class="st">'AST'</span>, <span class="st">'STL'</span>, <span class="st">'BLK'</span>, <span class="st">'FG_PCT'</span>, <span class="st">'FT_PCT'</span>, <span class="st">'FG3M'</span>, <span class="st">'TOV'</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Z-scores for each player in each category</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> categories:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    df[category <span class="op">+</span> <span class="st">'_Z'</span>] <span class="op">=</span> (df[category] <span class="op">-</span> df[category].mean()) <span class="op">/</span> df[category].std()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate the Z-scores by team</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>team_z_scores <span class="op">=</span> df.groupby(<span class="st">'Fantasy Team'</span>)[[category <span class="op">+</span> <span class="st">'_Z'</span> <span class="cf">for</span> category <span class="kw">in</span> categories]].mean()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>display(HTML(team_z_scores.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -604,49 +606,49 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df[category + '_Z'] = (df[category] - df[category].mean()) / df[category].std()
-&lt;ipython-input-199-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
+&lt;ipython-input-213-34b8360b5f12&gt;:6: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -840,7 +842,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <p>By running the simulation 250 times, we can generate a wide range of plausible scenarios. Each simulation will give us a different set of results, and by analyzing these results, we can gain insights into the likelihood of various outcomes.</p>
 <p>For example, let’s say Team A has a higher Z score than Team B in the “points” category. In a single simulation, Team B might win that category due to the randomness factor. However, across 250 simulations, we would expect Team A to win the “points” category more often than Team B.</p>
 <p>Monte Carlo simulations help us account for the complexities and uncertainties in a fantasy basketball season. By embracing randomness and running many simulations, we can better understand the range of possible outcomes and make more informed decisions when managing our fantasy teams.</p>
-<div class="cell" data-execution_count="200">
+<div class="cell" data-execution_count="214">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>team_z_scores <span class="op">=</span> team_z_scores.reset_index()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
@@ -850,11 +852,11 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>num_weeks <span class="op">=</span> <span class="dv">22</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>num_simulations <span class="op">=</span> <span class="dv">250</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="201">
+<div class="cell" data-execution_count="215">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize results df to track wins, losses, and ties</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>results_template <span class="op">=</span> pd.DataFrame(<span class="dv">0</span>, index<span class="op">=</span>teams, columns<span class="op">=</span>[<span class="st">'Wins'</span>, <span class="st">'Losses'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="202">
+<div class="cell" data-execution_count="216">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monte Carlo season simulation</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_season(randomness):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    weekly_results <span class="op">=</span> results_template.copy()</span>
@@ -898,7 +900,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> weekly_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="203">
+<div class="cell" data-execution_count="217">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate season 250 times for each level of randomness</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_multiple_seasons(randomness, num_simulations):</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    all_simulation_results <span class="op">=</span> []</span>
@@ -916,7 +918,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> average_results, all_simulation_results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that the Monte Carlo simulation functions have been set up, we can run the simulation 250 times.</p>
-<div class="cell" data-execution_count="204">
+<div class="cell" data-execution_count="218">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the simulations</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>final_results <span class="op">=</span> {}</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>simulation_results <span class="op">=</span> {}</span>
@@ -926,7 +928,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    final_results[level] <span class="op">=</span> avg_results</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    simulation_results[level] <span class="op">=</span> all_results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="205">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the final averaged results for each randomness level into a single DataFrame</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>results_table <span class="op">=</span> pd.concat(final_results, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>results_table.columns <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> Randomness'</span> <span class="cf">for</span> level <span class="kw">in</span> results_table.columns.get_level_values(<span class="dv">0</span>)]</span>
@@ -1022,10 +1024,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="206">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate win percentages (number of wins divided by 22)</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>games_played <span class="op">=</span> num_weeks  <span class="co"># Each team plays 22 games</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>win_percentages <span class="op">=</span> results_table_sorted <span class="op">/</span> games_played <span class="op">*</span> <span class="dv">250</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>win_percentages <span class="op">=</span> results_table_sorted <span class="op">/</span> games_played <span class="op">*</span> <span class="dv">100</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>win_percentages.columns <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> Win %'</span> <span class="cf">for</span> col <span class="kw">in</span> win_percentages.columns]</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the win percentage table</span></span>
@@ -1122,7 +1124,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <section id="plotting-team-outcomes" class="level1">
 <h1>Plotting Team Outcomes</h1>
 <p>Now let’s visualize the results by showing the win distribution for each team under each randomness scenario.</p>
-<div class="cell" data-execution_count="207">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team <span class="kw">in</span> teams:</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(randomness_levels), figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f'Number of Wins Distribution for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> (250 Simulations)'</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
