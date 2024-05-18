@@ -51,7 +51,7 @@ $$N_{t+1} = N_{t} + f(N_{t},P_{t}) - L(N_{t})$$ In this equation, $Nt$ is the am
 
 In order to estimate the parameters of this model, or in other words the function $f$ and the rate of nitrogen loss $L$, we can implement the MCMC method. First, we need to define prior distributions based on historical data and knowledge of the system we are working in. Once this data has been collected, we can use MCMC to sample from the posterior distribution of the parameters. For example, we could set up the following prior distributions
 
-$$f(N_{t}, P_{t} = N(\mu_{f}, \sigma_{f})$$ $$L(N_t) = e^{\lambda}$$
+$$f(N_{t}, P_{t}) = N(\mu_{f}, \sigma_{f})$$ $$L(N_t) = e^{\lambda}$$
 
 where $\mu_{f}$ and $\sigma_{f}$ are the mean and standard deviation of the distribution of nitrogen inputs, and lambda is the rate for the exponential distribution of nitrogen loss. Then, we can use MCMC to sample from the joint posterior distribution of $f$ and $L$, given the data we have on soil nitrogen at different times. By sampling from this distribution, we could estimate the parameters of the model and make predictions about future soil nitrogen levels based on the implemented regenerative management practices. It is important to note that this model is certainly an oversimplification of the model that would be used in practice. While this can certainly be an effective way to determine the effects of regenerative practices, let’s now consider how neural networks can be used to analyze this same problem.
 
