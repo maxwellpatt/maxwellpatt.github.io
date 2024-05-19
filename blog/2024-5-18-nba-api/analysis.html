@@ -193,6 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#monte-carlo-simulation" id="toc-monte-carlo-simulation" class="nav-link" data-scroll-target="#monte-carlo-simulation">Monte Carlo Simulation</a></li>
   <li><a href="#plotting-team-outcomes" id="toc-plotting-team-outcomes" class="nav-link" data-scroll-target="#plotting-team-outcomes">Plotting Team Outcomes</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#bonus-points-analysis" id="toc-bonus-points-analysis" class="nav-link" data-scroll-target="#bonus-points-analysis">Bonus: Points Analysis</a></li>
   </ul>
 </nav>
     </div>
@@ -1095,6 +1096,396 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
 <p>In our analysis, we utilized Monte Carlo simulations to project the outcomes of a fantasy basketball season under different levels of randomness. By running 250 simulations for each level of randomness — low, medium, and high — we were able to model the inherent variability in team performances. This approach not only allowed us to see which teams are likely to excel consistently but also highlighted how randomness can impact the overall season. The histograms generated for each team showed the distribution of their wins across simulations, providing a visual representation of their performance stability.</p>
+</section>
+<section id="bonus-points-analysis" class="level1">
+<h1>Bonus: Points Analysis</h1>
+<p>I’ve also created the same workflow, but for points instead of 9-CAT since this the scoring of my fintasy league</p>
+<div class="cell" data-execution_count="321">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pd.options.mode.chained_assignment <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate "percent started" based on player ranking within each fantasy team</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Rank'</span>] <span class="op">=</span> df.groupby(<span class="st">'Fantasy Team'</span>)[<span class="st">'FP/G'</span>].rank(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Percent Started'</span>] <span class="op">=</span> df[<span class="st">'Rank'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">&lt;=</span> <span class="dv">10</span> <span class="cf">else</span> <span class="fl">0.5</span> <span class="cf">if</span> x <span class="op">&lt;=</span> <span class="dv">15</span> <span class="cf">else</span> <span class="fl">0.25</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>teams <span class="op">=</span> df[<span class="st">'Fantasy Team'</span>].unique()</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>randomness_levels <span class="op">=</span> {<span class="st">'low'</span>: <span class="fl">0.2</span>, <span class="st">'medium'</span>: <span class="fl">0.4</span>, <span class="st">'high'</span>: <span class="fl">0.6</span>}</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>num_weeks <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>num_simulations <span class="op">=</span> <span class="dv">250</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize results df to track wins and losses</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>results_template <span class="op">=</span> pd.DataFrame(<span class="dv">0</span>, index<span class="op">=</span>teams, columns<span class="op">=</span>[<span class="st">'Wins'</span>, <span class="st">'Losses'</span>])</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_season_fp(randomness):</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    weekly_results <span class="op">=</span> results_template.copy()</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a schedule where each team plays every other team twice</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    matchups <span class="op">=</span> <span class="bu">list</span>(combinations(teams, <span class="dv">2</span>)) <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    random.shuffle(matchups)  <span class="co"># Randomize the order of matchups</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Distribute matchups across 22 weeks</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    weeks <span class="op">=</span> [matchups[i:i <span class="op">+</span> <span class="bu">len</span>(teams)<span class="op">//</span><span class="dv">2</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(matchups), <span class="bu">len</span>(teams)<span class="op">//</span><span class="dv">2</span>)]</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> week <span class="kw">in</span> weeks:</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> team1, team2 <span class="kw">in</span> week:</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>            team1_players <span class="op">=</span> df[df[<span class="st">'Fantasy Team'</span>] <span class="op">==</span> team1]</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>            team2_players <span class="op">=</span> df[df[<span class="st">'Fantasy Team'</span>] <span class="op">==</span> team2]</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>            team1_fp <span class="op">=</span> (team1_players[<span class="st">'FP/G'</span>] <span class="op">*</span> team1_players[<span class="st">'Percent Started'</span>]).<span class="bu">sum</span>()</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>            team2_fp <span class="op">=</span> (team2_players[<span class="st">'FP/G'</span>] <span class="op">*</span> team2_players[<span class="st">'Percent Started'</span>]).<span class="bu">sum</span>()</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>            team1_fp <span class="op">+=</span> np.random.normal(<span class="dv">0</span>, randomness <span class="op">*</span> <span class="bu">abs</span>(team1_fp))</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>            team2_fp <span class="op">+=</span> np.random.normal(<span class="dv">0</span>, randomness <span class="op">*</span> <span class="bu">abs</span>(team2_fp))</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> team1_fp <span class="op">&gt;</span> team2_fp:</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team1, <span class="st">'Wins'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team2, <span class="st">'Losses'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> team1_fp <span class="op">&lt;</span> team2_fp:</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team1, <span class="st">'Losses'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>                weekly_results.at[team2, <span class="st">'Wins'</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> weekly_results</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_multiple_seasons_fp(randomness, num_simulations):</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>    cumulative_results <span class="op">=</span> pd.DataFrame(<span class="dv">0</span>, index<span class="op">=</span>teams, columns<span class="op">=</span>[<span class="st">'Wins'</span>, <span class="st">'Losses'</span>])</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    all_simulation_results <span class="op">=</span> []</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_simulations):</span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>        season_results <span class="op">=</span> simulate_season_fp(randomness)</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>        cumulative_results <span class="op">+=</span> season_results</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>        all_simulation_results.append(season_results[<span class="st">'Wins'</span>].copy())</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate average results</span></span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>    average_results <span class="op">=</span> cumulative_results <span class="op">/</span> num_simulations</span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> average_results, pd.concat(all_simulation_results, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the simulations</span></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>final_results_fp <span class="op">=</span> {}</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>simulation_results_fp <span class="op">=</span> {}</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> level, randomness <span class="kw">in</span> randomness_levels.items():</span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>    avg_results_fp, all_results_df_fp <span class="op">=</span> simulate_multiple_seasons_fp(randomness, num_simulations)</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>    final_results_fp[level] <span class="op">=</span> avg_results_fp</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>    simulation_results_fp[level] <span class="op">=</span> all_results_df_fp</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine results ensuring unique column names</span></span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>results_table_fp <span class="op">=</span> pd.concat(final_results_fp, axis<span class="op">=</span><span class="dv">1</span>, keys<span class="op">=</span>randomness_levels.keys())</span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>results_table_fp.columns <span class="op">=</span> [<span class="st">' '</span>.join(col).strip() <span class="cf">for</span> col <span class="kw">in</span> results_table_fp.columns.values]</span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the table by 'low Wins' in descending order</span></span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>results_table_sorted_fp <span class="op">=</span> results_table_fp.sort_values(by<span class="op">=</span><span class="st">'low Wins'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a>display(HTML(results_table_sorted_fp.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate win percentages (number of wins divided by 22)</span></span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>win_percentages_fp <span class="op">=</span> results_table_sorted_fp <span class="op">/</span> num_weeks <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>win_percentages_fp.columns <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> Win %'</span> <span class="cf">for</span> col <span class="kw">in</span> win_percentages_fp.columns]</span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the win percentage table</span></span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>display(HTML(win_percentages_fp.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histograms for the number of wins for each team in each simulation for each level of randomness</span></span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team <span class="kw">in</span> teams:</span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(randomness_levels), figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f'Number of Wins Distribution for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> (250 Simulations)'</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (level, results_df_fp) <span class="kw">in</span> <span class="bu">enumerate</span>(simulation_results_fp.items()):</span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>        axes[col].hist(results_df_fp.loc[team], bins<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>        axes[col].set_title(<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> Randomness'</span>, fontsize<span class="op">=</span><span class="dv">18</span>)</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>        axes[col].set_xlabel(<span class="st">'Number of Wins'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>        axes[col].tick_params(axis<span class="op">=</span><span class="st">'both'</span>, which<span class="op">=</span><span class="st">'major'</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>            axes[col].set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">low Wins</th>
+<th data-quarto-table-cell-role="th">low Losses</th>
+<th data-quarto-table-cell-role="th">medium Wins</th>
+<th data-quarto-table-cell-role="th">medium Losses</th>
+<th data-quarto-table-cell-role="th">high Wins</th>
+<th data-quarto-table-cell-role="th">high Losses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bikini Bottom</td>
+<td>15.94</td>
+<td>6.06</td>
+<td>13.80</td>
+<td>8.20</td>
+<td>12.93</td>
+<td>9.07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Malibu</td>
+<td>15.05</td>
+<td>6.95</td>
+<td>13.08</td>
+<td>8.92</td>
+<td>12.75</td>
+<td>9.25</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Winterfell</td>
+<td>13.55</td>
+<td>8.45</td>
+<td>12.13</td>
+<td>9.87</td>
+<td>12.07</td>
+<td>9.93</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cream City</td>
+<td>12.94</td>
+<td>9.06</td>
+<td>12.13</td>
+<td>9.87</td>
+<td>11.64</td>
+<td>10.36</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">San Diego</td>
+<td>12.00</td>
+<td>10.00</td>
+<td>11.60</td>
+<td>10.40</td>
+<td>11.40</td>
+<td>10.60</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Scottsdale</td>
+<td>10.32</td>
+<td>11.68</td>
+<td>10.84</td>
+<td>11.16</td>
+<td>10.65</td>
+<td>11.35</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>9.78</td>
+<td>12.22</td>
+<td>10.21</td>
+<td>11.79</td>
+<td>10.20</td>
+<td>11.80</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>9.65</td>
+<td>12.35</td>
+<td>10.34</td>
+<td>11.66</td>
+<td>10.53</td>
+<td>11.47</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Helsinki</td>
+<td>9.02</td>
+<td>12.98</td>
+<td>10.16</td>
+<td>11.84</td>
+<td>10.39</td>
+<td>11.61</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>8.03</td>
+<td>13.97</td>
+<td>9.36</td>
+<td>12.64</td>
+<td>9.90</td>
+<td>12.10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>8.01</td>
+<td>13.99</td>
+<td>9.36</td>
+<td>12.64</td>
+<td>9.98</td>
+<td>12.02</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Santa Barbara</td>
+<td>7.71</td>
+<td>14.29</td>
+<td>8.98</td>
+<td>13.02</td>
+<td>9.56</td>
+<td>12.44</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">low Wins Win %</th>
+<th data-quarto-table-cell-role="th">low Losses Win %</th>
+<th data-quarto-table-cell-role="th">medium Wins Win %</th>
+<th data-quarto-table-cell-role="th">medium Losses Win %</th>
+<th data-quarto-table-cell-role="th">high Wins Win %</th>
+<th data-quarto-table-cell-role="th">high Losses Win %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bikini Bottom</td>
+<td>72.44</td>
+<td>27.56</td>
+<td>62.73</td>
+<td>37.27</td>
+<td>58.76</td>
+<td>41.24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Malibu</td>
+<td>68.40</td>
+<td>31.60</td>
+<td>59.45</td>
+<td>40.55</td>
+<td>57.96</td>
+<td>42.04</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Winterfell</td>
+<td>61.58</td>
+<td>38.42</td>
+<td>55.13</td>
+<td>44.87</td>
+<td>54.85</td>
+<td>45.15</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cream City</td>
+<td>58.84</td>
+<td>41.16</td>
+<td>55.13</td>
+<td>44.87</td>
+<td>52.93</td>
+<td>47.07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">San Diego</td>
+<td>54.55</td>
+<td>45.45</td>
+<td>52.75</td>
+<td>47.25</td>
+<td>51.80</td>
+<td>48.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Scottsdale</td>
+<td>46.93</td>
+<td>53.07</td>
+<td>49.25</td>
+<td>50.75</td>
+<td>48.40</td>
+<td>51.60</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>44.45</td>
+<td>55.55</td>
+<td>46.42</td>
+<td>53.58</td>
+<td>46.38</td>
+<td>53.62</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>43.87</td>
+<td>56.13</td>
+<td>47.02</td>
+<td>52.98</td>
+<td>47.85</td>
+<td>52.15</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Helsinki</td>
+<td>41.00</td>
+<td>59.00</td>
+<td>46.18</td>
+<td>53.82</td>
+<td>47.24</td>
+<td>52.76</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>36.49</td>
+<td>63.51</td>
+<td>42.55</td>
+<td>57.45</td>
+<td>45.02</td>
+<td>54.98</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>36.42</td>
+<td>63.58</td>
+<td>42.56</td>
+<td>57.44</td>
+<td>45.36</td>
+<td>54.64</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Santa Barbara</td>
+<td>35.04</td>
+<td>64.96</td>
+<td>40.84</td>
+<td>59.16</td>
+<td>43.44</td>
+<td>56.56</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-4.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-5.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-6.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-7.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-8.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-9.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-10.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-11.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-12.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-13.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="analysis_files/figure-html/cell-16-output-14.png" class="img-fluid"></p>
+</div>
+</div>
 
 
 </section>
