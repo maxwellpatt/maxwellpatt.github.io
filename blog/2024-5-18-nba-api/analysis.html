@@ -1100,12 +1100,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="bonus-points-analysis" class="level1">
 <h1>Bonus: Points Analysis</h1>
 <p>I’ve also created the same workflow, but for points instead of 9-CAT since this the scoring of my fintasy league</p>
-<div class="cell" data-execution_count="322">
+<div class="cell" data-execution_count="323">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pd.options.mode.chained_assignment <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate "percent started" based on player ranking within each fantasy team</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Rank'</span>] <span class="op">=</span> df.groupby(<span class="st">'Fantasy Team'</span>)[<span class="st">'FP/G'</span>].rank(ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Percent Started'</span>] <span class="op">=</span> df[<span class="st">'Rank'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">&lt;=</span> <span class="dv">10</span> <span class="cf">else</span> <span class="fl">0.5</span> <span class="cf">if</span> x <span class="op">&lt;=</span> <span class="dv">15</span> <span class="cf">else</span> <span class="fl">0.25</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Percent Started'</span>] <span class="op">=</span> df[<span class="st">'Rank'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">&lt;=</span> <span class="dv">10</span> <span class="cf">else</span> <span class="fl">0.8</span> <span class="cf">if</span> x <span class="op">&lt;=</span> <span class="dv">15</span> <span class="cf">else</span> <span class="fl">0.4</span>)</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>teams <span class="op">=</span> df[<span class="st">'Fantasy Team'</span>].unique()</span>
@@ -1215,111 +1215,111 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Bikini Bottom</td>
-<td>18.04</td>
-<td>3.96</td>
-<td>15.10</td>
-<td>6.90</td>
-<td>14.20</td>
-<td>7.80</td>
+<td>18.10</td>
+<td>3.90</td>
+<td>15.02</td>
+<td>6.98</td>
+<td>13.90</td>
+<td>8.10</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Malibu</td>
-<td>16.52</td>
-<td>5.48</td>
-<td>13.99</td>
-<td>8.01</td>
-<td>13.04</td>
-<td>8.96</td>
+<td>16.67</td>
+<td>5.33</td>
+<td>14.16</td>
+<td>7.84</td>
+<td>13.35</td>
+<td>8.65</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Winterfell</td>
-<td>14.62</td>
-<td>7.38</td>
-<td>13.30</td>
-<td>8.70</td>
-<td>12.44</td>
-<td>9.56</td>
+<td>15.15</td>
+<td>6.85</td>
+<td>13.38</td>
+<td>8.62</td>
+<td>12.40</td>
+<td>9.60</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Cream City</td>
-<td>14.07</td>
-<td>7.93</td>
-<td>12.47</td>
-<td>9.53</td>
-<td>12.13</td>
-<td>9.87</td>
+<td>14.42</td>
+<td>7.58</td>
+<td>13.13</td>
+<td>8.87</td>
+<td>12.38</td>
+<td>9.62</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">San Diego</td>
-<td>12.19</td>
-<td>9.81</td>
-<td>11.77</td>
-<td>10.23</td>
-<td>11.39</td>
-<td>10.61</td>
+<td>12.21</td>
+<td>9.79</td>
+<td>11.46</td>
+<td>10.54</td>
+<td>11.46</td>
+<td>10.54</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Scottsdale</td>
-<td>10.11</td>
-<td>11.89</td>
-<td>10.35</td>
-<td>11.65</td>
-<td>10.47</td>
-<td>11.53</td>
+<td>9.93</td>
+<td>12.07</td>
+<td>10.60</td>
+<td>11.40</td>
+<td>10.51</td>
+<td>11.49</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">Beaverton</td>
-<td>9.18</td>
-<td>12.82</td>
-<td>9.70</td>
-<td>12.30</td>
-<td>10.17</td>
-<td>11.83</td>
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>8.90</td>
+<td>13.10</td>
+<td>9.25</td>
+<td>12.75</td>
+<td>10.14</td>
+<td>11.86</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Anacortes</td>
-<td>8.96</td>
-<td>13.04</td>
-<td>9.77</td>
-<td>12.23</td>
-<td>10.22</td>
-<td>11.78</td>
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>8.85</td>
+<td>13.15</td>
+<td>9.71</td>
+<td>12.29</td>
+<td>10.39</td>
+<td>11.61</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Helsinki</td>
-<td>8.43</td>
-<td>13.57</td>
-<td>9.58</td>
-<td>12.42</td>
-<td>9.88</td>
-<td>12.12</td>
+<td>8.44</td>
+<td>13.56</td>
+<td>9.66</td>
+<td>12.34</td>
+<td>9.89</td>
+<td>12.11</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Las Vegas</td>
-<td>6.84</td>
-<td>15.16</td>
-<td>8.62</td>
-<td>13.38</td>
-<td>9.34</td>
-<td>12.66</td>
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>6.58</td>
+<td>15.42</td>
+<td>8.74</td>
+<td>13.26</td>
+<td>9.25</td>
+<td>12.75</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">Slytherin</td>
-<td>6.76</td>
-<td>15.24</td>
-<td>8.82</td>
-<td>13.18</td>
-<td>9.42</td>
-<td>12.58</td>
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>6.45</td>
+<td>15.55</td>
+<td>8.39</td>
+<td>13.61</td>
+<td>9.20</td>
+<td>12.80</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Santa Barbara</td>
-<td>6.29</td>
-<td>15.71</td>
-<td>8.52</td>
-<td>13.48</td>
-<td>9.29</td>
-<td>12.71</td>
+<td>6.30</td>
+<td>15.70</td>
+<td>8.50</td>
+<td>13.50</td>
+<td>9.11</td>
+<td>12.89</td>
 </tr>
 </tbody>
 </table>
@@ -1340,111 +1340,111 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Bikini Bottom</td>
-<td>81.98</td>
-<td>18.02</td>
-<td>68.65</td>
-<td>31.35</td>
-<td>64.55</td>
-<td>35.45</td>
+<td>82.29</td>
+<td>17.71</td>
+<td>68.25</td>
+<td>31.75</td>
+<td>63.18</td>
+<td>36.82</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Malibu</td>
-<td>75.11</td>
-<td>24.89</td>
-<td>63.58</td>
-<td>36.42</td>
-<td>59.27</td>
-<td>40.73</td>
+<td>75.78</td>
+<td>24.22</td>
+<td>64.35</td>
+<td>35.65</td>
+<td>60.67</td>
+<td>39.33</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Winterfell</td>
-<td>66.47</td>
-<td>33.53</td>
-<td>60.45</td>
-<td>39.55</td>
-<td>56.53</td>
-<td>43.47</td>
+<td>68.85</td>
+<td>31.15</td>
+<td>60.80</td>
+<td>39.20</td>
+<td>56.38</td>
+<td>43.62</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Cream City</td>
-<td>63.95</td>
-<td>36.05</td>
-<td>56.69</td>
-<td>43.31</td>
-<td>55.15</td>
-<td>44.85</td>
+<td>65.56</td>
+<td>34.44</td>
+<td>59.69</td>
+<td>40.31</td>
+<td>56.29</td>
+<td>43.71</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">San Diego</td>
-<td>55.40</td>
-<td>44.60</td>
-<td>53.51</td>
-<td>46.49</td>
-<td>51.78</td>
-<td>48.22</td>
+<td>55.49</td>
+<td>44.51</td>
+<td>52.09</td>
+<td>47.91</td>
+<td>52.11</td>
+<td>47.89</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Scottsdale</td>
-<td>45.95</td>
-<td>54.05</td>
-<td>47.05</td>
-<td>52.95</td>
-<td>47.60</td>
-<td>52.40</td>
+<td>45.15</td>
+<td>54.85</td>
+<td>48.18</td>
+<td>51.82</td>
+<td>47.78</td>
+<td>52.22</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">Beaverton</td>
-<td>41.71</td>
-<td>58.29</td>
-<td>44.07</td>
-<td>55.93</td>
-<td>46.24</td>
-<td>53.76</td>
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>40.44</td>
+<td>59.56</td>
+<td>42.04</td>
+<td>57.96</td>
+<td>46.09</td>
+<td>53.91</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Anacortes</td>
-<td>40.73</td>
-<td>59.27</td>
-<td>44.40</td>
-<td>55.60</td>
-<td>46.45</td>
-<td>53.55</td>
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>40.22</td>
+<td>59.78</td>
+<td>44.15</td>
+<td>55.85</td>
+<td>47.24</td>
+<td>52.76</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Helsinki</td>
-<td>38.33</td>
-<td>61.67</td>
-<td>43.56</td>
-<td>56.44</td>
-<td>44.89</td>
-<td>55.11</td>
+<td>38.35</td>
+<td>61.65</td>
+<td>43.93</td>
+<td>56.07</td>
+<td>44.96</td>
+<td>55.04</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Las Vegas</td>
-<td>31.07</td>
-<td>68.93</td>
-<td>39.20</td>
-<td>60.80</td>
-<td>42.47</td>
-<td>57.53</td>
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>29.93</td>
+<td>70.07</td>
+<td>39.73</td>
+<td>60.27</td>
+<td>42.05</td>
+<td>57.95</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">Slytherin</td>
-<td>30.73</td>
-<td>69.27</td>
-<td>40.11</td>
-<td>59.89</td>
-<td>42.84</td>
-<td>57.16</td>
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>29.31</td>
+<td>70.69</td>
+<td>38.15</td>
+<td>61.85</td>
+<td>41.84</td>
+<td>58.16</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Santa Barbara</td>
-<td>28.58</td>
-<td>71.42</td>
-<td>38.71</td>
-<td>61.29</td>
-<td>42.24</td>
-<td>57.76</td>
+<td>28.64</td>
+<td>71.36</td>
+<td>38.65</td>
+<td>61.35</td>
+<td>41.40</td>
+<td>58.60</td>
 </tr>
 </tbody>
 </table>
