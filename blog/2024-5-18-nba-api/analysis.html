@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-preprocessing" class="level1">
 <h1>Data Preprocessing</h1>
-<div class="cell" data-execution_count="273">
+<div class="cell" data-execution_count="303">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nba_api.stats.static <span class="im">import</span> players, teams</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nba_api.stats.endpoints <span class="im">import</span> leaguedashplayerstats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="274">
+<div class="cell" data-execution_count="304">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in fantasy data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fantrax_data <span class="op">=</span> pd.read_csv(<span class="st">"fantrax_05_18_2024.csv"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>fantrax_data[<span class="st">'Fantasy Team'</span>] <span class="op">=</span> fantrax_data[<span class="st">'Fantasy Team'</span>].<span class="bu">map</span>(status_mapping)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that the Fantrax data is cleaned, we can join it with each players stats pulled from the NBA API.</p>
-<div class="cell" data-execution_count="275">
+<div class="cell" data-execution_count="305">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract player names</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>player_names <span class="op">=</span> fantrax_data[<span class="st">'Player'</span>].tolist()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -273,9 +273,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.merge(fantrax_data, player_stats, left_on<span class="op">=</span><span class="st">'Player_ID'</span>, right_on<span class="op">=</span><span class="st">'PLAYER_ID'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check out the data to make sure it looks good.</p>
-<div class="cell" data-execution_count="263">
+<div class="cell" data-execution_count="306">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="263">
+<div class="cell-output cell-output-display" data-execution_count="306">
 <pre><code>Index(['Player', 'Fantasy Team', 'FPts', 'FP/G', 'Player_ID', 'PLAYER_ID',
        'PLAYER_NAME', 'NICKNAME', 'TEAM_ID', 'TEAM_ABBREVIATION', 'AGE', 'GP',
        'W', 'L', 'W_PCT', 'MIN', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A',
@@ -291,9 +291,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       dtype='object')</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="264">
+<div class="cell" data-execution_count="307">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="264">
+<div class="cell-output cell-output-display" data-execution_count="307">
 <div>
 
 
@@ -597,13 +597,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The data has been merged successfully! Now, let’s perform some data cleaning to filter out players that were not active last season.</p>
-<div class="cell" data-execution_count="265">
+<div class="cell" data-execution_count="308">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>While our league is a points league, where fantasy points are the scoring metric, some leagues are set up as a 9 category format where teams try to win each week based on the 9 main statistical categories.</p>
 <p>The categories are: - Points - Rebounds - Assists - Steals - Blocks - Field goal percentage - Free throw percentage - Three pointers made - Turnovers</p>
 <p>Let’s see where each fantasy teams strengths would be in this format!</p>
-<div class="cell" data-execution_count="276">
+<div class="cell" data-execution_count="309">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pd.options.mode.chained_assignment <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns to be used for Z-score calculations</span></span>
@@ -817,18 +817,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>By running the simulation 250 times, we can generate a wide range of plausible scenarios. Each simulation will give us a different set of results, and by analyzing these results, we can gain insights into the likelihood of various outcomes.</p>
 <p>For example, let’s say Team A has a higher Z score than Team B in the “points” category. In a single simulation, Team B might win that category due to the randomness factor. However, across 250 simulations, we would expect Team A to win the “points” category more often than Team B.</p>
 <p>Monte Carlo simulations help us account for the complexities and uncertainties in a fantasy basketball season. By embracing randomness and running many simulations, we can better understand the range of possible outcomes and make more informed decisions when managing our fantasy teams.</p>
-<div class="cell" data-execution_count="277">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># Parameters</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>teams <span class="op">=</span> team_z_scores[<span class="st">'Fantasy Team'</span>].unique()</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>randomness_levels <span class="op">=</span> {<span class="st">'low'</span>: <span class="fl">0.3</span>, <span class="st">'medium'</span>: <span class="fl">0.6</span>, <span class="st">'high'</span>: <span class="fl">0.9</span>}</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>num_weeks <span class="op">=</span> <span class="dv">22</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>num_simulations <span class="op">=</span> <span class="dv">250</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="310">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>team_z_scores <span class="op">=</span> team_z_scores.reset_index()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a> <span class="co"># Parameters</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>teams <span class="op">=</span> team_z_scores[<span class="st">'Fantasy Team'</span>].unique()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>randomness_levels <span class="op">=</span> {<span class="st">'low'</span>: <span class="fl">0.3</span>, <span class="st">'medium'</span>: <span class="fl">0.6</span>, <span class="st">'high'</span>: <span class="fl">0.9</span>}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>num_weeks <span class="op">=</span> <span class="dv">22</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>num_simulations <span class="op">=</span> <span class="dv">250</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="278">
+<div class="cell" data-execution_count="311">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize results df to track wins, losses, and ties</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>results_template <span class="op">=</span> pd.DataFrame(<span class="dv">0</span>, index<span class="op">=</span>teams, columns<span class="op">=</span>[<span class="st">'Wins'</span>, <span class="st">'Losses'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="279">
+<div class="cell" data-execution_count="312">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_season(randomness):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    weekly_results <span class="op">=</span> results_template.copy()</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -872,7 +874,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> weekly_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="280">
+<div class="cell" data-execution_count="313">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_multiple_seasons(randomness, num_simulations):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    cumulative_results <span class="op">=</span> pd.DataFrame(<span class="dv">0</span>, index<span class="op">=</span>teams, columns<span class="op">=</span>[<span class="st">'Wins'</span>, <span class="st">'Losses'</span>])</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    all_simulation_results <span class="op">=</span> []</span>
@@ -887,7 +889,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> average_results, pd.concat(all_simulation_results, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that the Monte Carlo simulation functions have been set up, we can run the simulation 250 times.</p>
-<div class="cell" data-execution_count="281">
+<div class="cell" data-execution_count="314">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the simulations</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>final_results <span class="op">=</span> {}</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>simulation_results <span class="op">=</span> {}</span>
@@ -896,21 +898,140 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    avg_results, all_results_df <span class="op">=</span> simulate_multiple_seasons(randomness, num_simulations)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    final_results[level] <span class="op">=</span> avg_results</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    simulation_results[level] <span class="op">=</span> all_results_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>KeyError: 'San Diego'</code></pre>
 </div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the final averaged results for each randomness level</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>results_table <span class="op">=</span> pd.concat(final_results, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>results_table.columns <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> Randomness'</span> <span class="cf">for</span> level <span class="kw">in</span> results_table.columns.get_level_values(<span class="dv">0</span>)]</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the table by 'Low Randomness' wins in descending order</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>results_table_sorted <span class="op">=</span> results_table.sort_values(by<span class="op">=</span><span class="st">'Low Randomness'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>display(HTML(results_table_sorted.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>ValueError: The column label 'Low Randomness' is not unique.</code></pre>
+<div class="cell" data-execution_count="317">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine results ensuring unique column names</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>results_table <span class="op">=</span> pd.concat(final_results, axis<span class="op">=</span><span class="dv">1</span>, keys<span class="op">=</span>randomness_levels.keys())</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>results_table.columns <span class="op">=</span> [<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> level, col <span class="kw">in</span> results_table.columns]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the table by 'Low Randomness' wins in descending order</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>results_table_sorted <span class="op">=</span> results_table.sort_values(by<span class="op">=</span><span class="st">'Low Wins'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>display(HTML(results_table_sorted.to_html(float_format<span class="op">=</span><span class="st">"</span><span class="sc">%.2f</span><span class="st">"</span>, border<span class="op">=</span><span class="dv">0</span>, justify<span class="op">=</span><span class="st">'center'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Low Wins</th>
+<th data-quarto-table-cell-role="th">Low Losses</th>
+<th data-quarto-table-cell-role="th">Medium Wins</th>
+<th data-quarto-table-cell-role="th">Medium Losses</th>
+<th data-quarto-table-cell-role="th">High Wins</th>
+<th data-quarto-table-cell-role="th">High Losses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Malibu</td>
+<td>20.58</td>
+<td>1.42</td>
+<td>20.14</td>
+<td>1.86</td>
+<td>19.71</td>
+<td>2.29</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Cream City</td>
+<td>19.76</td>
+<td>2.24</td>
+<td>19.62</td>
+<td>2.38</td>
+<td>19.25</td>
+<td>2.75</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Bikini Bottom</td>
+<td>19.30</td>
+<td>2.70</td>
+<td>19.12</td>
+<td>2.88</td>
+<td>18.68</td>
+<td>3.32</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">San Diego</td>
+<td>15.72</td>
+<td>6.28</td>
+<td>16.07</td>
+<td>5.93</td>
+<td>15.97</td>
+<td>6.03</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Winterfell</td>
+<td>14.64</td>
+<td>7.36</td>
+<td>14.84</td>
+<td>7.16</td>
+<td>14.82</td>
+<td>7.18</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Las Vegas</td>
+<td>8.23</td>
+<td>13.77</td>
+<td>6.65</td>
+<td>15.35</td>
+<td>6.04</td>
+<td>15.96</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Anacortes</td>
+<td>7.68</td>
+<td>14.32</td>
+<td>6.80</td>
+<td>15.20</td>
+<td>6.54</td>
+<td>15.46</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Scottsdale</td>
+<td>7.54</td>
+<td>14.46</td>
+<td>7.58</td>
+<td>14.42</td>
+<td>7.70</td>
+<td>14.30</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Helsinki</td>
+<td>7.39</td>
+<td>14.61</td>
+<td>6.80</td>
+<td>15.20</td>
+<td>6.80</td>
+<td>15.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Beaverton</td>
+<td>6.89</td>
+<td>15.11</td>
+<td>7.73</td>
+<td>14.27</td>
+<td>8.00</td>
+<td>14.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Santa Barbara</td>
+<td>3.72</td>
+<td>18.28</td>
+<td>4.60</td>
+<td>17.40</td>
+<td>5.01</td>
+<td>16.99</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Slytherin</td>
+<td>0.55</td>
+<td>21.45</td>
+<td>2.04</td>
+<td>19.96</td>
+<td>3.46</td>
+<td>18.54</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Reminder that this is for a 22 week regular season where each team plays each other twice. Under a 9-cat format, the Bikini Bottom Ballers are still the best team in the league. SDP, the San Diego Pilots, would seem to fare much better in a 9-cat format than the current points format.</p>
@@ -918,21 +1039,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="plotting-team-outcomes" class="level1">
 <h1>Plotting Team Outcomes</h1>
 <p>Now let’s visualize the results by showing the win distribution for each team under each randomness scenario.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team <span class="kw">in</span> teams:</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(randomness_levels), figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f'Number of Wins Distribution for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> (250 Simulations)'</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (level, results_df) <span class="kw">in</span> <span class="bu">enumerate</span>(simulation_results.items()):</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        axes[col].hist(results_df.loc[team], bins<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        axes[col].set_title(<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> Randomness'</span>, fontsize<span class="op">=</span><span class="dv">18</span>)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        axes[col].set_xlabel(<span class="st">'Number of Wins'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        axes[col].tick_params(axis<span class="op">=</span><span class="st">'both'</span>, which<span class="op">=</span><span class="st">'major'</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>            axes[col].set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="318">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> team <span class="kw">in</span> teams:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(randomness_levels), figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="ss">f'Number of Wins Distribution for </span><span class="sc">{</span>team<span class="sc">}</span><span class="ss"> (250 Simulations)'</span>, fontsize<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, (level, results_df) <span class="kw">in</span> <span class="bu">enumerate</span>(simulation_results.items()):</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        axes[col].hist(results_df.loc[team], bins<span class="op">=</span><span class="dv">10</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        axes[col].set_title(<span class="ss">f'</span><span class="sc">{</span>level<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss"> Randomness'</span>, fontsize<span class="op">=</span><span class="dv">18</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        axes[col].set_xlabel(<span class="st">'Number of Wins'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        axes[col].tick_params(axis<span class="op">=</span><span class="st">'both'</span>, which<span class="op">=</span><span class="st">'major'</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            axes[col].set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="analysis_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>
