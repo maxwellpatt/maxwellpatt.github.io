@@ -24,7 +24,7 @@ Before my first site visit to the Scottish Highlands, I read Nan Shepherd's *The
 
 # The Work Behind the Wandering
 
-At Zulu Ecosystems, we're an end-to-end nature restoration project developer working across the UK. From peatland and woodland restoration to thinking about biodiversity and water management, we work with estate owners, water companies, farming groups, universities, and more to help heal the damanged British landscapes. I have been developing analytics and tools to help us deliver more projects, with our office is in a Notting Hill, building data pipelines and learning what science looks like in a business environment.
+At Zulu Ecosystems, we're an end-to-end nature restoration project developer working across the UK. From peatland and woodland restoration to thinking about biodiversity and water management, we work with estate owners, water companies, farming groups, universities, and more to help heal the damaged British landscapes. I have been developing analytics and tools to help us deliver more projects, with our office in Notting Hill, building data pipelines and learning what science looks like in a business environment.
 
 My particular recent focus has been on modeling erosion features—areas of exposed bare peat that are essentially wounds in the landscape. These aren't just aesthetic concerns. Globally, degraded peat emits around 2 billion tons of greenhouse gases annually. Think about that scale for a moment. And that's not even accounting for the countless species that depend on healthy peatland habitats.
 
@@ -48,7 +48,7 @@ This was where Shepherd's philosophy really set in for me. I wasn't there to con
 
 # The Weight of Our Influence
 
-We are, as a species, so innovative, creative, complicated, and selfish. Our influence on the world, especially over the last few centuries, is incredibly tangle. While we're just a speck on the timeline of this planet, we're an undeniably large speck. The evidence surrounds you in these Scottish landscapes, in the transition zones from heather to bog, in the grazing pressures, in the very erosion features I've been modeling.
+We are, as a species, so innovative, creative, complicated, and selfish. Our influence on the world, especially over the last few centuries, is incredibly tangled. While we're just a speck on the timeline of this planet, we're an undeniably large speck. The evidence surrounds you in these Scottish landscapes, in the transition zones from heather to bog, in the grazing pressures, in the very erosion features I've been modeling.
 
 The sphagnum moss that carpets healthy sections of the peatland tells a different story. Its colors pop against the darker peats, vibrant greens and reds that seem almost otherworldly, like a coral reef on land. But it's the temporal scale that hits me most. This moss, decomposing slowly into peat over centuries and even millennia, is one of our planet's most effective carbon storage systems. A single hectare can store up to 60 tonnes of carbon, acting as a massive sink slowly giving itself back into the soil.
 
@@ -72,10 +72,10 @@ As I write this back in London, I think about how the field experience has chang
 
 But there's something else Shepherd understood that feels more urgent now: when we damage these landscapes, we're not just losing what we know is there. We're losing everything we haven't yet had the chance to discover. The intricate relationships between species we haven't identified, the climate services we haven't quantified, the carbon storage potential we haven't realized.
 
-In our work at Zulu Ecosystems, we're trying to reverse some of that loss. Project by project, we're helping landscapes heal. IIn the grand scheme of things, i's slow work, ultimately linked to the timescale of flora and fauna like the patient building of peat by sphagnum moss. But at the same time its incredibly urgent work, given the scale of the challenges we face.
+In our work at Zulu Ecosystems, we're trying to reverse some of that loss. Project by project, we're helping landscapes heal. In the grand scheme of things, it's slow work, ultimately linked to the timescale of flora and fauna like the patient building of peat by sphagnum moss. But at the same time it's incredibly urgent work, given the scale of the challenges we face.
 
-Sitting on that knoll, feeling the wind off the loch, I felt lucky to be doing this work. Grateful, excited, and inspired be part of efforts that bring together technology and ecological wisdom, that connect the precision of remote sensing with the irreplaceable knowledge that comes from being present in the landscape.
+Sitting on that knoll, feeling the wind off the loch, I felt lucky to be doing this work. Grateful, excited, and inspired to be part of efforts that bring together technology and ecological wisdom, that connect the precision of remote sensing with the irreplaceable knowledge that comes from being present in the landscape.
 
-We are just one species in this whole thing. But we're also the species with the greatest power, either to heal or harm. In these Scottish Highliands, surrounded by a rich mosaic of creatures, processes, and existence, that responsibility feels real.
+We are just one species in this whole thing. But we're also the species with the greatest power, either to heal or harm. In these Scottish Highlands, surrounded by a rich mosaic of creatures, processes, and existence, that responsibility feels real.
 
 The mountain, as Shepherd knew, gives itself most completely when we approach it not as conquerors but as friends. The same might be true of our relationship with all the landscapes we're working to restore.
