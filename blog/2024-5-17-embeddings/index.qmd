@@ -40,8 +40,8 @@ library(LexisNexisTools)
 ```
 
 
-```{r, message=FALSE}
-setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big")
+```{r, message=FALSE, eval=FALSE}
+# setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big")
 
 # Reading in docx files
 post_files <- list.files(pattern = ".docx",
@@ -91,7 +91,7 @@ normalized_probs <- skipgram_probs %>%
 
 Next let's perform dimensionality reduction using Singular Value Decomposition (SVD) to get vector representations for each word in the corpus. These word vectors encode semantic and syntactic information, which lets us explore semantically similar words and perform arithmetic operations on the vectors to uncover interesting relationships.
 
-```{r}
+```{r, eval=FALSE}
 # Reduce dimensionality
 pmi_matrix <- normalized_probs %>% 
   mutate(pmi = log10(p_together)) %>% 
@@ -103,7 +103,7 @@ pmi_matrix <- normalized_probs %>%
 
 One of the powerful applications of word embeddings is the ability to identify semantically similar words based on their vector representations. By computing the cosine similarity between word vectors, we can find words that are closely related in meaning or context.
 
-```{r}
+```{r, eval=FALSE}
 # Replace NAs with 0
 pmi_matrix@x[is.na(pmi_matrix@x)] <- 0
 
@@ -130,7 +130,7 @@ search_synonyms <- function(word_vectors, selected_vector, original_word) {
 
 In this analysis, I've chosen to explore the top 10 most similar words for the terms "energy," "disadvantaged," and "law" using the custom word embeddings trained on the Kern County oil news corpus and the pre-trained GloVe embeddings (more on that later). The results reveal interesting insights into the semantic relationships captured by the embeddings.
 
-```{r}
+```{r, eval=FALSE}
 # Defining words to explore
 energy_synonyms <- search_synonyms(word_vectors, word_vectors["energy",], "energy") %>% head(10)
 disad_synonyms <- search_synonyms(word_vectors, word_vectors["disadvantaged",], "disadvantaged") %>% head(10)
@@ -163,7 +163,7 @@ For example, the custom embeddings associate "energy" with terms like "renewable
 
 Word embeddings also enable us to perform arithmetic operations on word vectors, revealing interesting relationships and analogies. By adding or subtracting vectors, we can explore the semantic spaces and uncover meaningful combinations or contrasts.
 
-```{r}
+```{r, eval=FALSE}
 # Assemble word math equations
 energy_disad <- word_vectors["water",] + word_vectors["resources",]
 search_synonyms(word_vectors, energy_disad, "") %>% head(25)
@@ -183,12 +183,12 @@ Let's consider water + resources here. It makes sense that irrigation, groundwat
 
 While training custom word embeddings can be valuable for domain-specific tasks, pre-trained embeddings like GloVe (Global Vectors for Word Representation) offer a powerful alternative. These embeddings are trained on massive amounts of text data, capturing a broad range of semantic and syntactic relationships across various domains.
 
-```{r, message=FALSE}
-setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big")
+```{r, message=FALSE, eval=FALSE}
+# setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/big")
 glove6b <- read_csv("glove6b.csv")
 ```
 
-```{r}
+```{r, eval=FALSE}
 # Transform embeddings to tidy 
 tidy_glove <- glove6b %>%
   pivot_longer(contains("d"),
@@ -216,7 +216,7 @@ tidy_glove %>% nearest_neighbors("disadvantaged")
 tidy_glove %>% nearest_neighbors("law")
 ```
 
-```{r}
+```{r, eval=FALSE}
 # make into a matrix
 tidy_matrix <- tidy_glove %>% 
   cast_sparse(item1, dimension, value)
@@ -240,7 +240,7 @@ search_synonyms(word_vectors = word_vectors,
                        original_word = "")
 ```
 
-```{r}
+```{r, eval=FALSE}
 # make into a matrix
 tidy_matrix <- tidy_glove %>% 
   cast_sparse(item1, dimension, value)
@@ -276,7 +276,7 @@ By comparing the results obtained from our custom word embeddings and the pre-tr
 
 The choice between custom and pre-trained embeddings ultimately depends on the specific task and requirements. For domain-specific applications where capturing nuanced relationships is crucial, custom embeddings may be more appropriate. However, for more general NLP tasks or when computational resources are limited, pre-trained embeddings can offer a powerful and efficient solution.
 
-```{r}
+```{r, eval=FALSE}
 # Find synonyms using GloVe embeddings
 energy_synonyms_glove <- search_synonyms(word_vectors, word_vectors["energy",], "energy") %>% head(10)
 disad_synonyms_glove <- search_synonyms(word_vectors, word_vectors["disadvantaged",], "disadvantaged") %>% head(10)
@@ -300,7 +300,7 @@ bind_rows(
   labs(x = NULL, y = "Similarity")
 ```
 
-```{r}
+```{r, eval=FALSE}
 # Word math equations with GloVe embeddings
 energy_disad_glove <- word_vectors["water",] + word_vectors["resources",]
 search_synonyms(word_vectors, energy_disad_glove, "") %>% head(10)

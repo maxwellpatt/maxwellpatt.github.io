@@ -15,7 +15,7 @@ In this blog post, we will explore the topic of biodiversity loss using text ana
 
 First, let's load the necessary libraries and set the working directory to the location of our data files.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 library(quanteda)
 library(tm)
 library(topicmodels)
@@ -26,7 +26,7 @@ library(reshape2)
 library(LexisNexisTools)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2024-4-26-topics/data/bio-1")
 
 # Reading in docx files
@@ -50,7 +50,7 @@ data <- tibble(Date=meta_df$Date, Headline = meta_df$Headline, id = articles_df$
 
 Now, let's clean up the data by removing duplicates, creating a corpus, and examining the tokens. A corpus is just a collection of all the words across all of the articles we are feeding in, with tokens being each of the words in the corpus. We're working with 161 different news articles on biodiversity loss!
 
-```{r}
+```{r, eval=FALSE}
 # Cleaning up data
 articles <- data %>% 
   dplyr::filter(!is.na(Headline)) %>%
@@ -70,7 +70,7 @@ What we see above is all of the tokens split up across the entire corpus.
 
 Next, we'll perform some preprocessing steps on the tokens, such as removing punctuation, numbers, URLs, and stop words, converting to lowercase, and trimming the document-feature matrix.
 
-```{r}
+```{r, eval=FALSE}
 # Remove punctuation, numbers and url
 toks <- tokens(articles_corpus, remove_punct = T, remove_numbers = T, remove_url = T)
 
@@ -91,7 +91,7 @@ dfm <- dfm2[sel_idx, ]
 
 To determine the optimal number of topics for our analysis, we'll use the `FindTopicsNumber` function from the `ldatuning` package.
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=FALSE}
 set.seed(123)
 
 results <- FindTopicsNumber(dfm,
@@ -111,7 +111,7 @@ Based on the results when I first ran this model, k = 7 appeared to be the optim
 
 Now that we have determined the optimal number of topics, let's run the Latent Dirichlet Allocation (LDA) topic model and show the most prevalent topics.
 
-```{r}
+```{r, eval=FALSE}
 set.seed(123)
 
 # set k value based 
@@ -149,7 +149,7 @@ top_terms
 
 Let's visualize the top terms for each topic using a bar plot.
 
-```{r, fig.width=10}
+```{r, fig.width=10, eval=FALSE}
 top_terms %>%
   mutate(term = reorder_within(term, beta, topic, sep = "")) %>% 
   ggplot(aes(term, beta, fill = factor(topic))) +
@@ -165,7 +165,7 @@ This plot breaks down the most frequent words in each of the topic groups. The f
 
 Next, let's examine the topic proportions for a few example documents.
 
-```{r, message=FALSE, fig.width=10}
+```{r, message=FALSE, fig.width=10, eval=FALSE}
 # assign names to topics
 topic_words <- terms(topicModel_k7, 5)
 topic_names <- apply(topic_words, 2, paste, collapse = " ")
