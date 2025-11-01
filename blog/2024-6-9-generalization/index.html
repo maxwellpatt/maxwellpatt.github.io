@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxwell Patterson">
+<meta name="dcterms.date" content="2024-06-09">
+
+<title>The Power of Generalization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cooking.html" rel="" target="">
+ <span class="menu-text">Cooking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../books.html" rel="" target="">
+ <span class="menu-text">Books</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">The Power of Generalization</h1>
+            <p class="subtitle lead">How a simple idea could revitalize us</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Maxwell Patterson </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 9, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#the-disconnect-from-our-food-sources" id="toc-the-disconnect-from-our-food-sources" class="nav-link" data-scroll-target="#the-disconnect-from-our-food-sources">The Disconnect from Our Food Sources</a></li>
+  <li><a href="#the-colonization-of-the-household" id="toc-the-colonization-of-the-household" class="nav-link" data-scroll-target="#the-colonization-of-the-household">The Colonization of the Household</a></li>
+  <li><a href="#the-power-of-generalization" id="toc-the-power-of-generalization" class="nav-link" data-scroll-target="#the-power-of-generalization">The Power of Generalization</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In an era marked by unprecedented technological progress and the siren song of specialization, we find ourselves at a junction. The attraction of mastering a specific skill or domain is undeniable, promising recognition, success, and the satisfaction of pushing the boundaries of what we know and think is possible. However, as we as a society head down this path of specialization, we risk losing sight of the interconnectedness that defines our reality. In fact, this transition has already happened to most of us, largely without anyone batting an eye. We have become so focused on our individual pursuits that we forget the broader context in which we exist – the intricate web of ecosystems, the delicate balance of planetary systems, and the fundamental interdependence of the human experience. This focus on specialization is not limited to our professional lives; it permeates our relationship with the natural world as well. In our quest for efficiency and convenience, we have distanced ourselves from the very things that connect us to the planet and nature, such as farming and other forms of direct engagement with the environment. While these practices may seem antiquated or inefficient in the face of modern technology, they serve a vital purpose in grounding us in the reality of our existence. By creating distance between ourselves and the natural world, we risk reducing the quality of our lived experiences and losing touch with the profound beauty and complexity that surrounds us.</p>
+<p>The philosopher Alan Watts once said, “We do not ‘come into’ this world; we come out of it, as leaves from a tree.” This statement encapsulates the root of our relationship with the world around us. We are not separate from nature, but a part of it. Our existence is woven into the fabric of the universe, and our actions have effects that extend far beyond our individual lives. Yet, in our pursuit of specialization and our desire to control and manipulate our environment, we have lost sight of this fundamental truth. As we navigate the complexities of the 21st century, it is essential that we reclaim a sense of wonder and awe for the world around us. We must learn to see the forest for the trees, to recognize the beauty and intricacy of the systems that sustain us, and to appreciate the interconnectedness of all things. This is where the power of generalization comes into play. By embracing a more holistic perspective, we can begin to see the patterns and connections that exist across seemingly disparate fields and disciplines. We can begin to understand the world not as a collection of isolated bits and pieces, but as a complex and ever-changing whole.</p>
+<p>In the field of artificial intelligence, we are witnessing the emergence of generalized language models that embody this principle and harness the powers of interconnectedness across disciplines. These models, free from the constraints of specialization, are capable of synthesizing information from a wide range of sources, recognizing patterns that specialized might miss, and generating novel insights that transcend the boundaries of discipline. In fact, it has been proven that generalized models are more capable than specialized models <span class="citation" data-cites="Sukhbaatar">(<a href="#ref-Sukhbaatar" role="doc-biblioref">Sykhbaatar 2024</a>)</span>. Why exactly injecting information about World War 2 into a large model would help the model perform better on code related tasks is beyond me, and most certainly everyone for the foreseeable future. However, there is not a particular reason that we must know exactly how or why the networks comprising language models work, since we have such a limited understanding of how human knowledge works in the brain. The rise of the Transformer model in LLMs is an excellent example of the powers of generalization in practice. A paper highlighting important work done in the field of AI, written by Samuel Bowman, summarises the following key points that have been proven by AI researchers over the last few years <span class="citation" data-cites="Bowman">(<a href="#ref-Bowman" role="doc-biblioref">Bowman 2024</a>)</span>:</p>
+<ul>
+<li><p>LLMs predictably get more capable with increasing investment, even without targeted innovation</p></li>
+<li><p>Many important LLM behaviors emerge unpredictably as a byproduct of increasing investment</p></li>
+<li><p>LLMs often appear to learn and use representations of the outside world.</p></li>
+</ul>
+<p>The first two bullets are what we are concerned with in this blog post, as they reflect the idea of what it means to generalize information as the models can learn from the vastness of the information at their disposal that is gained in the training process. When considering the third bullet, the idea that the models are able to learn certainly carries a lot of weight and the sentence overall is more ambiguous in meaning compared to the first two. The important takeaway is that we know that supporting interdisciplinary collaboration and understanding of LLMs might allow us to unlock insights not only about these systems, but about us, about society which has evolved in a way that has allowed these models to exist in the first place. As we move forward into a pretty bleak future, it is imperative that we embrace the art of generalization and the importance of systemic thinking. We must learn to see the world not as a collection of isolated problems to be solved, but as a complex and interconnected web of relationships and dependencies. Only by embracing this perspective can we hope to create a more sustainable, more empathetic, and more harmonious relationship with the natural world and with each other. LLMs might actually help us learn a thing or two about the importance of thinking holistically and the art of the generalist.</p>
+</section>
+<section id="the-disconnect-from-our-food-sources" class="level1">
+<h1>The Disconnect from Our Food Sources</h1>
+<p>In the agricultural section, society has undergone a massive shift in our relationship with the food we consume over the last 100 years or so. Gone are the days when the majority of people had a direct connection to the land, growing their own crops and raising their own livestock or fresh herbs. As societies have become more urbanized due to industrialization, we have increasingly relied on complex supply chains and large-scale agricultural practices to feed our growing population. While this shift has brought about many benefits, such as increased food security and convenience, it has also created a significant disconnect between the food we eat and its sources.</p>
+<p>This disconnect has massive consequences, on both human health and the health of the environment. When we are no longer intimately involved in the production of our food, we lose touch with the natural cycles and processes that sustain us. We become less aware of the seasonal rhythms of planting and harvesting, the delicate balance of soil health, and the intricate relationships between plants, animals, and microorganisms that make up a thriving agricultural ecosystem. As a result, we take for granted the immense effort and resources required to bring food to our tables, and we may be less inclined to make choices that prioritize sustainability and environmental stewardship. Moreover, the increasing distance between the point of production and the point of consumption has led to a proliferation of highly processed, packaged, and artificially preserved foods. These products, while convenient and often inexpensive, lack the vital nutrients and enzymes that are essential for our health and well-being. They also contribute to a host of environmental problems, such as the overuse of pesticides, the depletion of soil fertility, and the generation of excessive waste. TALK ABOUT UNSETTLING REFERENCE HERE WITH HEAD OF AG BEING PROUD THAT 95% OF PEOPLE DONT GROW FOOD</p>
+<p>To address these challenges, we must find ways to reconnect with the sources of our food. This may involve supporting local farmers’ markets, participating in community-supported agriculture programs, or even growing our own food in backyard gardens or urban allotments. By re-establishing a more direct relationship with the land and the people who cultivate it, we can begin to appreciate the true value of our food and the importance of preserving the natural systems that sustain us.</p>
+</section>
+<section id="the-colonization-of-the-household" class="level1">
+<h1>The Colonization of the Household</h1>
+<p>Just as our relationship with food has undergone a transformation, so too has the structure and function of the household. Historically, the home was a holistic unit, with men and women taking on nurturing roles that directly contributed to the well-being of the family. Women often managed the domestic sphere, overseeing the preparation of food, the care of children, and the maintenance of the home, while men engaged in activities such as farming, hunting, and craftsmanship that provided for the family’s needs.</p>
+<p>As industrialization reshaped society, the traditional division of labor within households underwent a significant transformation. Men left the domestic sphere to pursue work in factories, offices, and other external settings, while women remained at home, tasked with managing the household. This separation of the household from the broader economy created a void that corporations eagerly exploited. Recognizing the untapped potential of “lonely housewives” who were losing their sense of purpose, these corporations began to market a wide array of products and services designed to simplify and streamline domestic life. In essence, corporations colonized the household, fostering a new form of dependence that would shape the future of America. By promising convenience and efficiency in cooking, cleaning, and childcare, these corporations gradually eroded the traditional skills and knowledge that had been passed down through generations. Consequently, many households became increasingly reliant on processed foods, disposable products, and external services, all of which had detrimental effects on both human health and the environment.</p>
+<p>As households grew more dependent on the products and services provided by corporations, they became disconnected from the natural world and began to lose touch with the rhythms and cycles of the seasons, the importance of biodiversity, and the delicate balance of ecosystems. Rather, a culture of consumption and convenience swept over the Untied States, a culture that cared about short-term gains over long-term sustainability. People embraced this new way of living without fully considering the implications of the corporate takeover, as the link between industrialization, overproduction, and climate change was not yet clear to most individuals during the 1940s through the 1970s. This consumerist mindset enabled companies to continue producing goods at an unsustainable pace, often using materials and methods that were detrimental to the environment and incentivized the production of poorly made items that contributed to the growing climate crisis. It is important to recognize that during this period, the public was largely unaware of the long-term consequences of their consumption habits and the impact of industrialization on the planet. As awareness of climate change and its causes has grown in recent decades, it has become increasingly apparent that breaking free from this cycle of dependence and exploitation is crucial. To address this, we must reclaim the household as a site of nurturing, creativity, and connection, rediscovering traditional skills and practices, and re-evaluating our relationship with the products and services we consume, making choices that prioritize sustainability, community, and the well-being of the planet. While it may be tempting to place blame on past generations for not recognizing the consequences of their actions, it is more productive to focus on the present and take responsibility for the choices we make today, armed with the knowledge and understanding of the impact our consumption habits have on the environment.</p>
+</section>
+<section id="the-power-of-generalization" class="level1">
+<h1>The Power of Generalization</h1>
+<p>As we navigate the complexities of the 21st century and face the looming threat of climate change, it is more crucial than ever that we embrace the power of generalization and systemic thinking. We must recognize that the challenges we face are not isolated incidents but are deeply interconnected, rooted in the very fabric of our society and our relationship with the natural world. To address these challenges, we must break free from the narrow confines of specialization and rediscover the art of the generalist. This means reconnecting with the skills and knowledge that have sustained humanity for millennia, from growing our own food to crafting our own goods. It means re-evaluating our relationship with the products and services we consume, making choices that prioritize sustainability, community, and the well-being of the planet. And it means embracing a more holistic perspective, one that recognizes the intricate web of relationships that connect us all. By tapping into the wisdom of our ancestors and the power of generalization, we can unlock new solutions to the problems we face and chart a course towards a more resilient and sustainable future.</p>
+<p>But this shift towards generalization and systemic thinking cannot happen in isolation. It requires a collective awakening, a coming together of minds and hearts to create a new vision for the future. We must support and uplift those who are already leading the way, from local farmers and artisans to community organizers and environmental activists. We must inspire others to join the movement, to rediscover their own inner generalist and contribute their unique skills and perspectives to the cause. And we must do so with a sense of urgency, knowing that the window of opportunity is rapidly closing. The path ahead may be difficult, but it is also filled with possibility. By embracing the power of generalization and reconnecting with the wisdom of our ancestors, we can create a world that is more resilient, more equitable, and more sustainable. A world where we understand our place in the grand tapestry of life, and where we work together to preserve and protect the beauty and wonder of the natural world. So let us rise to the challenge, let us embrace the power of generalization, and let us work together to create a brighter future for ourselves and for generations to come. The time for action is now, and the choice is ours. Will we continue down the path of specialization and environmental destruction, or will we chart a new course, one that honors our interconnectedness and our responsibility to the planet? The answer lies within each and every one of us, and it is up to us to make the right choice. Let us seize this moment, let us embrace the power of generalization, and let us work together to create a world that is worthy of our highest aspirations.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Bowman" class="csl-entry" role="listitem">
+Bowman, Samuel. 2024. <span>“Eight Things to Know about Large Language Models.”</span> <a href="https://arxiv.org/abs/2304.00612">https://arxiv.org/abs/2304.00612</a>.
+</div>
+<div id="ref-Sukhbaatar" class="csl-entry" role="listitem">
+Sykhbaatar. 2024. <span>“Branch-Train-MiX: Mixing Expert LLMs into a Mixture-of-Experts LLM.”</span> <a href="https://arxiv.org/abs/2403.07816">https://arxiv.org/abs/2403.07816</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
