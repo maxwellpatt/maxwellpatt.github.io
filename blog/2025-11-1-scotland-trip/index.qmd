@@ -2,7 +2,7 @@
 title: "Reflections from Scotland and London"
 author:
   - name: Maxwell Patterson
-date: 11-01-2024
+date: 11-24-2025
 categories: [Environment, Scotland, Conservation, Reflection]
 format: 
   html:
