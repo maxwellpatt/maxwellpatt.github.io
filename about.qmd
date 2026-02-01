@@ -1,15 +1,15 @@
----
+n---
 title: "About Me"
 format: html
 ---
 
 ### 🚀
 
-Hello! My name is Maxwell Patterson, and I'm a Master's student in Environmental Data Science at the Bren School of Environmental Science & Management, University of California, Santa Barbara (UCSB). I'm passionate about using data-driven approaches to tackle environmental challenges and contribute to a more sustainable future.
+Hello! My name is Maxwell Patterson, and I'm currently working at Zora Ecosystems, a nature restoration company in London, where I apply data science to support ecosystem restoration and environmental impact. I'm passionate about using data-driven approaches to tackle environmental challenges and contribute to a more sustainable future.
 
 ### 🌲
 
-My journey in environmental data science is fueled by my strong interest in climate communication, data visualization, and machine learning. I believe that effective communication is crucial in driving positive change, and I'm dedicated to honing my skills in presenting complex environmental data in a clear, engaging, and impactful way. Through my coursework and projects at UCSB, I'm exploring various techniques in data visualization and learning how to create compelling narratives that resonate with diverse audiences. Moreover, I'm fascinated by the potential of machine learning in solving environmental problems. From predictive modeling to pattern recognition, I'm eager to apply these cutting-edge tools to uncover valuable insights and develop innovative solutions. By combining my expertise in data science with my passion for environmental sustainability, I aim to make a meaningful impact and contribute to a greener future.
+My work in environmental data science is fueled by my strong interest in climate communication, data visualization, and sustainability. I believe that effective communication is crucial in driving positive change, and I'm dedicated to presenting complex environmental data in clear and impactful ways.
 
 ### 👨‍🍳
 
@@ -17,7 +17,7 @@ Beyond my academic pursuits, I have a deep love for cooking. In fact, I took my 
 
 ### 🔢🤽‍♂️
 
-I hold a Bachelor of Arts in Applied Mathematics-Economics from Brown University, where I also had the privilege of being a member of the varsity water polo team. As a four-time Academic All-American and the 2022 Team Captain, I learned valuable lessons in leadership, teamwork, and perseverance, which I now apply to my academic and professional endeavors.
+I hold a Bachelor of Arts in Applied Mathematics-Economics from Brown University, where I also had the privilege of being a member of the varsity water polo team. As a four-time Academic All-American and the 2022 Team Captain, I learned valuable lessons in leadership, teamwork, and perseverance. I went on to earn a Master's degree in Environmental Data Science (MEDS) from the Bren School of Environmental Science & Management at the University of California, Santa Barbara (UCSB), where I deepened my expertise in applying data-driven approaches to environmental challenges.
 
 ### 🗺️
 
