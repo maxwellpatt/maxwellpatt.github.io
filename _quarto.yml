@@ -14,6 +14,9 @@ website:
       - cooking.qmd
       - books.qmd
 
+execute:
+  freeze: auto
+
 format:
   html:
     theme: lux

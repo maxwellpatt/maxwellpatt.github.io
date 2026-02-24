@@ -1,0 +1,14 @@
+{
+  "hash": "8621537df569b54d1cb81f11866e4f23",
+  "result": {
+    "markdown": "---\n  title: \"The Expressivity of Neural Networks\"\n  description: \"\"\n  author:\n    - name: Maxwell Patterson\n    - affiliation: Brown University\n  date: 5-11-2023\n  categories: [Python, ML]\n---\n\n::: {.cell}\n\n:::\n\n\n![Networks are everywhere](images/nn.png){width=\"60%\"}\n\nHere's a project I did in my Pattern Theory course in the spring semester of 2023. Note that there are a few typos in the project.\n\nSee below for the project PDF.\n\n\n```{=html}\n<style>\n.pdf {\n  max-width: 100%;\n    width: 600px;\n    height: 600px;\n    border: 10px solid rgba(0,0,0,.2);\n    margin: 0;\n}\n</style>\n```\n\n{{< pdf exp_of_nn.pdf height=1200 width=1200 >}}\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

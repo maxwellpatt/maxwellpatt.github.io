@@ -40,14 +40,11 @@ For more context, my roster transitioned from win-now to building for the future
 
 Now it's time to do a little exploration to understand the data that is being worked with. The platform we use for the league, Fantrax, allows for easy downloading of data in CSV formats. I'll start by importing the data, doing some simple cleaning so it will be ready for further wrangling and analysis. This code is hidden for the reader's convenience so we can get right to the data exploration.
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE}
 rm(list=ls())
 ```
 
-```{r, echo=FALSE, message=FALSE, eval=FALSE}
-# Setting working directory to blog post
-setwd("/Users/maxwellpatterson/Desktop/personal/maxwellpatt.github.io/blog/2024-2-28-data-viz-proj")
-
+```{r, echo=FALSE, message=FALSE}
 # Installing some libraries
 library(here)
 library(dplyr)
@@ -56,11 +53,11 @@ library(janitor)
 
 # Defining data and image paths within blog
 data_path <- here("blog", "2024-2-28-data-viz-proj", "data")
-image_path <-here("blog", "2024-2-28-data-viz-proj", "images")
+image_path <- here("blog", "2024-2-28-data-viz-proj", "images")
 
 ```
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, eval=FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 # Import Fantrax data
 fantrax_raw <- read_csv(here(data_path, "fantrax_02_26_24_blog.csv"))
 
@@ -95,7 +92,7 @@ rostered <- fantrax_data %>%
 
 Below is a list of the column names in the cleaned data set (`rostered`):
 
-```{r, eval=FALSE}
+```{r}
 colnames(rostered)
 ```
 
@@ -117,7 +114,7 @@ While DEI has been highlighted in our lecture materials and some other assignmen
 
 ### Plot 1: Scatter plot
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE}
 # Selecting top 10 assets from each fantasy team
 swell_assets <- c("Anthony Edwards", "Victor Wembanyama", "Desmond Bane", "Jaren Jackson", "Jalen Duren", "Keyonte George", "Grayson Allen", "Marvin Bagley", "Precious Achiuwa", "Jaden McDaniels")
 scorpions_assets <- c("Evan Mobley", "Jayson Tatum", "Coby White", "Mark Williams", "Darius Garland", "Amen Thompson", "Jalen Green", "Tari Eason", "Trey Murphy", "Bilal Coulibaly")
@@ -138,7 +135,7 @@ top_assets <- c(swell_assets, scorpions_assets, ballers_assets, crusaders_assets
                 bigfoots_assets, milkers_assets, serpents_assets, orcas_assets)
 ```
 
-```{r, message=FALSE, warning=FALSE, fig.width=7, out.width='100%', eval=FALSE}
+```{r, message=FALSE, warning=FALSE, fig.width=7, out.width='100%'}
 # Importing libraries
 library(ggimage)
 library(ggtext) # Set font for annotations
@@ -279,7 +276,7 @@ Annotations are added to provide more context on the draft capital of specific t
 
 ### Plot 2: Ridge line plot
 
-```{r, warning=FALSE, message=FALSE, fig.width=8, out.width='100%', eval=FALSE}
+```{r, warning=FALSE, message=FALSE, fig.width=8, out.width='100%'}
 # Installing new packages
 library(ggridges)
 library(viridis)
@@ -393,7 +390,7 @@ By presenting the data in this way, the ridge line plot allows for a quick and e
 
 ### Plot 3: Sunburst plot
 
-```{r, message = FALSE, warning=FALSE, fig.width=7, out.width='100%', eval=FALSE}
+```{r, message = FALSE, warning=FALSE, fig.width=7, out.width='100%'}
 # Importing new libraries
 library(data.table)
 library(plotly)
@@ -457,7 +454,7 @@ as.sunburstDF <- function(DF, value_column = NULL, add_root = FALSE){
 
 *Note: the code for creating the sunburst function was adopted from <https://rpubs.com/DragonflyStats/Sunburst-Plots-With-Plotly>*
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Summarize total fantasy points by fantasy team
 team_summary <- rostered %>%
   group_by(fantasy_team) %>%
@@ -487,7 +484,7 @@ plot_ly(data = sunburst_data_teams_only,
 
 This plot breaks down the total fantasy scoring across the entire season by team. Let's go one step further and break each team down by age group: under 25, 25-29, and over 30. This will provide more context on the construction of each fantasy team
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Categorize each player into age group bin
 rostered <- rostered %>%
   mutate(age_group = case_when(
