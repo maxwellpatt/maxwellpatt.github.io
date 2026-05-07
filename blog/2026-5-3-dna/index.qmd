@@ -1,5 +1,5 @@
 ---
-  title: "On Naming and Knowing"
+  title: "On Naming and Witness"
   author:
     - name: Maxwell Patterson
   date: 05-03-2026
