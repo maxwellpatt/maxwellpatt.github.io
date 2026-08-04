@@ -1,5 +1,8 @@
 ---
 title: "Maxwell Patterson"
+format:
+  html:
+    include-after-body: _includes/bg-animation.html
 about:
   id: hero-heading
   template: jolla

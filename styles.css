@@ -1,3 +1,102 @@
+/* Geometric theme */
+:root {
+  --geo-accent: #0099ff;
+  --geo-accent-dark: #0072c6;
+  --geo-ink: #16181b;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar-title, .navbar-brand, .nav-link {
+  font-family: "Space Grotesk", "Nunito Sans", sans-serif;
+}
+
+h1.title, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+h2::before, .anchored h2::before,
+h3::before, .anchored h3::before {
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 10px;
+  background: var(--geo-accent);
+  transform: rotate(45deg);
+  vertical-align: middle;
+}
+h3::before, .anchored h3::before {
+  width: 7px;
+  height: 7px;
+  margin-right: 9px;
+}
+
+a {
+  color: var(--geo-accent);
+}
+a:hover {
+  color: var(--geo-accent-dark);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+  color: var(--geo-accent) !important;
+}
+.navbar-dark .navbar-nav .nav-link.active {
+  color: var(--geo-accent) !important;
+  position: relative;
+}
+.navbar-dark .navbar-nav .nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 2px;
+  height: 2px;
+  background: var(--geo-accent);
+}
+
+hr, .about-sep {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--geo-accent) 50%, transparent);
+  opacity: 0.6;
+}
+
+.about-link {
+  border-radius: 2px !important;
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.about-link:hover {
+  color: var(--geo-accent) !important;
+  border-color: var(--geo-accent) !important;
+  transform: translateY(-1px);
+}
+
+.quarto-grid-item.card {
+  border: 1px solid #e9edf1;
+  border-top: 2px solid var(--geo-accent);
+  border-radius: 2px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.quarto-grid-item.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 153, 255, 0.14);
+}
+.quarto-grid-item .listing-title {
+  transition: color 0.15s ease;
+}
+.quarto-grid-item.card:hover .listing-title {
+  color: var(--geo-accent-dark);
+}
+
+#TOC .nav-link.active,
+.sidebar nav[role="doc-toc"] .active {
+  color: var(--geo-accent) !important;
+  border-left: 2px solid var(--geo-accent);
+  padding-left: 0.5rem;
+}
+
 /* Table Styling */
 table.custom-table {
   width: 100%;
