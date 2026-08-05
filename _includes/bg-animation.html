@@ -23,6 +23,8 @@
   var MAX_DIST = 190;
   var RIPPLE_LIFETIME = 950;
   var RIPPLE_EMIT_DIST = 7;
+  var HIT_RADIUS = 26;
+  var dragging = null;
 
   function pointCount(w, h) {
     var area = w * h;
@@ -51,7 +53,10 @@
         hub: hub,
         r: hub ? 3.6 + Math.random() * 1.6 : 1.8 + Math.random() * 1.2,
         lastRippleX: null,
-        lastRippleY: null
+        lastRippleY: null,
+        dragging: false,
+        x: 0,
+        y: 0
       });
     }
     return pts;
@@ -67,6 +72,7 @@
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     points = makePoints(W, H);
     ripples = [];
+    dragging = null;
   }
 
   function mix(a, b, t) {
@@ -81,11 +87,13 @@
 
     for (var i = 0; i < points.length; i++) {
       var p = points[i];
-      p.x = p.bx + Math.sin(t * p.fx + p.px) * p.ax;
-      p.y = p.by + Math.cos(t * p.fy + p.py) * p.ay;
+      if (!p.dragging) {
+        p.x = p.bx + Math.sin(t * p.fx + p.px) * p.ax;
+        p.y = p.by + Math.cos(t * p.fy + p.py) * p.ay;
+      }
       p.hue = baseHue + p.hueOffset + Math.sin(t * p.hueSpeed + p.huePhase) * 18;
 
-      if (p.hub) {
+      if (p.hub || p.dragging) {
         if (p.lastRippleX === null) { p.lastRippleX = p.x; p.lastRippleY = p.y; }
         var rdx = p.x - p.lastRippleX, rdy = p.y - p.lastRippleY;
         if (Math.sqrt(rdx * rdx + rdy * rdy) > RIPPLE_EMIT_DIST) {
@@ -138,14 +146,14 @@
     for (var i = 0; i < points.length; i++) {
       var p = points[i];
       var pulse = 0.85 + Math.sin(t * 0.0009 + p.pulsePhase) * 0.15;
-      var radius = p.r * pulse;
+      var radius = (p.dragging ? p.r * 1.6 : p.r) * pulse;
       var nodeLight = 58 + p.lightOffset;
       var nodeColor = 'hsla(' + p.hue.toFixed(1) + ', 92%, ' + nodeLight.toFixed(0) + '%, ';
 
-      if (p.hub) {
+      if (p.hub || p.dragging) {
         ctx.save();
         ctx.shadowColor = nodeColor + '0.8)';
-        ctx.shadowBlur = 11;
+        ctx.shadowBlur = p.dragging ? 16 : 11;
         ctx.fillStyle = nodeColor + '0.9)';
         ctx.beginPath();
         ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
@@ -175,6 +183,66 @@
   function stop() {
     running = false;
   }
+
+  function redrawIfStatic() {
+    if (!running) frame(performance.now());
+  }
+
+  function findNearest(mx, my) {
+    var best = null, bestDist = HIT_RADIUS;
+    for (var i = 0; i < points.length; i++) {
+      var p = points[i];
+      var dx = p.x - mx, dy = p.y - my;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d < bestDist) {
+        bestDist = d;
+        best = p;
+      }
+    }
+    return best;
+  }
+
+  function releaseDrag() {
+    if (!dragging) return;
+    var t = performance.now();
+    // hand the point back to its orbit, centered wherever it was dropped -- no snap
+    dragging.bx = dragging.x - Math.sin(t * dragging.fx + dragging.px) * dragging.ax;
+    dragging.by = dragging.y - Math.cos(t * dragging.fy + dragging.py) * dragging.ay;
+    dragging.dragging = false;
+    dragging = null;
+    document.body.style.cursor = '';
+    redrawIfStatic();
+  }
+
+  function onPointerDown(e) {
+    var hit = findNearest(e.clientX, e.clientY);
+    if (hit) {
+      dragging = hit;
+      dragging.dragging = true;
+      document.body.style.cursor = 'grabbing';
+      e.preventDefault();
+    }
+  }
+
+  function onPointerMove(e) {
+    if (dragging) {
+      dragging.x = Math.max(0, Math.min(W, e.clientX));
+      dragging.y = Math.max(0, Math.min(H, e.clientY));
+      e.preventDefault();
+      redrawIfStatic();
+    } else {
+      document.body.style.cursor = findNearest(e.clientX, e.clientY) ? 'grab' : '';
+    }
+  }
+
+  window.addEventListener('pointerdown', onPointerDown, { passive: false });
+  window.addEventListener('pointermove', onPointerMove, { passive: false });
+  window.addEventListener('pointerup', releaseDrag, { passive: false });
+  window.addEventListener('pointercancel', releaseDrag, { passive: false });
+  window.addEventListener('mousedown', onPointerDown, { passive: false });
+  window.addEventListener('mousemove', onPointerMove, { passive: false });
+  window.addEventListener('mouseup', releaseDrag, { passive: false });
+  window.addEventListener('blur', releaseDrag);
 
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) stop(); else if (!reduceMotion) start();
