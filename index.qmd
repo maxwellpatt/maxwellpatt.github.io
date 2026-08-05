@@ -1,5 +1,6 @@
 ---
 title: "Maxwell Patterson"
+toc: false
 format:
   html:
     include-after-body: _includes/bg-animation.html
