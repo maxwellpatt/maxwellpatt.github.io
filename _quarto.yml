@@ -24,6 +24,7 @@ format:
     toc: true
     page-layout: full
     include-in-header: _includes/geometric-fonts.html
+    html-math-method: katex
 
 editor: visual
 
