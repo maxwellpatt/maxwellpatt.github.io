@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxwell Patterson">
+<meta name="dcterms.date" content="2026-11-11">
+
+<title>The Anatomy of a Bioacoustic Model</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cooking.html" rel="" target="">
+ <span class="menu-text">Cooking</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../books.html" rel="" target="">
+ <span class="menu-text">Books</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">The Anatomy of a Bioacoustic Model</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Data science</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Maxwell Patterson </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 11, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#from-birds-to-whales" id="toc-from-birds-to-whales" class="nav-link active" data-scroll-target="#from-birds-to-whales">From birds to whales</a></li>
+  <li><a href="#what-a-model-brings-to-the-data" id="toc-what-a-model-brings-to-the-data" class="nav-link" data-scroll-target="#what-a-model-brings-to-the-data">What a model brings to the data</a></li>
+  <li><a href="#why-looking-inside-is-not-enough" id="toc-why-looking-inside-is-not-enough" class="nav-link" data-scroll-target="#why-looking-inside-is-not-enough">Why looking inside is not enough</a></li>
+  <li><a href="#untangling-with-a-sparse-autoencoder" id="toc-untangling-with-a-sparse-autoencoder" class="nav-link" data-scroll-target="#untangling-with-a-sparse-autoencoder">Untangling with a sparse autoencoder</a></li>
+  <li><a href="#what-saes-have-found-in-nature-so-far" id="toc-what-saes-have-found-in-nature-so-far" class="nav-link" data-scroll-target="#what-saes-have-found-in-nature-so-far">What SAEs have found in nature so far</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+<p><em>A closer look inside a model that identifies animal sounds</em></p>
+<section id="from-birds-to-whales" class="level1">
+<h1>From birds to whales</h1>
+<p>In August 2025, Google DeepMind released Perch 2.0, a model for identifying animals by their sounds. It learned almost entirely from birds and other animals that live on land. Its training data contained no underwater audio at all.</p>
+<p>Then researchers got curious about what would happen if they fed it recordings from the ocean. Perch turned each clip of whale song into a list of numbers, and a classifier trained on those numbers was able to distinguish the whale calls. A model that had only ever heard the sounds of forests, fields and wetlands managed to built a description of sound that worked underwater.</p>
+<p>How is this possible? What does a model like this really know, and how would we go about finding out?</p>
+<p>These questions matter more and more each year. Ecology increasingly runs on large pretrained models: Perch and BirdNET for sound, BioCLIP for photos of organisms, general vision models for aerial and satellite imagery. They work very well, and for the most part we aren’t totally sure why that is. This post walks through three ideas that help: inductive bias, superposition, and sparse autoencoders. At the end, I try the method myself on Perch, to find out what it hears in whale song.</p>
+</section>
+<section id="what-a-model-brings-to-the-data" class="level1">
+<h1>What a model brings to the data</h1>
+<p>A deep learning model like Perch comes with assumptions that shape what it learns. Machine learning calls these its <strong>inductive bias</strong>: the preferences, set by its design and its training process, that make it learn some patterns more readily than others.</p>
+<p>Some biases come from the model’s architecture. A convolutional network assumes that pixels close together belong together. That is usually true of photographs, and it’s also Tobler’s first law of geography: near things are more related than distant things. Others come from the task at hand. Perch was trained to separate thousands of bird species, many with near-identical calls. To do that effectively, it had to get very good at dissecting the fine structure of animal sound: how pitch rises and falls, how harmonics stack together, how notes repeat in rhythm.</p>
+<p>That is a plausible explanation for how the model carries over to identifying whale calls. Whale calls are made of the same sonic ingredients: pitch contours, harmonics, repetition. A model focused on describing birdsong ended up with a vocabulary general enough to describe sounds well beyond birdsong. This idea is what pulled me into the topic.</p>
+<p>But plausible is all it really is. To say “the model learned general features of animal sounds” provides an answer without showing it. To check, we need to look inside the model and find the features that make this transfer possible. That turns out to be harder than it sounds (no pun intended).</p>
+</section>
+<section id="why-looking-inside-is-not-enough" class="level1">
+<h1>Why looking inside is not enough</h1>
+<p>A natural first thought on how to inspect a neural network is to look at its neurons one at a time. If one neuron fired for “rising whistle” and another for “harmonic stack”, we could read the model like a list of ingredients. Sometimes networks are indeed this tidy. More often, though, a single neuron fires for a bunch of unrelated things, and the clean concepts seem to be spread across many neurons.</p>
+<p>In 2022, researchers at Anthropic offered an explanation called superposition. It starts with a picture of what a layer of neurons does. A layer with 100 neurons describes its input with 100 numbers, which you can think of as a point in a 100-dimensional space. Each concept the model tracks corresponds to a direction in that space. When the concept is present, the layer’s output moves along that direction.</p>
+<p>The tidy route gives every concept its own direction, at right angles to all the others. Each direction then stands for one clear idea that we can interpret on its own. In other words, directions at right angles don’t interfere with one another: moving along one leaves the others untouched, so the model can always tell which concepts are present. But a space has only as many right-angled directions as it has dimensions. A layer of 100 neurons could cleanly track 100 concepts, and no more. To track more concepts this way, you would need more neurons, thus a bigger model. You can infer why this is a losing battle.</p>
+<p>But the world holds far more things worth tracking than any model has neurons. Superposition is how models get around this limit. Each concept still gets its own direction, but the model lets those directions lean slightly towards each other, so they are only almost at right angles.</p>
+<p>That sounds like a small change, but it makes an enormous difference once there are many dimensions. On a flat page, with two dimensions, there is room for exactly two arrows at right angles. Squeeze in a third and at least two of them end up a long way from square. Add dimensions, though, and the room grows remarkably fast. In a space with 1,000 dimensions, two directions picked completely at random will almost always sit within a few degrees of a right angle. The number of nearly perpendicular directions grows exponentially with the number of dimensions. So a layer can hold far more concepts than it has neurons, with each concept spread across many neurons and each neuron shared among many concepts.</p>
+<p>The price is interference. Because the directions overlap slightly, an active concept leaves a faint echo on every concept it overlaps with, as if they were weakly present too. If several overlapping concepts fire at once, those echoes add up and the model starts to confuse them.</p>
+<p>This is where rarity comes in. Most concepts are switched off most of the time. A recording might contain one or two calls out of the thousands of sounds a model knows, so nearly everything else is silent. Picture two concepts that each turn up in 1 clip out of every 100. They will turn up in the same clip only about once in every 10,000. So almost always, only one of the pair is active, and the echo it leaves on the other is faint. The model can clean that up by ignoring anything below a small threshold, which is the job of a simple component called a ReLU. The model accepts the odd mix-up in exchange for room to store many more concepts, and the rarer the concepts, the better that deal gets.</p>
+<p>Think of an office where nobody has a fixed desk. People come in once or twice a week, on whatever days suit them, and grab a free desk when they arrive. Ten people can share four desks this way, because on most days only two or three turn up. Now and then a fifth person walks in and has to squeeze in at the end of someone’s desk. If everyone starts coming in every day, those clashes happen constantly, and it makes more sense to give everyone their own desk. Neural networks show the same switch: with common concepts they keep dedicated directions, and with rare ones they share.</p>
+<p>This also explains the puzzle from the start of this section: why a single neuron so often fires for a bunch of unrelated things. Since every neuron is shared among many concepts, looking at one neuron on its own shows a mixture. Researchers call these neurons polysemantic, meaning they carry many meanings at once.</p>
+<p>The effect shows up clearly in a tiny model. Give a network five features and only two dimensions to store them in. When the features are common, it keeps the two most important and drops the rest. Make the features rare, and all five squeeze in as arrows spread around a circle, like points of a pentagon.</p>
+<div id="spw" class="spw">
+<style>
+#spw{--spw-f0:#d19a12;--spw-f1:#6f9f2e;--spw-f2:#23998a;--spw-f3:#3b6fb6;--spw-f4:#7b4fb0;
+  color:inherit;font:inherit;margin:2rem 0;padding:1.25rem;border:1px solid color-mix(in srgb,currentColor 14%,transparent);border-radius:14px}
+#spw *{box-sizing:border-box}
+#spw .spw-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:1.5rem;align-items:center}
+@media (max-width:640px){#spw .spw-grid{grid-template-columns:1fr}}
+#spw canvas{width:100%;aspect-ratio:1/1;display:block}
+#spw .spw-legend{display:flex;justify-content:center;gap:.9rem;flex-wrap:wrap;font-size:.8rem;opacity:.75;margin-top:.4rem}
+#spw .spw-legend span{display:inline-flex;align-items:center;gap:.3rem}
+#spw .spw-legend i{width:.65rem;height:.65rem;border-radius:50%;display:inline-block}
+#spw .spw-status{font-size:1.05rem;line-height:1.45;margin:0 0 1.2rem;min-height:4.4em}
+#spw .spw-step{font-size:.78rem;opacity:.6;font-variant-numeric:tabular-nums;margin:0 0 1rem}
+#spw label{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;margin-bottom:.35rem}
+#spw label output{opacity:.7;font-variant-numeric:tabular-nums}
+#spw input[type=range]{width:100%;accent-color:var(--spw-f2);margin:0 0 1.1rem}
+#spw .spw-ticks{display:flex;justify-content:space-between;font-size:.72rem;opacity:.55;margin:-.9rem 0 1.1rem}
+#spw .spw-row{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+#spw .spw-seg{display:inline-flex;border:1px solid color-mix(in srgb,currentColor 22%,transparent);border-radius:999px;padding:3px;gap:2px}
+#spw button{font:inherit;font-size:.85rem;color:inherit;background:transparent;border:0;cursor:pointer;padding:.35rem .9rem;border-radius:999px}
+#spw .spw-seg button[aria-pressed=true]{background:var(--spw-f2);color:#fff}
+#spw .spw-again{border:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+#spw button:focus-visible,#spw input:focus-visible{outline:2px solid var(--spw-f2);outline-offset:2px}
+#spw .spw-note{font-size:.8rem;opacity:.65;line-height:1.45;margin:1.2rem 0 0}
+</style>
+<div class="spw-grid">
+  <div>
+    <canvas aria-label="Five feature directions stored in a two-dimensional hidden space"></canvas>
+    <div class="spw-legend" aria-hidden="true">
+      <span><i style="background:var(--spw-f0)"></i>1</span><span><i style="background:var(--spw-f1)"></i>2</span><span><i style="background:var(--spw-f2)"></i>3</span><span><i style="background:var(--spw-f3)"></i>4</span><span><i style="background:var(--spw-f4)"></i>5</span><span style="opacity:.8">most → least important</span>
+    </div>
+  </div>
+  <div>
+    <p class="spw-status" aria-live="polite">Scroll here to start training.</p>
+    <p class="spw-step"></p>
+    <label for="spw-density">Each feature is active <output></output></label>
+    <input id="spw-density" type="range" min="0" max="100" step="1">
+    <div class="spw-ticks" aria-hidden="true"><span>rarely</span><span>always</span></div>
+    <div class="spw-row">
+      <div class="spw-seg" role="group" aria-label="Output activation">
+        <button data-act="relu" aria-pressed="true">With ReLU</button>
+        <button data-act="lin" aria-pressed="false">Linear</button>
+      </div>
+      <button class="spw-again">Train again</button>
+    </div>
+    <p class="spw-note">Five features, two dimensions. Each arrow is one feature’s direction in the model’s hidden space; an arrow near the centre means the feature was dropped. Every change retrains the model live in your browser, after <a href="https://transformer-circuits.pub/2022/toy_model/index.html">Elhage et al. (2022)</a>.</p>
+  </div>
+</div>
+<script>
+(function(){
+const root=document.getElementById('spw');if(!root||root.dataset.ready)return;root.dataset.ready='1';
+const cv=root.querySelector('canvas'),statusEl=root.querySelector('.spw-status'),stepEl=root.querySelector('.spw-step');
+const slider=root.querySelector('#spw-density'),out=root.querySelector('label output');
+const N=5,M=2,STEPS=4000,SEEDS=4,BATCH=1024,IMP=[...Array(N)].map((_,i)=>Math.pow(0.9,i));
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const state={density:0.05,relu:true,seed:1};
+const toSlider=d=>Math.round((Math.log10(d)+2.3)/2.3*100),fromSlider=v=>Math.pow(10,v/100*2.3-2.3);
+
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function gauss(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function makeModel(seed){const r=rng(seed),W=new Float64Array(M*N),s=Math.sqrt(2/(N+M));for(let i=0;i<M*N;i++)W[i]=gauss(r)*s;
+  return{W,b:new Float64Array(N),r,mW:new Float64Array(M*N),vW:new Float64Array(M*N),mb:new Float64Array(N),vb:new Float64Array(N),t:0,loss:null,
+    gW:new Float64Array(M*N),gb:new Float64Array(N),x:new Float64Array(N),h:new Float64Array(M),dy:new Float64Array(N),dh:new Float64Array(M)}}
+function step(m,lr,p,relu){const{W,b,r,gW,gb,x,h,dy,dh}=m;gW.fill(0);gb.fill(0);let L=0;
+  for(let s=0;s<BATCH;s++){
+    for(let i=0;i<N;i++)x[i]=r()<p?r():0;
+    for(let k=0;k<M;k++){let a=0;for(let i=0;i<N;i++)a+=W[k*N+i]*x[i];h[k]=a}
+    for(let i=0;i<N;i++){let y=b[i];for(let k=0;k<M;k++)y+=W[k*N+i]*h[k];const o=relu?(y>0?y:0):y,e=o-x[i];L+=IMP[i]*e*e;dy[i]=(relu&&y<=0)?0:2*IMP[i]*e/BATCH}
+    for(let k=0;k<M;k++){let a=0;for(let i=0;i<N;i++){a+=W[k*N+i]*dy[i];gW[k*N+i]+=dy[i]*h[k]}dh[k]=a}
+    for(let k=0;k<M;k++){const d=dh[k];if(d)for(let j=0;j<N;j++)gW[k*N+j]+=d*x[j]}
+    for(let i=0;i<N;i++)gb[i]+=dy[i]}
+  m.t++;const b1=.9,b2=.999,c1=1-Math.pow(b1,m.t),c2=1-Math.pow(b2,m.t);
+  for(let i=0;i<M*N;i++){m.mW[i]=b1*m.mW[i]+(1-b1)*gW[i];m.vW[i]=b2*m.vW[i]+(1-b2)*gW[i]*gW[i];W[i]-=lr*(m.mW[i]/c1)/(Math.sqrt(m.vW[i]/c2)+1e-8)}
+  for(let i=0;i<N;i++){m.mb[i]=b1*m.mb[i]+(1-b1)*gb[i];m.vb[i]=b2*m.vb[i]+(1-b2)*gb[i]*gb[i];b[i]-=lr*(m.mb[i]/c1)/(Math.sqrt(m.vb[i]/c2)+1e-8)}
+  L/=BATCH;m.loss=m.loss==null?L:.97*m.loss+.03*L}
+
+function analyse(m){const cols=[];for(let i=0;i<N;i++)cols.push([m.W[i],m.W[N+i]]);
+  const norm=cols.map(c=>Math.hypot(c[0],c[1]));
+  const D=cols.map((c,i)=>{if(norm[i]<.15)return 0;const u=[c[0]/norm[i],c[1]/norm[i]];let s=0;for(const d of cols){const q=u[0]*d[0]+u[1]*d[1];s+=q*q}return norm[i]*norm[i]/s});
+  let ref=norm.findIndex(v=>v>.3);if(ref<0)ref=0;const rot=Math.PI/2-Math.atan2(cols[ref][1],cols[ref][0]),cr=Math.cos(rot),sr=Math.sin(rot);
+  return{cols:cols.map(c=>[c[0]*cr-c[1]*sr,c[0]*sr+c[1]*cr]),norm,D}}
+
+const FR=[[1,'a whole dimension'],[2/3,'two-thirds of a dimension'],[1/2,'half a dimension'],[2/5,'two-fifths of a dimension'],[1/3,'a third of a dimension']];
+function fracWords(d){let best=null,bd=1;for(const[v,s]of FR){const e=Math.abs(v-d);if(e<bd){bd=e;best=s}}return bd<.05?best:`about ${d.toFixed(2)} of a dimension`}
+
+function colour(i){return getComputedStyle(root).getPropertyValue('--spw-f'+i).trim()}
+function draw(A){const dpr=Math.min(window.devicePixelRatio||1,2),rect=cv.getBoundingClientRect();if(!rect.width)return;
+  const w=Math.round(rect.width*dpr);if(cv.width!==w){cv.width=w;cv.height=w}
+  const ctx=cv.getContext('2d'),c=w/2,R=w*.34,ink=getComputedStyle(root).color;ctx.clearRect(0,0,w,w);
+  ctx.strokeStyle=ink;ctx.lineWidth=dpr;ctx.globalAlpha=.16;ctx.beginPath();ctx.arc(c,c,R,0,Math.PI*2);ctx.stroke();
+  ctx.setLineDash([3*dpr,5*dpr]);ctx.beginPath();ctx.moveTo(c-R*1.22,c);ctx.lineTo(c+R*1.22,c);ctx.moveTo(c,c-R*1.22);ctx.lineTo(c,c+R*1.22);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+  if(!A)return;
+  const tips=A.cols.map((p,i)=>({i,x:c+p[0]*R,y:c-p[1]*R,a:Math.atan2(p[1],p[0])})).filter(t=>A.norm[t.i]>.5).sort((a,b)=>a.a-b.a);
+  if(tips.length>=3){ctx.globalAlpha=.10;ctx.fillStyle=ink;ctx.beginPath();tips.forEach((t,k)=>k?ctx.lineTo(t.x,t.y):ctx.moveTo(t.x,t.y));ctx.closePath();ctx.fill();
+    ctx.globalAlpha=.35;ctx.strokeStyle=ink;ctx.lineWidth=dpr;ctx.stroke();ctx.globalAlpha=1}
+  for(let i=N-1;i>=0;i--){const ex=c+A.cols[i][0]*R,ey=c-A.cols[i][1]*R,L=Math.hypot(ex-c,ey-c),col=colour(i);ctx.strokeStyle=col;ctx.fillStyle=col;
+    if(L<5*dpr){ctx.beginPath();ctx.arc(c,c,4*dpr,0,Math.PI*2);ctx.fill();continue}
+    ctx.lineWidth=3.2*dpr;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(c,c);ctx.lineTo(ex,ey);ctx.stroke();
+    const an=Math.atan2(ey-c,ex-c),hs=12*dpr;ctx.beginPath();ctx.moveTo(ex+Math.cos(an)*hs*.3,ey+Math.sin(an)*hs*.3);
+    ctx.lineTo(ex-Math.cos(an-.45)*hs,ey-Math.sin(an-.45)*hs);ctx.lineTo(ex-Math.cos(an+.45)*hs,ey-Math.sin(an+.45)*hs);ctx.closePath();ctx.fill();
+    ctx.font=`600 ${13*dpr}px system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';const f=1+20*dpr/L;ctx.fillText(String(i+1),c+(ex-c)*f,c+(ey-c)*f)}
+  ctx.fillStyle=ink;ctx.beginPath();ctx.arc(c,c,2.5*dpr,0,Math.PI*2);ctx.fill()}
+
+function describe(A,done){const st=A.norm.map((v,i)=>v>.5?i:-1).filter(i=>i>=0);const k=st.length;
+  if(!done)return `Training… ${k} of 5 features stored so far.`;
+  if(k<=2)return state.relu?`The model keeps the ${k===2?'two':'one'} most important feature${k===2?'s':''} at right angles and drops the rest. When features are this common, overlapping would cause too many collisions.`:
+    `A linear model can only keep the top two features, however rare they are. Without the ReLU, overlap always costs more than it gains.`;
+  const avg=st.reduce((s,i)=>s+A.D[i],0)/k;
+  return `Superposition: ${k} features packed into 2 dimensions, each getting ${fracWords(avg)}. The model accepts occasional crosstalk because the features rarely fire together.`}
+
+let models=null,t=0,running=false,visible=false;
+function start(){state.seed++;models=[...Array(SEEDS)].map((_,s)=>makeModel(state.seed*101+s*7+1));t=0;if(!running&&visible){running=true;requestAnimationFrame(tick)}}
+function best(){return t<150?models[0]:models.reduce((a,b)=>a.loss<b.loss?a:b)}
+function tick(){if(!visible){running=false;return}
+  const end=performance.now()+12;while(t<STEPS&&performance.now()<end){const f=t/STEPS,lr=f<.6?.02:.02-.018*(f-.6)/.4;for(const m of models)step(m,lr,state.density,state.relu);t++}
+  const done=t>=STEPS,A=analyse(best());if(!reduce||done)draw(A);statusEl.textContent=describe(A,done);
+  stepEl.textContent=done?'Trained for 4,000 steps; showing the best of four runs.':`Step ${t.toLocaleString()} of 4,000`;
+  if(!done)requestAnimationFrame(tick);else running=false}
+
+function syncUI(){slider.value=toSlider(state.density);const p=state.density*100;out.textContent=(p>=10?p.toFixed(0):p>=1?p.toFixed(1):p.toFixed(2))+'% of the time';
+  root.querySelectorAll('[data-act]').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.act==='relu')===state.relu)))}
+let deb;function retrainSoon(){syncUI();clearTimeout(deb);deb=setTimeout(start,250)}
+slider.addEventListener('input',()=>{state.density=fromSlider(+slider.value);retrainSoon()});
+root.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>{state.relu=b.dataset.act==='relu';retrainSoon()}));
+root.querySelector('.spw-again').addEventListener('click',start);
+new ResizeObserver(()=>{if(models)draw(analyse(best()))}).observe(cv);
+new MutationObserver(()=>{if(models)draw(analyse(best()))}).observe(document.body,{attributes:true,attributeFilter:['class']});
+syncUI();draw(null);
+new IntersectionObserver(es=>{visible=es.some(e=>e.isIntersecting);if(visible){if(!models)start();else if(!running&&t<STEPS){running=true;requestAnimationFrame(tick)}}},{rootMargin:'100px'}).observe(root);
+})();
+</script>
+</div>
+<p>Models of the natural world are especially likely to rely on superposition. The world is full of rare things: a particular bird’s alarm call, a single species of orchid, one type of landform. A model has a limited number of neurons, and nature offers an enormous number of these rare sounds, species and shapes to keep track of. So the knowledge we are looking for is in there somewhere, but tangled together in overlapping directions. Interpretability researchers sometimes call whatever their current tools can’t yet untangle the field’s dark matter.</p>
+</section>
+<section id="untangling-with-a-sparse-autoencoder" class="level1">
+<h1>Untangling with a sparse autoencoder</h1>
+<p>If concepts are packed into overlapping directions, the job is to find those directions. A <strong>sparse autoencoder</strong>, or SAE, is a small extra network trained to do just that.</p>
+<p>First, you pick one layer of the model you want to study. Then you run a large collection of examples through the model, often millions of image patches or audio clips, and record what that layer outputs for each one. For a vision model, that output is a list of numbers describing each small patch of an image. DINOv3, a widely used vision model, describes every patch with 1,024 numbers. Perch does the same for sound, describing each small slice of time and pitch with 1,536 numbers. Those numbers capture what the model “sees”, but they’re tangled together and impossible to interpret on their own.</p>
+<p>The SAE learns to rewrite each list as a combination of entries from a much larger dictionary, say 8,192 features. Each feature is a direction in the model’s 1,024-dimensional space: the high-dimensional version of an arrow in the pentagon picture above. The SAE has one hard rule. Only a handful of features, let’s say 32, can be switched on for any patch. Everything else is set to zero.</p>
+<p>Training then has one goal: rebuild the original numbers as accurately as possible, using only those few active features.</p>
+<p>$$</p>
+<p> = b + \sum_{i \in \text{active}} f_i \, d_i</p>
+<p>$$</p>
+<p>Here <span class="math inline">x</span> is the model’s original description of a patch, each <span class="math inline">d_i</span> is a dictionary direction, and <span class="math inline">f_i</span> is how strongly that feature fires. The sparsity rule is what makes the result readable. With only a few features allowed per patch, each one is pushed to stand for a single recognizable thing.</p>
+<p>To find out what a feature means, you look at where it fires most strongly. Gather the hundred patches or audio clips that switch it on hardest and see what they share. In large language models, this approach has turned up features for the Golden Gate Bridge, bugs in code, and many other concepts. The open question is what it finds in models of the natural world.</p>
+</section>
+<section id="what-saes-have-found-in-nature-so-far" class="level1">
+<h1>What SAEs have found in nature so far</h1>
+<p>The work is still in its early days, but the results are strong, especially for images.</p>
+<p><strong>Images.</strong> In 2025, Samuel Stevens and colleagues at Ohio State trained SAEs on patch-level features from DINOv3. On a standard scene-segmentation benchmark, the SAE features rediscovered the benchmark’s object classes and their spatial relationships, without ever seeing a label. Applied to photos of organisms, the same procedure picked out fine anatomical structure, again without any part labels.</p>
+<p>A follow-up study in 2026 built a more practical approach. Trait ecology depends on measurements like wing patterns or leaf margins, which experts usually record by hand, so most specimen images in museum collections don’t have any. The team used SAE features as automatic part detectors: they picked features that fire strongly on one species and weakly on its relatives, highlighted those regions, then asked a vision-language model to describe just that part. Pointing the language model at a single highlighted part made it far less likely to make things up. They then used the trait descriptions to further train BioCLIP, a model that matches photos of organisms to species names. On one insect benchmark, its accuracy at naming species it had no specific training examples for rose from about 35% to 40%.</p>
+<p><strong>Biology more broadly.</strong> The same approach has spread through computational biology. SAEs on protein language models have found thousands of features that line up with concepts biologists have already catalogued in protein databases, such as binding sites, where other molecules attach, and structural motifs, recurring shapes in the folded protein. Researchers have done the same with models of gene activity in individual cells, and with models of RNA, finding features tied to known biological processes. The hope is that some features will turn out to track a biological process or pattern that scientists haven’t yet discovered, giving them a new lead to test out.</p>
+<p><strong>Sound.</strong> Here the picture is thinner. SAEs have been trained on general audio models such as Whisper, OpenAI’s speech recognition model, and HuBERT, which learns representations of speech from raw audio. When the researchers trained the SAE several times from different random starting points, more than half the features came out the same each time. That is a good sign: a feature that keeps reappearing is likely to reflect real structure in the model, since a fluke of one training run wouldn’t. But as far as I can find, nobody has yet published a serious SAE study of a bioacoustic model like Perch or BirdNET. So the whale question from the start of this post is still open.</p>
+<p>The common thread is that SAEs recover categories people already use, like object classes, body parts and protein motifs, without being told them, which is encouraging. Whether they can show us categories we don’t yet have is a harder question.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
